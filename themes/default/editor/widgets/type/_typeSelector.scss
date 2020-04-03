@@ -1,0 +1,30 @@
+.type-selector {
+  display:flex;  
+  border-bottom:1px solid $lightgrey-border;
+
+  .type {
+    flex:1;
+    text-align:center;
+    padding:7px;
+    font-size:14px;
+  }
+
+  .type {
+    cursor:pointer;
+    border-right:1px solid $lightgrey-border;
+  }
+
+  .type:last-child {
+    border-right:none;
+  }
+
+  .type:hover {
+    background-color:$blueish-white-hi;;
+  }
+
+  .icon {
+    margin:0 3px 1px 0;
+    height:13px;
+  }
+
+}

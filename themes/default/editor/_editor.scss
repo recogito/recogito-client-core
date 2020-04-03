@@ -1,0 +1,81 @@
+@import "widgets/comment/comment";
+@import "widgets/tag/tag";
+@import "widgets/type/typeSelector";
+
+.r6o-editor {
+  position:absolute;
+  z-index:99999;
+  margin-top:18px;
+  margin-left:-14px;
+  width:400px;
+  color:$standard-type;
+
+  .arrow {
+    position:absolute;
+    overflow:hidden;
+    top:-12px;
+    left:12px;
+    width:28px;
+    height:12px;
+  }
+
+  .arrow:after {
+    content:'';
+    position:absolute;
+    top:5px;
+    left:5px;
+    width:18px;
+    height:18px;
+    background-color:#fff;
+    @include rotate(45deg);
+  }
+
+  .inner {
+    background-color:#fff;
+    @include rounded-corners(2px);
+    @include box-shadow(2px, 2px, 42px, 0.4);
+
+    .r6o-section:first-child {
+      @include rounded-corners-top(2px);
+    }
+
+    .r6o-section {
+      border-bottom:1px solid $lightgrey-border-darker;
+    }
+  }
+
+  .footer {
+    text-align:right;
+    padding:8px 0;
+
+    .r6o-btn {
+      margin-right:8px;
+    }
+  }
+
+}
+
+.r6o-editor.align-right {
+  margin-left:8px;
+
+  .arrow {
+    left:auto;
+    right:12px;
+  }
+
+}
+
+.r6o-editor.align-bottom {
+  margin-bottom:14px;
+
+  .arrow {
+    top:auto;
+    bottom:-12px;
+  }
+
+  .arrow::after {
+    top:-11px;
+    box-shadow:none;
+  }
+
+}

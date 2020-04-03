@@ -1,0 +1,61 @@
+.r6o-section.comment {
+  font-size:14px;
+  min-height:3em;
+  background-color:#fff;
+  position:relative;
+
+  .arrow-down {
+    position:absolute;
+    top:5px;
+    right:5px;
+    height: 20px;
+    width: 20px;
+    line-height: 14px;
+    font-size: 18px;
+    background-color:#fff;
+    text-align: center;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    border: 1px solid $lightgrey-border;
+    top: 9px;
+    right: 9px;
+    cursor: pointer;
+    @include rounded-corners(1px);
+  }
+
+  .arrow-down::before {
+    content:'\2304';
+  }
+
+  .arrow-down.menu-open {
+    border-color:$ocean;
+  }
+
+  .comment-dropdown-menu {
+    position:absolute;
+    top:32px;
+    right:8px;
+    background-color:#fff;
+    border:1px solid $lightgrey-border;
+    list-style-type:none;
+    margin:0;
+    padding:5px 0;
+    z-index:9999;
+    @include box-shadow(0, 2px, 4px, 0.2);
+
+    li {
+      padding:0 15px;
+      cursor:pointer;
+    }
+
+    li:hover {
+      background-color:$blueish-white;
+    }
+
+  }
+
+}
+
+.r6o-section.comment.editable {
+  background-color:$blueish-white;
+}

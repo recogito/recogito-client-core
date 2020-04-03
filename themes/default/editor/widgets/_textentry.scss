@@ -1,0 +1,13 @@
+.r6o-editable-text {
+  padding:8px 10px;
+  max-height:120px;
+  overflow:auto;
+  outline:none;
+  min-height:3em;
+  font-size:14px;
+}
+
+.r6o-editable-text:empty:not(:focus):before {
+  content:attr(data-placeholder);
+  color:#c2c2c2;
+}
