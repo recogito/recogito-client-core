@@ -2,36 +2,72 @@ import React from 'react';
 import Comment from './Comment';
 import TextEntryField from './TextEntryField';
 
+/**
+ * Comments are TextualBodies where the purpose field is either 
+ * blank or 'commenting' or 'replying'
+ */
+const isComment = body => 
+  body.type === 'TextualBody' && (
+    !body.hasOwnProperty('purpose') || body.purpose === 'commenting' || body.purpose === 'replying'
+  );
+  
+/**
+ * The draft reply is a comment body with a 'draft' flag
+ */
+const getDraftReply = (existingDraft, isReply) => {
+  return existingDraft ? existingDraft : {
+    type: 'TextualBody', value: '', purpose: isReply ? 'replying' : 'commenting', draft: true
+  };
+};
+
 /** 
  * Renders a list of comment bodies, followed by a 'reply' field.
  */
 const CommentWidget = props => {
 
-  const commentBodies = props.annotation ? 
-    props.annotation.bodies.filter(b => // No purpose or 'commenting', 'replying'
-      !b.hasOwnProperty('purpose') || b.purpose === 'commenting' || b.purpose === 'replying'
-    ) : [];
+  // All comments (draft + non-draft)
+  const all = props.annotation ? 
+    props.annotation.bodies.filter(isComment) : [];
+
+  // Non-draft comments
+  const comments = all.filter(b => !b.draft);
+
+  // Draft reply
+  const draftReply = getDraftReply(all.find(b => b.draft), comments.length > 0); 
+
+  const onEditReply = evt => {
+    const prev = draftReply.value.trim();
+    const updated = evt.target.value.trim();
+
+    if (prev.length === 0 && updated.length > 0) {
+      props.onAppendBody({ ...draftReply, value: updated });
+    } else if (prev.length > 0 && updated.length === 0) {
+      props.onRemoveBody(draftReply);
+    } else {
+      props.onUpdateBody(draftReply, { ...draftReply, value: updated });
+    }
+  }
 
   return (
     <>
-      { commentBodies.map((body, idx) => 
+      { comments.map((body, idx) => 
         <Comment 
           key={idx} 
           readOnly={props.readOnly} 
           body={body} 
-          onUpdate={props.onUpdateComment}
-          onDelete={props.onDeleteComment}
-          onOk={props.onOk} />
+          onUpdate={props.onUpdateBody}
+          onDelete={props.onRemoveBody}
+          onSaveAndClose={props.onSaveAndClose} />
       )}
 
       { !props.readOnly && props.annotation &&
         <div className="r6o-widget comment editable">
           <TextEntryField
-            content={props.currentReply}
+            content={draftReply.value}
             editable={true}
-            placeholder={commentBodies.length > 0 ? 'Add a reply...' : 'Add a comment...'}
-            onChange={props.onUpdateReply}
-            onOk={() => props.onOk()}
+            placeholder={comments.length > 0 ? 'Add a reply...' : 'Add a comment...'}
+            onChange={onEditReply}
+            onSaveAndClose={() => props.onSaveAndClose()}
           /> 
         </div>
       }

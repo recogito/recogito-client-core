@@ -32,7 +32,7 @@ const Comment = props => {
         editable={isEditable}
         content={props.body.value} 
         onChange={onUpdateComment} 
-        onOk={props.onOk} 
+        onSaveAndClose={props.onSaveAndClose} 
       />
 
       <div 

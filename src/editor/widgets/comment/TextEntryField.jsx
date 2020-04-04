@@ -13,7 +13,7 @@ export default class TextEntryField extends Component {
   // CTRL+Enter functions as Ok
   onKeyDown = evt => {
     if (evt.which === 13 && evt.ctrlKey)
-      this.props.onOk();
+      this.props.onSaveAndClose();
   }
 
   // Focus on render

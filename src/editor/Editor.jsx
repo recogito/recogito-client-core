@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import setPosition from './setPosition';
 import TagWidget  from './widgets/tag/TagWidget';
-import TypeSelectorWidget from './widgets/type/TypeSelectorWidget';
 import CommentWidget from './widgets/comment/CommentWidget';
 
 /**
@@ -15,7 +14,6 @@ const Editor = props => {
   
   // The current state of the edited annotation vs. original
   const [ currentAnnotation, setCurrentAnnotation ] = useState();
-  const [ currentReply, setCurrentReply ] = useState('');
 
   // Reference to the DOM element, so we can set position
   const element = useRef();
@@ -23,7 +21,6 @@ const Editor = props => {
   // Re-render: set derived annotation state & position the editor
   useEffect(() => {
     setCurrentAnnotation(props.annotation);
-    setCurrentReply('');
 
     if (element.current)
       setPosition(props.containerEl, element.current, props.bounds);
@@ -48,25 +45,24 @@ const Editor = props => {
   );
 
   const onOk = _ => {
-    // If there is a non-empty reply, append it as a comment body
-    const updated = currentReply.trim() ?
-      currentAnnotation.clone({
-        body: [ ...currentAnnotation.bodies, { type: 'TextualBody', value: currentReply.trim() } ] 
-      }) : currentAnnotation;
+    // Removes the 'draft' flag from all bodies
+    const undraft = annotation => annotation.clone({
+      body : annotation.bodies.map(({ draft, ...rest }) => rest)
+    });
 
     // Current annotation is either a selection (if it was created from 
     // scratch just now) or an annotation (if it existed already and was
     // opened for editing)
-    if (updated.bodies.length === 0) {
-      if (updated.isSelection)
+    if (currentAnnotation.bodies.length === 0) {
+      if (currentAnnotation.isSelection)
         props.onCancel();
       else 
         props.onAnnotationDeleted(props.annotation);
     } else {
-      if (updated.isSelection)
-        props.onAnnotationCreated(updated.toAnnotation());
+      if (currentAnnotation.isSelection)
+        props.onAnnotationCreated(undraft(currentAnnotation).toAnnotation());
       else
-        props.onAnnotationUpdated(updated, props.annotation);
+        props.onAnnotationUpdated(undraft(currentAnnotation), props.annotation);
     }
   };
 
@@ -76,16 +72,15 @@ const Editor = props => {
       <div className="inner">
         <CommentWidget 
           annotation={currentAnnotation}
-          currentReply={currentReply}
-          onUpdateComment={onUpdateBody}
-          onDeleteComment={onRemoveBody}
-          onUpdateReply={evt => setCurrentReply(evt.target.value.trim())}
-          onOk={onOk} />
+          onAppendBody={onAppendBody}
+          onUpdateBody={onUpdateBody}
+          onRemoveBody={onRemoveBody}
+          onSaveAndClose={onOk} />
 
         <TagWidget 
           annotation={currentAnnotation} 
-          onAddTag={onAppendBody}
-          onRemoveTag={onRemoveBody} />
+          onAppendBody={onAppendBody}
+          onRemoveBody={onRemoveBody} />
         
         { props.readOnly ? (
           <div className="footer">
