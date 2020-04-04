@@ -11,10 +11,7 @@ module.exports = {
     hints: false
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
-    alias: {
-      'themes': resolveAppPath('themes/default')    
-    }
+    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [
