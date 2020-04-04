@@ -25,7 +25,7 @@ const CommentWidget = props => {
       )}
 
       { !props.readOnly && props.annotation &&
-        <div className="r6o-section comment editable">
+        <div className="r6o-widget comment editable">
           <TextEntryField
             content={props.currentReply}
             editable={true}

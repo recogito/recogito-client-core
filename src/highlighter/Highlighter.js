@@ -34,14 +34,14 @@ export default class Highlighter {
 
   _findAnnotationSpans = annotation => {
     // TODO index annotation to make this faster
-    const allAnnotationSpans = document.querySelectorAll('.annotation');
+    const allAnnotationSpans = document.querySelectorAll('.r6o-annotation');
     return Array.prototype.slice.call(allAnnotationSpans)
       .filter(span => span.annotation.isEqual(annotation));
   }
 
   getAllAnnotations = () => {
     // TODO index annotation to make this faster
-    const allAnnotationSpans = document.querySelectorAll('.annotation');
+    const allAnnotationSpans = document.querySelectorAll('.r6o-annotation');
     return Array.prototype.slice.call(allAnnotationSpans)
       .map(span => span.annotation);
   }
@@ -80,7 +80,7 @@ export default class Highlighter {
 
   applyStyles = (annotation, spans) => {
     const extraClasses = this.formatter ? this.formatter(annotation) : '';
-    spans.forEach(span => span.className = `annotation ${extraClasses}`.trim());
+    spans.forEach(span => span.className = `r6o-annotation ${extraClasses}`.trim());
   }
 
   bindAnnotation = (annotation, elements) => {
@@ -245,7 +245,7 @@ export default class Highlighter {
 
           annotations.push(element.annotation);
 
-          return (parent.classList.contains('annotation')) ?
+          return (parent.classList.contains('r6o-annotation')) ?
             getAnnotationsRecursive(parent, annotations) : annotations;
         },
 

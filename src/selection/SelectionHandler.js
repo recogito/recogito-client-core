@@ -37,7 +37,7 @@ export default class SelectionHandler extends EventEmitter {
       const selection = getSelection();
 
       if (selection.isCollapsed) {
-        const annotationSpan = evt.target.closest('.annotation');
+        const annotationSpan = evt.target.closest('.r6o-annotation');
         if (annotationSpan) {
           this.emit('select', { 
             selection: this.highlighter.getAnnotationsAt(annotationSpan)[0],

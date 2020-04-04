@@ -23,11 +23,11 @@ const Comment = props => {
   }
 
   return props.readOnly ? (
-    <div className="r6o-section comment">
+    <div className="r6o-widget comment">
       {props.body.value}
     </div>
   ) : (
-    <div className={ isEditable ? "r6o-section comment editable" : "r6o-section comment"}>
+    <div className={ isEditable ? "r6o-widget comment editable" : "r6o-widget comment"}>
       <TextEntryField 
         editable={isEditable}
         content={props.body.value} 

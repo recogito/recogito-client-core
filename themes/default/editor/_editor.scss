@@ -1,3 +1,4 @@
+@import "widgets/textentry";
 @import "widgets/comment/comment";
 @import "widgets/tag/tag";
 @import "widgets/type/typeSelector";
@@ -35,11 +36,11 @@
     @include rounded-corners(2px);
     @include box-shadow(2px, 2px, 42px, 0.4);
 
-    .r6o-section:first-child {
+    .r6o-widget:first-child {
       @include rounded-corners-top(2px);
     }
 
-    .r6o-section {
+    .r6o-widget {
       border-bottom:1px solid $lightgrey-border-darker;
     }
   }
