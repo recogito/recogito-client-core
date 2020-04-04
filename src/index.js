@@ -1,3 +1,4 @@
+export { default as TextAnnotator } from './TextAnnotator';
 export { default as WebAnnotation } from './WebAnnotation';
 
 export * from './editor';
