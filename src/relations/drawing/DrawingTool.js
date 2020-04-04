@@ -99,7 +99,7 @@ export default class DrawingTool extends EventEmitter {
   }
 
   /** Emphasise hovered annotation **/
-  onEnterAnnotation = delegatingHandler('.annotation', evt => {
+  onEnterAnnotation = delegatingHandler('.r6o-annotation', evt => {
     if (this.currentHover) 
       this.hover();
 
@@ -107,7 +107,7 @@ export default class DrawingTool extends EventEmitter {
   });
 
   /** Clear hover emphasis **/
-  onLeaveAnnotation = delegatingHandler('.annotation', evt => {
+  onLeaveAnnotation = delegatingHandler('.r6o-annotation', evt => {
     this.hover();
   });
 

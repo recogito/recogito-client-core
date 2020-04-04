@@ -17,7 +17,7 @@ export const getNodeForEvent = function(evt) {
   const sortByQuoteLengthDesc = annotations => 
     annotations.sort((a, b) => a.quote.length - b.quote.length);
 
-  const annotationSpan = evt.target.closest('.annotation');
+  const annotationSpan = evt.target.closest('.r6o-annotation');
 
   if (annotationSpan) {
     // All stacked annotation spans
@@ -27,7 +27,7 @@ export const getNodeForEvent = function(evt) {
     const annotation = sortByQuoteLengthDesc(spans.map(span => span.annotation))[0];
 
     // ALL spans for this annotation (not just the hovered one)
-    const elements = document.querySelectorAll(`.annotation[data-id="${annotation.id}"]`);
+    const elements = document.querySelectorAll(`.r6o-annotation[data-id="${annotation.id}"]`);
     
     return { annotation, elements: Array.from(elements) };    
   }
@@ -50,6 +50,6 @@ export const getAnnotationSpansRecursive = function(element, s) {
 
   const parent = element.parentNode;
 
-  return parent.classList.contains('annotation') ?
+  return parent.classList.contains('r6o-annotation') ?
     getAnnotationSpansRecursive(parent, spans) : spans;
 }
