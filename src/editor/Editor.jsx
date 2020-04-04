@@ -70,17 +70,15 @@ const Editor = props => {
     <div ref={element} className="r6o-editor">
       <div className="arrow" />
       <div className="inner">
-        <CommentWidget 
-          annotation={currentAnnotation}
-          onAppendBody={onAppendBody}
-          onUpdateBody={onUpdateBody}
-          onRemoveBody={onRemoveBody}
-          onSaveAndClose={onOk} />
-
-        <TagWidget 
-          annotation={currentAnnotation} 
-          onAppendBody={onAppendBody}
-          onRemoveBody={onRemoveBody} />
+        {React.Children.map(props.children, child =>
+          React.cloneElement(child, { 
+            annotation : currentAnnotation,
+            onAppendBody : onAppendBody,
+            onUpdateBody : onUpdateBody,
+            onRemoveBody : onRemoveBody,
+            onSaveAndClose : onOk              
+          }))
+        }
         
         { props.readOnly ? (
           <div className="footer">

@@ -20,12 +20,12 @@ const TagWidget = props => {
 
   const onDelete = tag => evt => { 
     evt.stopPropagation();
-    props.onRemoveTag(tag);
+    props.onRemoveBody(tag);
   }
 
   const onKeyDown = evt => {
     if (evt.which === 13) { // Enter
-      props.onAddTag({ type: 'TextualBody', purpose: 'tagging', value: newTag.trim() });
+      props.onAppendBody({ type: 'TextualBody', purpose: 'tagging', value: newTag.trim() });
       setNewTag(''); // Clear the input
     }
   }
