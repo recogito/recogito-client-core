@@ -74,8 +74,6 @@ const Editor = props => {
     <div ref={element} className="r6o-editor">
       <div className="arrow" />
       <div className="inner">
-        <TypeSelectorWidget />
-
         <CommentWidget 
           annotation={currentAnnotation}
           currentReply={currentReply}
