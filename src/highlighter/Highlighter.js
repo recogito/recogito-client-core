@@ -1,4 +1,4 @@
-import WebAnnotation from '../annotation/WebAnnotation';
+import WebAnnotation from '../WebAnnotation';
 
 const TEXT = 3; // HTML DOM node type for text nodes
 

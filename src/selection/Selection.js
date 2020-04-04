@@ -1,4 +1,4 @@
-import WebAnnotation from './WebAnnotation';
+import WebAnnotation from '../WebAnnotation';
 import uuid from 'uuid/v1';
 
 /**

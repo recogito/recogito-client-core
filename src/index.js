@@ -1,2 +1,7 @@
 export { default as WebAnnotation } from './WebAnnotation';
-export { default as Selection } from './Selection';
+
+export * from './editor';
+export * from './highlighter';
+export * from './relations';
+export * from './selection';
+export * from './utils';
