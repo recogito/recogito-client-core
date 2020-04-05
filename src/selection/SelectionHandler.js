@@ -54,7 +54,7 @@ export default class SelectionHandler extends EventEmitter {
         const clientRect = selectedRange.getBoundingClientRect();
 
         const spans = this.highlighter.wrapRange(selectedRange);
-        spans.forEach(span => span.className = 'selection');
+        spans.forEach(span => span.className = 'r6o-selection');
 
         this._clearNativeSelection();
 
@@ -81,7 +81,7 @@ export default class SelectionHandler extends EventEmitter {
   clearSelection = () => {
     this._currentSelection = null;
 
-    const spans = Array.prototype.slice.call(this.el.querySelectorAll('.selection'));
+    const spans = Array.prototype.slice.call(this.el.querySelectorAll('.r6o-selection'));
     if (spans) {
       spans.forEach(span => {
         const parent = span.parentNode;
