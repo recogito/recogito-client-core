@@ -1,6 +1,6 @@
-import WebAnnotation from '../WebAnnotation';
-
 const TEXT = 3; // HTML DOM node type for text nodes
+
+const RENDER_BATCH_SIZE = 100; // Number of annotations to render in one frame
 
 const uniqueItems = items => Array.from(new Set(items))
 
@@ -12,13 +12,30 @@ export default class Highlighter {
   }
 
   init = annotations => {    
+    const startTime = performance.now();
+
     // Discard all annotations without a TextPositionSelector
     const highlights = annotations.filter(a => a.selector('TextPositionSelector'));
 
     // Sorting bottom to top significantly speeds things up,
     // because walkTextNodes will have a lot less to walk 
     highlights.sort((a, b) => b.start - a.start);
-    highlights.forEach(this._addAnnotation);
+
+    // Render loop
+    const render = annotations => {
+      const batch = annotations.slice(0, RENDER_BATCH_SIZE);
+      const remainder = annotations.slice(RENDER_BATCH_SIZE);
+
+      requestAnimationFrame(() => {
+        batch.forEach(this._addAnnotation);
+        if (remainder.length > 0)
+          render(remainder);
+        else
+          console.log(`Rendered ${highlights.length}, took ${performance.now() - startTime}ms`);
+      });
+    }
+
+    render(highlights);
   }
 
   _addAnnotation = annotation => {

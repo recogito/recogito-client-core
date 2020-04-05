@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import setPosition from './setPosition';
-import TagWidget  from './widgets/tag/TagWidget';
-import CommentWidget from './widgets/comment/CommentWidget';
 
 /**
  * The popup editor component.
