@@ -11,7 +11,7 @@ export default class Highlighter {
     this.formatter = formatter;
   }
 
-  init = annotations => {    
+  init = annotations => new Promise((resolve, _) => {    
     const startTime = performance.now();
 
     // Discard all annotations without a TextPositionSelector
@@ -28,15 +28,17 @@ export default class Highlighter {
 
       requestAnimationFrame(() => {
         batch.forEach(this._addAnnotation);
-        if (remainder.length > 0)
+        if (remainder.length > 0) {
           render(remainder);
-        else
+        } else {
           console.log(`Rendered ${highlights.length}, took ${performance.now() - startTime}ms`);
+          resolve();
+        }
       });
     }
 
     render(highlights);
-  }
+  })
 
   _addAnnotation = annotation => {
     const [ domStart, domEnd ] = this.charOffsetsToDOMPosition([ annotation.start, annotation.end ]);
