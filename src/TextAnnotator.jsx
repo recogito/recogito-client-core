@@ -12,7 +12,6 @@ import RelationEditor from './relations/editor/RelationEditor';
 export default class TextAnnotator extends Component {
 
   state = {
-    showEditor: false,
     selectionBounds: null,
     selectedAnnotation: null,
 
@@ -23,7 +22,6 @@ export default class TextAnnotator extends Component {
   /** Helper **/
   _clearState = () => {
     this.setState({
-      showEditor: false,
       selectionBounds: null,
       selectedAnnotation: null
     });
@@ -63,7 +61,6 @@ export default class TextAnnotator extends Component {
     const { selection, clientRect } = evt;
     if (selection) {
       this.setState({ 
-        showEditor: true, 
         selectionBounds: clientRect,
         selectedAnnotation: selection 
       });
@@ -147,12 +144,12 @@ export default class TextAnnotator extends Component {
     // If the editor is currently open on this annotation, close it
     const { selectedAnnotation } = this.state;
     if (selectedAnnotation && annotation.isEqual(selectedAnnotation))
-      this.setState({ showEditor: false });
+      this._clearState();
   }
 
   setAnnotations = annotations => {
-    this.highlighter.init(annotations);
-    this.relationsLayer.init(annotations);
+    this.highlighter.init(annotations).then(() =>
+      this.relationsLayer.init(annotations));
   }
 
   getAnnotations = () => {
@@ -163,7 +160,7 @@ export default class TextAnnotator extends Component {
 
   setMode = mode => {
     if (mode === 'RELATIONS') {
-      this.setState({ showEditor: false });
+      this._clearState();
       
       this.selectionHandler.enabled = false;
 
@@ -182,9 +179,8 @@ export default class TextAnnotator extends Component {
   render() {
     return (
       <>
-        { this.state.showEditor &&
+        { this.state.selectedAnnotation &&
           <Editor
-            open={this.state.showEditor}
             readOnly={this.props.readOnly}
             bounds={this.state.selectionBounds}
             containerEl={this.props.containerEl}
