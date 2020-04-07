@@ -19,8 +19,8 @@ export default class TextAnnotator extends Component {
     selectedRelation: null
   }
 
-  /** Helper **/
-  _clearState = () => {
+  /** Shorthand **/
+  clearState = () => {
     this.setState({
       selectionBounds: null,
       selectedAnnotation: null
@@ -65,14 +65,13 @@ export default class TextAnnotator extends Component {
         selectedAnnotation: selection 
       });
     } else {
-      this._clearState();
+      this.clearState();
     }
   }
 
   /** Common handler for annotation CREATE or UPDATE **/
   onCreateOrUpdateAnnotation = method => (annotation, previous) => {
-    // Clear the annotation layer
-    this._clearState();
+    this.clearState();
     
     this.selectionHandler.clearSelection();
     this.highlighter.addOrUpdateAnnotation(annotation, previous);
@@ -86,14 +85,14 @@ export default class TextAnnotator extends Component {
     const connections = this.relationsLayer.getConnectionsFor(annotation);
     connections.forEach(c => c.destroy());
 
-    this._clearState();
+    this.clearState();
     this.selectionHandler.clearSelection();
     this.highlighter.removeAnnotation(annotation);
   }
 
   /** Cancel button on annotation editor **/
   onCancelAnnotation = () => {
-    this._clearState();
+    this.clearState();
     this.selectionHandler.clearSelection();
   }
 
@@ -144,7 +143,7 @@ export default class TextAnnotator extends Component {
     // If the editor is currently open on this annotation, close it
     const { selectedAnnotation } = this.state;
     if (selectedAnnotation && annotation.isEqual(selectedAnnotation))
-      this._clearState();
+      this.clearState();
   }
 
   setAnnotations = annotations => {
@@ -160,7 +159,7 @@ export default class TextAnnotator extends Component {
 
   setMode = mode => {
     if (mode === 'RELATIONS') {
-      this._clearState();
+      this.clearState();
       
       this.selectionHandler.enabled = false;
 
