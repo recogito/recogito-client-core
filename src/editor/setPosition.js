@@ -1,7 +1,7 @@
 /** Sets the editor position and determines a proper orientation **/
-const setPosition = (containerEl, editorEl, annotationBounds) => {
+const setPosition = (wrapperEl, editorEl, annotationBounds) => {
   // Container element offset
-  const { offsetLeft, offsetTop } = containerEl;
+  const { offsetLeft, offsetTop } = wrapperEl;
   const { scrollX, scrollY } = window;
 
   // Re-set orientation class
@@ -20,10 +20,10 @@ const setPosition = (containerEl, editorEl, annotationBounds) => {
     editorEl.style.left = `${right - defaultOrientation.width + scrollX - offsetLeft}px`;
   }
 
-  if (defaultOrientation.bottom > window.innerHeight) {
+  if (defaultOrientation.bottom > window.innerHeight - scrollY) {
     // Flip vertically
     const annotationTop = top + scrollY; // Annotation top relative to parents
-    const containerBounds = containerEl.getBoundingClientRect();
+    const containerBounds = wrapperEl.getBoundingClientRect();
     const containerHeight = containerBounds.height + containerBounds.top + scrollY;
     
     editorEl.classList.add('align-bottom');

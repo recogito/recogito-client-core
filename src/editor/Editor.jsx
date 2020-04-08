@@ -21,7 +21,7 @@ const Editor = props => {
     setCurrentAnnotation(props.annotation);
 
     if (element.current)
-      setPosition(props.containerEl, element.current, props.bounds);
+      setPosition(props.wrapperEl, element.current, props.bounds);
   }, [ props.annotation ]);
 
   const onAppendBody = body => setCurrentAnnotation(
