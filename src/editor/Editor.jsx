@@ -22,7 +22,7 @@ const Editor = props => {
 
     if (element.current)
       setPosition(props.wrapperEl, element.current, props.bounds);
-  }, [ props.annotation ]);
+  }, [ props.annotation, props.bounds ]);
 
   const onAppendBody = body => setCurrentAnnotation(
     currentAnnotation.clone({ 
