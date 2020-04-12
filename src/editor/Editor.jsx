@@ -18,11 +18,12 @@ const Editor = props => {
 
   // Re-render: set derived annotation state & position the editor
   useEffect(() => {
-    setCurrentAnnotation(props.annotation);
+    if (!currentAnnotation?.isEqual(props.annotation))
+      setCurrentAnnotation(props.annotation);
 
     if (element.current)
       setPosition(props.wrapperEl, element.current, props.bounds);
-  }, [ props.annotation, props.bounds ]);
+  }, [ props.bounds ]);
 
   const onAppendBody = body => setCurrentAnnotation(
     currentAnnotation.clone({ 
