@@ -7,6 +7,9 @@ const setPosition = (wrapperEl, editorEl, annotationBounds) => {
   // Re-set orientation class
   editorEl.className = 'r6o-editor';
 
+  // Set visible
+  editorEl.style.opacity = 1;
+
   // Default orientation
   const { x, y, height, top, right } = annotationBounds; 
   editorEl.style.top = `${y + height + scrollY - offsetTop}px`;

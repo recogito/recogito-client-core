@@ -10,6 +10,11 @@
   margin-left:-14px;
   width:400px;
   color:$standard-type;
+  opacity:0;
+
+  -webkit-transition:opacity 0.1s ease-in-out;
+     -moz-transition:opacity 0.1s ease-in-out;
+          transition:opacity 0.1s ease-in-out;
 
   .arrow {
     position:absolute;
