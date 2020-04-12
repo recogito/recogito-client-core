@@ -47,6 +47,14 @@ export default class Selection {
   }
 
   /** For consistency with WebAnnotation **/
+  isEqual(other) {
+    if (!other) {
+      return false;
+    } else {
+      return this._stub === other._stub;
+    }
+  }
+  
   get bodies() {
     return this._stub.body;
   }
