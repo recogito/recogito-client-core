@@ -20,8 +20,13 @@ export default class Selection {
 
   /** Creates a copy of this selection **/
   clone = opt_props => {
-    const selectors = this._stub.target.selector.map(s => ({ ...s })); // Clone selectors
-    const cloned = new Selection(selectors);
+    // Clone selector(s)
+    const { selector } = this._stub.target;
+
+    const clonedSelector = Array.isArray(selector) ?
+      selector.map(s => ({ ...s })) : { ...selector };
+    
+    const cloned = new Selection(clonedSelector);
 
     if (opt_props)
       cloned._stub = { ...cloned._stub, ...opt_props };
@@ -47,7 +52,15 @@ export default class Selection {
   }
 
   selector = type => {
-    return this._stub.target.selector.find(t => t.type === type);
+    const { target } = this._stub;
+
+    if (target.selector) {
+      // Normalize to array
+      const selectors = Array.isArray(target.selector) ?
+        target.selector : [ target.selector ];
+
+      return selectors.find(s => s.type === type);
+    }
   }
 
   /** Shorthand for the 'exact' field of the TextQuoteSelector **/
