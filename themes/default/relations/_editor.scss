@@ -1,5 +1,8 @@
 .r6o-relation-editor {
   position:absolute;
+  font-family:'Lato', sans-serif;
+  font-size:17px;
+  line-height:27px;
   @include box-shadow(0, 1px, 14px, 0.4);
   @include rounded-corners(3px);
   transform:translate(-50%, -50%);
