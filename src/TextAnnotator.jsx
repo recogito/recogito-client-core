@@ -61,9 +61,12 @@ export default class TextAnnotator extends Component {
     const { selection, clientRect } = evt;
     if (selection) {
       this.setState({ 
-        selectionBounds: clientRect,
-        selectedAnnotation: selection 
-      });
+        selectedAnnotation: null, 
+        selectionBounds: null 
+      }, () => this.setState({ 
+        selectedAnnotation: selection,
+        selectionBounds: clientRect
+      }))
     } else {
       this.clearState();
     }
