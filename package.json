@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/recogito/recogito-client-core/issues"
   },
-  "homepage": "https://github.com/recogito/recogito-client-core#readme",
+  "homepage": "https://github.com/recogito/recogito-client-core/wiki",
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
