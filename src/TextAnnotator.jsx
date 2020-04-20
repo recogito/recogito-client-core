@@ -183,10 +183,11 @@ export default class TextAnnotator extends Component {
       <>
         { this.state.selectedAnnotation &&
           <Editor
-            readOnly={this.props.readOnly}
-            bounds={this.state.selectionBounds}
             wrapperEl={this.props.wrapperEl}
+            bounds={this.state.selectionBounds}
             annotation={this.state.selectedAnnotation}
+            readOnly={this.props.readOnly}
+            autoApply={this.props.autoApply}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
             onAnnotationUpdated={this.onCreateOrUpdateAnnotation('onAnnotationUpdated')}
             onAnnotationDeleted={this.onDeleteAnnotation}

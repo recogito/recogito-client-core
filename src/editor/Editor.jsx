@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import setPosition from './setPosition';
 
+const autoApply = props => {
+  const applied = props.annotation.clone({ body: [{ ...props.autoApply }]});
+  return applied.toAnnotation();
+}
+
 /**
  * The popup editor component.
  * 
@@ -21,6 +26,15 @@ const Editor = props => {
     if (!currentAnnotation?.isEqual(props.annotation))
       setCurrentAnnotation(props.annotation);
 
+
+
+    /** Experimental **/
+    if (props.autoApply && props.annotation?.isSelection)
+      props.onAnnotationCreated(autoApply(props));
+    /** Experimental **/      
+
+
+    
     if (element.current)
       setPosition(props.wrapperEl, element.current, props.bounds);
   }, [ props.bounds ]);
@@ -63,7 +77,7 @@ const Editor = props => {
       else
         props.onAnnotationUpdated(undraft(currentAnnotation), props.annotation);
     }
-  };
+  };  
 
   return (
     <div ref={element} className="r6o-editor">
