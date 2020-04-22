@@ -23,18 +23,21 @@ const Editor = props => {
 
   // Re-render: set derived annotation state & position the editor
   useEffect(() => {
-    if (!currentAnnotation?.isEqual(props.annotation))
-      setCurrentAnnotation(props.annotation);
+    // Shorthand: user wants a template applied and this is a selection
+    const shouldApplyTemplate = props.applyTemplate && props.annotation?.isSelection
 
+    // Apply template if needed
+    const annotation = shouldApplyTemplate ? 
+      props.annotation.clone({ body: [ ...props.applyTemplate ]}) : 
+      props.annotation;
 
+    if (!currentAnnotation?.isEqual(annotation))
+      setCurrentAnnotation(annotation);
 
-    /** Experimental **/
-    if (props.autoApply && props.annotation?.isSelection)
-      props.onAnnotationCreated(autoApply(props));
-    /** Experimental **/      
+    // In headless mode, create immediately
+    if (shouldApplyTemplate && props.headless)
+      props.onAnnotationCreated(annotation.toAnnotation());
 
-
-    
     if (element.current)
       setPosition(props.wrapperEl, element.current, props.bounds);
   }, [ props.bounds ]);

@@ -16,7 +16,10 @@ export default class TextAnnotator extends Component {
     selectedAnnotation: null,
 
     showRelationEditor: false,
-    selectedRelation: null
+    selectedRelation: null,
+
+    applyTemplate: null,
+    headless: false
   }
 
   /** Shorthand **/
@@ -178,6 +181,9 @@ export default class TextAnnotator extends Component {
     }
   }
 
+  applyTemplate = (bodies, headless) => 
+    this.setState({ applyTemplate: bodies, headless })
+
   render() {
     return (
       <>
@@ -187,7 +193,8 @@ export default class TextAnnotator extends Component {
             bounds={this.state.selectionBounds}
             annotation={this.state.selectedAnnotation}
             readOnly={this.props.readOnly}
-            autoApply={this.props.autoApply}
+            headless={this.state.headless}
+            applyTemplate={this.state.applyTemplate}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
             onAnnotationUpdated={this.onCreateOrUpdateAnnotation('onAnnotationUpdated')}
             onAnnotationDeleted={this.onDeleteAnnotation}
