@@ -94,6 +94,8 @@ export default class TextAnnotator extends Component {
     this.clearState();
     this.selectionHandler.clearSelection();
     this.highlighter.removeAnnotation(annotation);
+
+    this.props.onAnnotationDeleted(annotation);
   }
 
   /** Cancel button on annotation editor **/
