@@ -1,3 +1,5 @@
+import uuid from 'uuid/v1';
+
 export default class WebAnnotation {
 
   constructor(annotation) {
@@ -9,6 +11,7 @@ export default class WebAnnotation {
     const stub = {
       '@context': 'http://www.w3.org/ns/anno.jsonld',
       'type': 'Annotation',
+      'id': uuid(),
       'body': []
     };
 
