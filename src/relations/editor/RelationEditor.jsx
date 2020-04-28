@@ -72,6 +72,7 @@ export default class RelationEditor extends Component {
   
   onSubmit = () => {
     const updatedAnnotation = this.props.relation.annotation.clone({
+      motivation: 'linking',
       body: [{
         type: 'TextualBody',
         value: this.state.content,

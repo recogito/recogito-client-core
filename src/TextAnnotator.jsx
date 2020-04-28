@@ -130,10 +130,15 @@ export default class TextAnnotator extends Component {
     this.relationsLayer.addOrUpdateRelation(relation, previous);
     this.closeRelationsEditor();
 
-    if (previous)
-      this.props.onAnnotationUpdated(relation.annotation, previous.annotation);
-    else
+    // This method will always receive a 'previous' connection -
+    // if the previous is just an empty connection, fire 'create',
+    // otherwise, fire 'update'
+    const isNew = previous.annotation.bodies.length === 0;
+
+    if (isNew)
       this.props.onAnnotationCreated(relation.annotation);
+    else
+      this.props.onAnnotationUpdated(relation.annotation, previous.annotation);
   }
 
   /** 'Delete' on the relation editor popup **/
