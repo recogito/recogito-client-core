@@ -131,16 +131,16 @@ export default class TextAnnotator extends Component {
     this.closeRelationsEditor();
 
     if (previous)
-      this.props.onAnnotationUpdated(relation, previous);
+      this.props.onAnnotationUpdated(relation.annotation, previous.annotation);
     else
-      this.props.onAnnotationCreated(relation, previous);
+      this.props.onAnnotationCreated(relation.annotation);
   }
 
   /** 'Delete' on the relation editor popup **/
   onDeleteRelation = relation => {
     this.relationsLayer.removeRelation(relation);
     this.closeRelationsEditor();
-    this.props.onAnnotationDeleted(relation);
+    this.props.onAnnotationDeleted(relation.annotation);
   }
 
   /****************/               
