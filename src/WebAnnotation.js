@@ -11,7 +11,7 @@ export default class WebAnnotation {
     const stub = {
       '@context': 'http://www.w3.org/ns/anno.jsonld',
       'type': 'Annotation',
-      'id': uuid(),
+      'id': `#${uuid()}`,
       'body': []
     };
 

@@ -52,7 +52,7 @@ export default class Connection extends EventEmitter {
   /** Initializes a fixed connection from an annotation **/
   initFromAnnotation = function(contentEl, svgEl, annotation) {
     const [ fromId, toId ] = annotation.target.map(t => t.id);
-    const relation = annotation.bodies[0].value; // Temporary hack
+    const relation = annotation.bodies[0].value;
 
     const fromNode = getNodeById(contentEl, fromId);
     const fromBounds = new Bounds(fromNode.elements, svgEl);

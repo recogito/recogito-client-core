@@ -88,7 +88,7 @@ export default class Selection {
     const a = Object.assign({}, this._stub, {
       '@context': 'http://www.w3.org/ns/anno.jsonld',
       'type': 'Annotation',
-      'id': uuid()
+      'id': `#${uuid()}`
     });
 
     return new WebAnnotation(a);
