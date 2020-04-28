@@ -142,8 +142,8 @@ export default class DrawingTool extends EventEmitter {
 
     const annotation = WebAnnotation.create({ 
       target: [
-        { id: `#${from.id}` },
-        { id: `#${to.id}` }
+        { id: from.id },
+        { id: to.id }
       ]
     });
 

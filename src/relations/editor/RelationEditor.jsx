@@ -83,7 +83,7 @@ export default class RelationEditor extends Component {
 
     // Fire create or update event
     if (this.props.relation.annotation.bodies.length === 0) 
-      this.props.onRelationCreated(updatedRelation);
+      this.props.onRelationCreated(updatedRelation, this.props.relation);
     else 
       this.props.onRelationUpdated(updatedRelation, this.props.relation);
   }
