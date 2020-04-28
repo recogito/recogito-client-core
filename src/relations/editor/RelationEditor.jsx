@@ -81,8 +81,11 @@ export default class RelationEditor extends Component {
 
     const updatedRelation = { ...this.props.relation, annotation: updatedAnnotation };
 
-    // Return updated/before
-    this.props.onRelationUpdated(updatedRelation, this.props.relation);
+    // Fire create or update event
+    if (this.props.relation.annotation.bodies.length === 0) 
+      this.props.onRelationCreated(updatedRelation);
+    else 
+      this.props.onRelationUpdated(updatedRelation, this.props.relation);
   }
 
   onDelete = () =>

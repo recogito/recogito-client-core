@@ -216,6 +216,7 @@ export default class TextAnnotator extends Component {
         { this.state.showRelationEditor && 
           <RelationEditor 
             relation={this.state.selectedRelation}
+            onRelationCreated={this.onCreateOrUpdateRelation}
             onRelationUpdated={this.onCreateOrUpdateRelation}
             onRelationDeleted={this.onDeleteRelation}
             onCancel={this.closeRelationsEditor}
