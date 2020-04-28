@@ -82,11 +82,17 @@ export default class RelationEditor extends Component {
 
     const updatedRelation = { ...this.props.relation, annotation: updatedAnnotation };
 
-    // Fire create or update event
-    if (this.props.relation.annotation.bodies.length === 0) 
-      this.props.onRelationCreated(updatedRelation, this.props.relation);
-    else 
-      this.props.onRelationUpdated(updatedRelation, this.props.relation);
+    
+    if (this.state.content) {
+      // Fire create or update event
+      if (this.props.relation.annotation.bodies.length === 0) 
+        this.props.onRelationCreated(updatedRelation, this.props.relation);
+      else 
+        this.props.onRelationUpdated(updatedRelation, this.props.relation);
+    } else {
+      // Leaving the tag empty and hitting Enter equals cancel
+      this.props.onCancel();
+    }
   }
 
   onDelete = () =>
