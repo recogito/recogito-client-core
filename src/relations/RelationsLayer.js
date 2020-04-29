@@ -104,6 +104,12 @@ export default class RelationsLayer extends EventEmitter {
       c.startAnnotation.isEqual(annotation) || c.endAnnotation.isEqual(annotation));
   }
 
+  destroyConnectionsFor = annotation => {
+    const connections = this.getConnectionsFor(annotation);
+    connections.forEach(c => c.destroy());
+    this.connections = this.connections.filter(c => !connections.includes(c));
+  }
+
   show = () =>
     this.svg.style.display = 'inital';
 

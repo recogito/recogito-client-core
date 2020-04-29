@@ -88,8 +88,7 @@ export default class TextAnnotator extends Component {
 
   onDeleteAnnotation = annotation => {
     // Delete connections
-    const connections = this.relationsLayer.getConnectionsFor(annotation);
-    connections.forEach(c => c.destroy());
+    this.relationsLayer.destroyConnectionsFor(annotation);
 
     this.clearState();
     this.selectionHandler.clearSelection();
