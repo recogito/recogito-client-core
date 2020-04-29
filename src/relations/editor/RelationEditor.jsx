@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ContentEditable from 'react-contenteditable';
+import { TrashIcon, CheckIcon } from '../../Icons';
 
 /**
  * Shorthand to get the label (= first tag body value) from the
@@ -112,11 +113,15 @@ export default class RelationEditor extends Component {
         <div className="buttons">
           <span 
             className="icon delete"
-            onClick={this.onDelete}>{'\uf014'}</span>
+            onClick={this.onDelete}>
+            <TrashIcon width={14} />
+          </span>
 
           <span
             className="icon ok"
-            onClick={this.onSubmit}>{'\uf00c'}</span>
+            onClick={this.onSubmit}>
+            <CheckIcon width={14} />
+          </span>
         </div>
       </div>
     )

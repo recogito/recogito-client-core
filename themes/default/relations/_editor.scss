@@ -8,6 +8,11 @@
   transform:translate(-50%, -50%);
   background-color:#fff;
 
+  svg {
+    vertical-align:middle;
+    shape-rendering: geometricPrecision;
+  }
+
   * {
     line-height:31px;
     box-sizing:border-box;
@@ -49,7 +54,7 @@
 
     .delete {
       background-color:#fff;
-      color:$standard-type;
+      color:$lightblue-type;
       border-left:1px solid $lightgrey-border;
     }
 

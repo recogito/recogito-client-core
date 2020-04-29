@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DropdownMenu from './DropdownMenu';
 import TextEntryField from './TextEntryField';
-import { ChevronDown } from '../../../Icons';
+import { ChevronDownIcon } from '../../../Icons';
 
 /** A single comment inside the CommentWidget **/
 const Comment = props => {
@@ -39,7 +39,7 @@ const Comment = props => {
       <div 
         className={isMenuVisible ? "icon arrow-down menu-open" : "icon arrow-down"} 
         onClick={() => setIsMenuVisible(!isMenuVisible)}>
-        <ChevronDown width={12} />
+        <ChevronDownIcon width={12} />
       </div>
 
       { isMenuVisible && 

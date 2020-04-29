@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { Close } from '../../../Icons';
+import { CloseIcon } from '../../../Icons';
 
 /** The basic freetext tag control from original Recogito **/
 const TagWidget = props => {
@@ -41,7 +41,7 @@ const TagWidget = props => {
             <CSSTransition in={showDelete === tag.value} timeout={200} classNames="delete">
               <span className="delete-wrapper" onClick={onDelete(tag)}>
                 <span className="delete">
-                  <Close width={14} />
+                  <CloseIcon width={12} />
                 </span>
               </span>
             </CSSTransition>
