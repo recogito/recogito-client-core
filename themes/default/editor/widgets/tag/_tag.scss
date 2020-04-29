@@ -28,6 +28,7 @@
     .label {
       padding:2px 8px;
       display:inline-block;
+      vertical-align:middle;
     }
 
     .delete-wrapper {
@@ -37,7 +38,7 @@
       width:0;
       height:100%;
       background-color:$ocean;
-      vertical-align:top;
+      @include rounded-corners-right(2px);
 
       .delete {
         padding:2px 6px;
@@ -47,6 +48,10 @@
           padding-bottom:1px;
         }
       
+      }
+
+      svg {
+        vertical-align:middle;
       }
 
     }

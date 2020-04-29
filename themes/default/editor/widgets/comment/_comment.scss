@@ -6,25 +6,17 @@
 
   .arrow-down {
     position:absolute;
-    top:5px;
-    right:5px;
     height: 20px;
     width: 20px;
-    line-height: 14px;
-    font-size: 18px;
-    background-color:#fff;
-    text-align: center;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    border: 1px solid $lightgrey-border;
     top: 9px;
     right: 9px;
+    line-height: 24px;
+    background-color:#fff;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    border: 1px solid $lightgrey-border;
     cursor: pointer;
     @include rounded-corners(1px);
-  }
-
-  .arrow-down::before {
-    content:'\2304';
   }
 
   .arrow-down.menu-open {
