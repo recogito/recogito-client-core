@@ -28,7 +28,6 @@
     .label {
       padding:2px 8px;
       display:inline-block;
-      vertical-align:middle;
     }
 
     .delete-wrapper {
@@ -51,7 +50,7 @@
       }
 
       svg {
-        vertical-align:middle;
+        vertical-align:text-top;
       }
 
     }
