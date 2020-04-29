@@ -25,7 +25,9 @@ export default class RelationsLayer extends EventEmitter {
     this.drawingTool.on('cancelDrawing', () => this.emit('cancelDrawing'));
 
     // Redraw on window resize
-    window.addEventListener('resize', this.recomputeAll);
+    window.addEventListener('resize', () => requestAnimationFrame(() => {
+      this.recomputeAll();
+    }));
   }
 
   /** Shorthand **/
