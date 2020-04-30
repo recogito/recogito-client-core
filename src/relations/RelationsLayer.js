@@ -93,6 +93,16 @@ export default class RelationsLayer extends EventEmitter {
     }
   }
 
+  overrideId = (annotationOrId, forcedId) => {
+    const id = annotationOrId.id ? annotationOrId.id : annotationOrId;
+    const conn = this.connections.find(c => c.annotation.id == id);
+    
+    const updatedAnnotation = conn.annotation.clone({ id : forcedId });
+    conn.annotation = updatedAnnotation;
+
+    return conn;
+  }
+
   getAllRelations = () => {
     return this.connections.map(c => c.annotation);
   }

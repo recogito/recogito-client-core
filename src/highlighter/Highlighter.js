@@ -53,17 +53,15 @@ export default class Highlighter {
   }
 
   _findAnnotationSpans = annotation => {
-    // TODO index annotation to make this faster
     const allAnnotationSpans = document.querySelectorAll('.r6o-annotation');
     return Array.prototype.slice.call(allAnnotationSpans)
       .filter(span => span.annotation.isEqual(annotation));
   }
 
   getAllAnnotations = () => {
-    // TODO index annotation to make this faster
     const allAnnotationSpans = document.querySelectorAll('.r6o-annotation');
-    return Array.prototype.slice.call(allAnnotationSpans)
-      .map(span => span.annotation);
+    const allAnnotations = Array.from(allAnnotationSpans).map(span => span.annotation);
+    return [...new Set(allAnnotations)];
   }
 
   addOrUpdateAnnotation = (annotation, maybePrevious) => {
@@ -90,6 +88,25 @@ export default class Highlighter {
     }
   }
 
+  /** 
+   * Forces a new ID on the given annotation (or annotation with the given ID). 
+   * This method handles the ID update within the Highlighter ONLY. It's up to 
+   * the application to keep the RelationsLayer in sync! 
+   * 
+   * @returns the updated annotation for convenience
+   */
+  overrideId = (annotationOrId, forcedId) => {
+    const id = annotationOrId.id ? annotationOrId.id : annotationOrId;
+    
+    const allSpans = document.querySelectorAll(`.r6o-annotation[data-id="${id}"]`);
+    const annotation = allSpans[0].annotation; 
+
+    const updatedAnnotation = annotation.clone({ id : forcedId });
+    this.bindAnnotation(updatedAnnotation, allSpans);
+
+    return updatedAnnotation;
+  }
+
   _unwrapHighlightings(highlightSpans) {
     for (const span of highlightSpans) {
       const parent = span.parentNode;
@@ -106,8 +123,7 @@ export default class Highlighter {
   bindAnnotation = (annotation, elements) => {
     elements.forEach(el => {
       el.annotation = annotation;
-      if (annotation.id)
-        el.dataset.id = annotation.id;
+      el.dataset.id = annotation.id;
     });
   }
 
