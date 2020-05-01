@@ -82,6 +82,8 @@ const Editor = props => {
     }
   };  
 
+  console.log(props);
+
   return (
     <div ref={element} className="r6o-editor">
       <div className="arrow" />
@@ -89,6 +91,7 @@ const Editor = props => {
         {React.Children.map(props.children, child =>
           React.cloneElement(child, { 
             annotation : currentAnnotation,
+            readOnly : props.readOnly,
             onAppendBody : onAppendBody,
             onUpdateBody : onUpdateBody,
             onRemoveBody : onRemoveBody,

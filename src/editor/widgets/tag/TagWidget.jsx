@@ -38,23 +38,27 @@ const TagWidget = props => {
           <li key={tag.value} onClick={toggle(tag.value)}>
             <span className="label">{tag.value}</span>
 
-            <CSSTransition in={showDelete === tag.value} timeout={200} classNames="delete">
-              <span className="delete-wrapper" onClick={onDelete(tag)}>
-                <span className="delete">
-                  <CloseIcon width={12} />
+            {!props.readOnly &&
+              <CSSTransition in={showDelete === tag.value} timeout={200} classNames="delete">
+                <span className="delete-wrapper" onClick={onDelete(tag)}>
+                  <span className="delete">
+                    <CloseIcon width={12} />
+                  </span>
                 </span>
-              </span>
-            </CSSTransition>
+              </CSSTransition>
+            }
           </li>
         )}
       </ul>
 
-      <input 
-        type="text" 
-        value={newTag} 
-        onChange={evt => setNewTag(evt.target.value)} 
-        onKeyDown={onKeyDown}
-        placeholder="Add tag..." />
+      { !props.readOnly &&
+        <input 
+          type="text" 
+          value={newTag} 
+          onChange={evt => setNewTag(evt.target.value)} 
+          onKeyDown={onKeyDown}
+          placeholder="Add tag..." />
+      }
     </div>
   )
 
