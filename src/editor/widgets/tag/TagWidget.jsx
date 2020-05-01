@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'preact/compat';
+import { useState } from 'preact/hooks';
 import { CSSTransition } from 'react-transition-group';
 import { CloseIcon } from '../../../Icons';
 

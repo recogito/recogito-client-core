@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'preact/compat';
+import { useState, useRef, useEffect } from 'preact/hooks';
 import setPosition from './setPosition';
 
 const autoApply = props => {

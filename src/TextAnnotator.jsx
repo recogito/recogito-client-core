@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'preact/compat';
 import Editor from './editor/Editor';
 import Highlighter from './highlighter/Highlighter';
 import SelectionHandler from './selection/SelectionHandler';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'preact/compat';
 import ContentEditable from 'react-contenteditable';
 import { TrashIcon, CheckIcon } from '../../Icons';
 

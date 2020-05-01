@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React from 'preact/compat';
+import { useRef } from 'preact/hooks';
 import useClickOutside from '../../useClickOutside';
 
 const DropdownMenu = props => {
