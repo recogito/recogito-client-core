@@ -24,7 +24,7 @@ const Editor = props => {
   // Re-render: set derived annotation state & position the editor
   useEffect(() => {
     // Shorthand: user wants a template applied and this is a selection
-    const shouldApplyTemplate = props.applyTemplate && props.annotation?.isSelection
+    const shouldApplyTemplate = props.applyTemplate && props.annotation?.isSelection;
 
     // Apply template if needed
     const annotation = shouldApplyTemplate ? 
@@ -34,8 +34,7 @@ const Editor = props => {
     if (!currentAnnotation?.isEqual(annotation))
       setCurrentAnnotation(annotation);
 
-    // In headless mode, create immediately
-    if (shouldApplyTemplate && props.headless)
+    if (shouldApplyTemplate && props.applyImmediately)
       props.onAnnotationCreated(annotation.toAnnotation());
 
     if (element.current)
@@ -80,9 +79,7 @@ const Editor = props => {
       else
         props.onAnnotationUpdated(undraft(currentAnnotation), props.annotation);
     }
-  };  
-
-  console.log(props);
+  };
 
   return (
     <div ref={element} className="r6o-editor">
