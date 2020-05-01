@@ -95,10 +95,8 @@ export default class Highlighter {
    * 
    * @returns the updated annotation for convenience
    */
-  overrideId = (annotationOrId, forcedId) => {
-    const id = annotationOrId.id ? annotationOrId.id : annotationOrId;
-    
-    const allSpans = document.querySelectorAll(`.r6o-annotation[data-id="${id}"]`);
+  overrideId = (originalId, forcedId) => {    
+    const allSpans = document.querySelectorAll(`.r6o-annotation[data-id="${originalId}"]`);
     const annotation = allSpans[0].annotation; 
 
     const updatedAnnotation = annotation.clone({ id : forcedId });

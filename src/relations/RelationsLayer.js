@@ -93,14 +93,21 @@ export default class RelationsLayer extends EventEmitter {
     }
   }
 
-  overrideId = (annotationOrId, forcedId) => {
-    const id = annotationOrId.id ? annotationOrId.id : annotationOrId;
-    const conn = this.connections.find(c => c.annotation.id == id);
-    
+  /** Overrides the ID for an existing relation **/
+  overrideRelationId = (originalId, forcedId) => {
+    const conn = this.connections.find(c => c.annotation.id == originalId);
     const updatedAnnotation = conn.annotation.clone({ id : forcedId });
     conn.annotation = updatedAnnotation;
-
     return conn;
+  }
+
+  /** Overrides the given source or target annotation **/
+  overrideTargetAnnotation = (originalAnnotation, forcedAnnotation) => {
+    const affectedFrom = this.connections.filter(c => c.fromNode.annotation == originalAnnotation);
+    affectedFrom.forEach(c => c.fromNode.annotation = forcedAnnotation);
+
+    const affectedTo = this.connections.filter(c => c.toNode.annotation == originalAnnotation);
+    affectedTo.forEach(c => c.toNode.annotation = forcedAnnotation);
   }
 
   getAllRelations = () => {
