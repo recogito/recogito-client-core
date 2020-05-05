@@ -11,9 +11,9 @@ const setPosition = (wrapperEl, editorEl, annotationBounds) => {
   editorEl.style.opacity = 1;
 
   // Default orientation
-  const { x, y, height, top, right } = annotationBounds; 
-  editorEl.style.top = `${y + height - containerBounds.top}px`;
-  editorEl.style.left = `${x + scrollX - containerBounds.left}px`;
+  const { left, top, right, height } = annotationBounds;
+  editorEl.style.top = `${top + height - containerBounds.top}px`;
+  editorEl.style.left = `${left + scrollX - containerBounds.left}px`;
 
   const defaultOrientation = editorEl.getBoundingClientRect();
 
@@ -27,7 +27,7 @@ const setPosition = (wrapperEl, editorEl, annotationBounds) => {
     // Flip vertically
     const annotationTop = top + scrollY; // Annotation top relative to parents
     const containerHeight = containerBounds.height + containerBounds.top + scrollY;
-    
+
     editorEl.classList.add('align-bottom');
     editorEl.style.top = 'auto';
     editorEl.style.bottom = `${containerHeight - annotationTop}px`;
