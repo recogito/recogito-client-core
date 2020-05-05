@@ -15,7 +15,7 @@ export default class Bounds {
   get rects() {
     return this.offsetBounds;
   }
-  
+
   get top() {
     return this.offsetBounds[0].top;
   }
@@ -47,15 +47,15 @@ export default class Bounds {
 
 /** Translates DOMRect client bounds to offset bounds within the given container **/
 const toOffsetBounds = (clientBounds, offsetContainer) => {
-  const { x, y } = offsetContainer.getBoundingClientRect();
-  const left = Math.round(clientBounds.left - x);
-  const top = Math.round(clientBounds.top - y);
+  const { top, left } = offsetContainer.getBoundingClientRect();
+  const l = Math.round(clientBounds.left - left);
+  const t = Math.round(clientBounds.top - top);
 
   return {
-    left  : left,
-    top   : top,
-    right : Math.round(left + clientBounds.width),
-    bottom: Math.round(top + clientBounds.height),
+    left  : l,
+    top   : t,
+    right : Math.round(l + clientBounds.width),
+    bottom: Math.round(t + clientBounds.height),
     width : Math.round(clientBounds.width),
     height: Math.round(clientBounds.height)
   };
@@ -65,7 +65,7 @@ const toOffsetBounds = (clientBounds, offsetContainer) => {
 const toUnionBoundingRects = elements => {
   const allRects = elements.reduce(function(arr, el) {
     const rectList = el.getClientRects();
-    const len = rectList.length; 
+    const len = rectList.length;
 
     for (let i = 0; i<len; i++) {
       arr.push(rectList[i]);

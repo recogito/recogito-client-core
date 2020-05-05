@@ -4,8 +4,8 @@ import HoverEmphasis from './HoverEmphasis';
 import { getNodeForEvent } from '../RelationUtils';
 import WebAnnotation from '../../WebAnnotation';
 
-/** 
- * Wraps an event handler for event delegation. This way, we 
+/**
+ * Wraps an event handler for event delegation. This way, we
  * can listen to events emitted by children matching the given
  * selector, rather than attaching (loads of!) handlers to each
  * child individually.
@@ -61,7 +61,7 @@ export default class DrawingTool extends EventEmitter {
     if (node) {
       if (this.currentConnection) {
         this.completeConnection(node);
-      } else { 
+      } else {
         this.startNewConnection(node);
       }
     }
@@ -72,8 +72,8 @@ export default class DrawingTool extends EventEmitter {
       if (this.currentHover)  {
         this.currentConnection.dragTo(this.currentHover.node);
       } else {
-        const { x, y } = this.contentEl.getBoundingClientRect();
-        this.currentConnection.dragTo([ evt.pageX - x, evt.pageY - y]);
+        const { top, left } = this.contentEl.getBoundingClientRect();
+        this.currentConnection.dragTo([ evt.pageX - left, evt.pageY - top ]);
       }
     }
   }
@@ -100,7 +100,7 @@ export default class DrawingTool extends EventEmitter {
 
   /** Emphasise hovered annotation **/
   onEnterAnnotation = delegatingHandler('.r6o-annotation', evt => {
-    if (this.currentHover) 
+    if (this.currentHover)
       this.hover();
 
     this.hover(getNodeForEvent(evt).elements);
@@ -116,7 +116,7 @@ export default class DrawingTool extends EventEmitter {
     if (elements) {
       this.currentHover = new HoverEmphasis(this.svgEl, elements);
     } else { // Clear hover
-      if (this.currentHover) 
+      if (this.currentHover)
         this.currentHover.destroy();
 
       this.currentHover = null;
@@ -135,12 +135,12 @@ export default class DrawingTool extends EventEmitter {
     this.currentConnection.unfloat();
 
     this.contentEl.classList.remove('r6o-drawing');
-    
+
     const from = this.currentConnection.startAnnotation;
     const to = this.currentConnection.endAnnotation;
     const [ midX, midY ] = this.currentConnection.midXY;
 
-    const annotation = WebAnnotation.create({ 
+    const annotation = WebAnnotation.create({
       target: [
         { id: from.id },
         { id: to.id }

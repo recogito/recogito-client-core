@@ -23,15 +23,15 @@ export default class Connection extends EventEmitter {
     svgEl.appendChild(this.startDot);
     svgEl.appendChild(this.endDot);
 
-    // Connections are initialized either from a relation annotation 
-    // (when loading), or as a 'floating' relation, attached to a start 
-    // node (when drawing a new one). 
+    // Connections are initialized either from a relation annotation
+    // (when loading), or as a 'floating' relation, attached to a start
+    // node (when drawing a new one).
     const props = nodeOrAnnotation.type === 'Annotation' ?
-     this.initFromAnnotation(contentEl, svgEl, nodeOrAnnotation) : 
+     this.initFromAnnotation(contentEl, svgEl, nodeOrAnnotation) :
      this.initFromStartNode(svgEl, nodeOrAnnotation);
 
     this.annotation = props.annotation;
-    
+
     // 'Descriptive' instance properties
     this.fromNode = props.fromNode;
     this.fromBounds = props.fromBounds;
@@ -66,10 +66,10 @@ export default class Connection extends EventEmitter {
 
     // RelationsLayer uses click as a selection event
     handle.on('click', () => this.emit('click', {
-      annotation, 
+      annotation,
       from: fromNode.annotation,
       to: toNode.annotation,
-      midX: this.currentMidXY[0], 
+      midX: this.currentMidXY[0],
       midY: this.currentMidXY[1]
     }));
 
@@ -82,7 +82,7 @@ export default class Connection extends EventEmitter {
     return { fromNode, fromBounds, floating: true };
   }
 
-  /** 
+  /**
    * Fixes the end of the connection to the current end node,
    * turning a floating connection into a non-floating one.
    */
@@ -107,7 +107,7 @@ export default class Connection extends EventEmitter {
     this.svgEl.removeChild(this.startDot);
     this.svgEl.removeChild(this.endDot);
 
-    if (this.handle) 
+    if (this.handle)
       this.handle.destroy();
   }
 
@@ -182,9 +182,9 @@ export default class Connection extends EventEmitter {
       this.endDot.setAttribute('r', 2);
       this.endDot.setAttribute('class', 'end');
 
-      if (startsAtTop) 
+      if (startsAtTop)
         this.path.setAttribute('d', compileTopPath());
-      else 
+      else
         this.path.setAttribute('d', compileBottomPath());
 
       this.path.setAttribute('class', 'connection');
@@ -210,13 +210,13 @@ export default class Connection extends EventEmitter {
     this.redraw();
   }
 
-  /** 
+  /**
    * Returns true if the given relation matches this connection,
    * meaning that this connection has the same start and end point
    * as recorded in the relation.
    */
   matchesRelation = relation =>
-    relation.from.isEqual(this.fromNode.annotation) && 
+    relation.from.isEqual(this.fromNode.annotation) &&
     relation.to.isEqual(this.toNode.annotation);
 
   /** Getter/setter shorthands **/
@@ -235,7 +235,7 @@ export default class Connection extends EventEmitter {
 
   get endXY() {
     return (this.currentEnd instanceof Array) ?
-      this.currentEnd : 
+      this.currentEnd :
         (this.fromBounds.top > this.toBounds.top) ?
           this.toBounds.bottomHandleXY : this.toBounds.topHandleXY;
   }
@@ -245,4 +245,3 @@ export default class Connection extends EventEmitter {
   }
 
 }
-
