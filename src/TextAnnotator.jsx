@@ -4,7 +4,7 @@ import Highlighter from './highlighter/Highlighter';
 import SelectionHandler from './selection/SelectionHandler';
 import RelationsLayer from './relations/RelationsLayer';
 import RelationEditor from './relations/editor/RelationEditor';
-import { addPolyfills } from './utils/MSEdgePolyfills';
+import { addPolyfills } from './utils';
 
 addPolyfills(); // For Microsoft Edge
 
