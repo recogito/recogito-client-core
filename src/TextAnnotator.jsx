@@ -4,8 +4,9 @@ import Highlighter from './highlighter/Highlighter';
 import SelectionHandler from './selection/SelectionHandler';
 import RelationsLayer from './relations/RelationsLayer';
 import RelationEditor from './relations/editor/RelationEditor';
+import { addPolyfills } from './utils/MSEdgePolyfills';
 
-import './utils/MSEdgePolyfills';
+addPolyfills(); // For Microsoft Edge
 
 /**
  * Pulls the strings between the annotation highlight layer
