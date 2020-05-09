@@ -37,14 +37,16 @@ export const rangeToSelection = (range, containerEl) => {
   const quote = range.toString();
   const start = rangeBefore.toString().length;
 
-  return new Selection([{
-    type: 'TextQuoteSelector',
-    exact: quote
-  }, {
-    type: 'TextPositionSelector',
-    start: start,
-    end: start + quote.length
-  }]);
+  return new Selection({ 
+    selector: [{
+      type: 'TextQuoteSelector',
+      exact: quote
+    }, {
+      type: 'TextPositionSelector',
+      start: start,
+      end: start + quote.length
+    }]
+  });
 
 };
 

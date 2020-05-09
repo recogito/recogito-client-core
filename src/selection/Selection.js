@@ -8,25 +8,19 @@ import uuid from 'uuid/v1';
  */
 export default class Selection {
 
-  constructor(selectors) {
+  constructor(target) {
     this._stub = {
       type: 'Selection',
       body: [],
-      target: {
-        selector: selectors
-      }
+      target
     }
   }
 
   /** Creates a copy of this selection **/
   clone = opt_props => {
-    // Clone selector(s)
-    const { selector } = this._stub.target;
-
-    const clonedSelector = Array.isArray(selector) ?
-      selector.map(s => ({ ...s })) : { ...selector };
-    
-    const cloned = new Selection(clonedSelector);
+    // Deep-clone target
+    const clonedTarget = JSON.parse(JSON.stringify(this._stub.target));    
+    const cloned = new Selection(clonedTarget);
 
     if (opt_props)
       cloned._stub = { ...cloned._stub, ...opt_props };
