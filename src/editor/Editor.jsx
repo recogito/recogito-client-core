@@ -42,6 +42,16 @@ const Editor = props => {
       setPosition(props.wrapperEl, element.current, props.selectedElement);
   }, [ props.selectedElement.getBoundingClientRect() ]);
 
+  // Attach resize listener on mount
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => {
+      setPosition(props.wrapperEl, element.current, props.selectedElement);
+    });
+
+    resizeObserver.observe(props.wrapperEl);
+    return () => resizeObserver.disconnect();
+  }, []);
+
   const onAppendBody = body => setCurrentAnnotation(
     currentAnnotation.clone({ 
       body: [ ...currentAnnotation.bodies, body ] 
