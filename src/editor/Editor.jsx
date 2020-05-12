@@ -40,7 +40,7 @@ const Editor = props => {
 
     if (element.current)
       setPosition(props.wrapperEl, element.current, props.selectedElement);
-  }, [ props.selectedElement ]);
+  }, [ props.selectedElement.getBoundingClientRect() ]);
 
   const onAppendBody = body => setCurrentAnnotation(
     currentAnnotation.clone({ 
