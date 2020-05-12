@@ -41,7 +41,7 @@ export default class SelectionHandler extends EventEmitter {
         if (annotationSpan) {
           this.emit('select', {
             selection: this.highlighter.getAnnotationsAt(annotationSpan)[0],
-            clientRect: annotationSpan.getBoundingClientRect()
+            element: annotationSpan
           });
         } else {
           // De-select
@@ -51,8 +51,6 @@ export default class SelectionHandler extends EventEmitter {
         const selectedRange = trimRange(selection.getRangeAt(0));
         const stub = rangeToSelection(selectedRange, this.el);
 
-        const clientRect = selectedRange.getBoundingClientRect();
-
         const spans = this.highlighter.wrapRange(selectedRange);
         spans.forEach(span => span.className = 'r6o-selection');
 
@@ -60,7 +58,7 @@ export default class SelectionHandler extends EventEmitter {
 
         this.emit('select', {
           selection: stub,
-          clientRect
+          element: selectedRange
         });
       }
     }

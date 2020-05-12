@@ -39,8 +39,8 @@ const Editor = props => {
       props.onAnnotationCreated(annotation.toAnnotation());
 
     if (element.current)
-      setPosition(props.wrapperEl, element.current, props.bounds);
-  }, [ props.bounds ]);
+      setPosition(props.wrapperEl, element.current, props.selectedElement);
+  }, [ props.selectedElement ]);
 
   const onAppendBody = body => setCurrentAnnotation(
     currentAnnotation.clone({ 

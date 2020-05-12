@@ -1,5 +1,5 @@
 /** Sets the editor position and determines a proper orientation **/
-const setPosition = (wrapperEl, editorEl, annotationBounds) => {
+const setPosition = (wrapperEl, editorEl, selectedEl) => {
   // Container element offset
   const containerBounds = wrapperEl.getBoundingClientRect();
   const { scrollX, scrollY } = window;
@@ -11,7 +11,7 @@ const setPosition = (wrapperEl, editorEl, annotationBounds) => {
   editorEl.style.opacity = 1;
 
   // Default orientation
-  const { left, top, right, height } = annotationBounds;
+  const { left, top, right, height } = selectedEl.getBoundingClientRect();
   editorEl.style.top = `${top + height - containerBounds.top}px`;
   editorEl.style.left = `${left + scrollX - containerBounds.left}px`;
 

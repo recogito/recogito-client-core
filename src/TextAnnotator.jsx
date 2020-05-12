@@ -15,8 +15,8 @@ addPolyfills(); // For Microsoft Edge
 export default class TextAnnotator extends Component {
 
   state = {
-    selectionBounds: null,
     selectedAnnotation: null,
+    selectedDOMElement: null,
     selectedRelation: null,
 
     applyTemplate: null,
@@ -26,8 +26,8 @@ export default class TextAnnotator extends Component {
   /** Shorthand **/
   clearState = () => {
     this.setState({
-      selectionBounds: null,
-      selectedAnnotation: null
+      selectedAnnotation: null,
+      selectedDOMElement: null
     });
   }
 
@@ -62,14 +62,14 @@ export default class TextAnnotator extends Component {
 
   /** Selection on the text **/
   handleSelect = evt => {
-    const { selection, clientRect } = evt;
+    const { selection, element } = evt;
     if (selection) {
       this.setState({
         selectedAnnotation: null,
-        selectionBounds: null
+        selectedDOMElement: null
       }, () => this.setState({
         selectedAnnotation: selection,
-        selectionBounds: clientRect
+        selectedDOMElement: element
       }))
     } else {
       this.clearState();
@@ -264,8 +264,8 @@ export default class TextAnnotator extends Component {
         { this.state.selectedAnnotation &&
           <Editor
             wrapperEl={this.props.wrapperEl}
-            bounds={this.state.selectionBounds}
             annotation={this.state.selectedAnnotation}
+            selectedElement={this.state.selectedDOMElement}
             readOnly={this.props.readOnly}
             headless={this.state.headless}
             applyTemplate={this.state.applyTemplate}
