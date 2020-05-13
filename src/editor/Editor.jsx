@@ -2,9 +2,10 @@ import React from 'preact/compat';
 import { useState, useRef, useEffect } from 'preact/hooks';
 import setPosition from './setPosition';
 
-const autoApply = props => {
-  const applied = props.annotation.clone({ body: [{ ...props.autoApply }]});
-  return applied.toAnnotation();
+/** We need to compare bounds by value, not by object ref **/
+const bounds = elem => {
+  const { top, left, width, height } = elem.getBoundingClientRect();
+  return `${top}, ${left}, ${width}, ${height}`;
 }
 
 /**
@@ -40,7 +41,7 @@ const Editor = props => {
 
     if (element.current)
       setPosition(props.wrapperEl, element.current, props.selectedElement);
-  }, [ props.selectedElement.getBoundingClientRect() ]);
+  }, [ props.selectedElement, bounds(props.selectedElement) ]);
 
   // Attach resize listener on mount
   useEffect(() => {
