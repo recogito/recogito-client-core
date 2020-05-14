@@ -102,13 +102,15 @@ export default class RelationEditor extends Component {
   render() {
     return(
       <div className="r6o-relation-editor" ref={this.element}>
-        <ContentEditable
-          className="input"
-          html={this.state.content}
-          data-placeholder="Tag..."
-          onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
-        />
+        <div className="input-wrapper">
+          <ContentEditable
+            className="input"
+            html={this.state.content}
+            data-placeholder="Tag..."
+            onChange={this.onChange}
+            onKeyDown={this.onKeyDown}
+          />
+        </div>
 
         <div className="buttons">
           <span 

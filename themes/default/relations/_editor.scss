@@ -18,17 +18,21 @@
     box-sizing:border-box;
   }
 
-  .input {
+  .input-wrapper {
     height:34px;
-    display:block;
-    padding:1px 6px;
+    padding:10px 6px;
     margin-right:68px;
-    font-size:15px;
+    font-size:14px;
     min-width:80px;
-    outline:none;
-    background-color:#fff;
+    background-color:$blueish-white;
     cursor:text;
     @include rounded-corners-left(3px);
+  }
+
+  .input {
+    outline:none;
+    line-height:14px;
+    white-space:pre;
   }
 
   .input:empty:before {
