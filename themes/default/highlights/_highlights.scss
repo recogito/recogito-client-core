@@ -8,3 +8,11 @@
   background-color:rgba(207, 207, 255, 0.63);
   cursor:pointer;
 }
+
+.hide-selection::selection, .hide-selection ::selection {
+  background: transparent;
+}
+
+.hide-selection::-moz-selection .hide-selection ::-moz-selection{
+  background: transparent;
+}

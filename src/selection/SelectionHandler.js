@@ -59,7 +59,7 @@ export default class SelectionHandler extends EventEmitter {
           const spans = this.highlighter.wrapRange(selectedRange);
           spans.forEach(span => span.className = 'r6o-selection');
 
-          this._clearNativeSelection();
+          this._hideNativeSelection();
 
           this.emit('select', {
             selection: stub,
@@ -70,7 +70,14 @@ export default class SelectionHandler extends EventEmitter {
     }
   }
 
-  _clearNativeSelection = () => {
+  _hideNativeSelection = () => {
+    this.el.classList.add('hide-selection');
+  }
+
+  clearSelection = () => {
+    this._currentSelection = null;
+
+    // Remove native selection, if any
     if (window.getSelection) {
       if (window.getSelection().empty) {  // Chrome
         window.getSelection().empty();
@@ -80,10 +87,8 @@ export default class SelectionHandler extends EventEmitter {
     } else if (document.selection) {  // IE?
       document.selection.empty();
     }
-  }
 
-  clearSelection = () => {
-    this._currentSelection = null;
+    this.el.classList.remove('hide-selection');
 
     const spans = Array.prototype.slice.call(this.el.querySelectorAll('.r6o-selection'));
     if (spans) {
