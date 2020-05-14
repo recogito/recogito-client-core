@@ -49,17 +49,23 @@ export default class SelectionHandler extends EventEmitter {
         }
       } else {
         const selectedRange = trimRange(selection.getRangeAt(0));
-        const stub = rangeToSelection(selectedRange, this.el);
 
-        const spans = this.highlighter.wrapRange(selectedRange);
-        spans.forEach(span => span.className = 'r6o-selection');
+        // Make sure the selection is entirely inside this.el
+        const { commonAncestorContainer } = selectedRange;
 
-        this._clearNativeSelection();
+        if (this.el.contains(commonAncestorContainer)) {
+          const stub = rangeToSelection(selectedRange, this.el);
 
-        this.emit('select', {
-          selection: stub,
-          element: selectedRange
-        });
+          const spans = this.highlighter.wrapRange(selectedRange);
+          spans.forEach(span => span.className = 'r6o-selection');
+
+          this._clearNativeSelection();
+
+          this.emit('select', {
+            selection: stub,
+            element: selectedRange
+          });
+        }
       }
     }
   }
