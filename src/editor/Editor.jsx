@@ -34,7 +34,16 @@ const Editor = props => {
       props.annotation.clone({ body: [ ...props.applyTemplate ]}) : 
       props.annotation;
 
-    if (!currentAnnotation?.isEqual(annotation))
+    // The 'currentAnnotation' differs from props.annotation because
+    // the user has been editing. Moving the selection bounds will 
+    // trigger this effect, but we don't want to update the currentAnnotation
+    // on move. Therefore, don't update if a) props.annotation equals
+    // the currentAnnotation, or props.annotation and currentAnnotations are
+    // a selection, just created by the user. 
+    const preventUpdate = currentAnnotation?.isEqual(annotation) ||
+      (currentAnnotation?.isSelection && annotation?.isSelection);
+    
+    if (!preventUpdate)
       setCurrentAnnotation(annotation);
 
     if (shouldApplyTemplate && props.applyImmediately)
