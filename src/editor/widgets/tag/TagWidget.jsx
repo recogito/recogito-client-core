@@ -2,6 +2,7 @@ import React from 'preact/compat';
 import { useState } from 'preact/hooks';
 import { CSSTransition } from 'react-transition-group';
 import { CloseIcon } from '../../../Icons';
+import i18n from '../../../i18n';
 
 /** The basic freetext tag control from original Recogito **/
 const TagWidget = props => {
@@ -58,7 +59,7 @@ const TagWidget = props => {
           value={newTag} 
           onChange={evt => setNewTag(evt.target.value)} 
           onKeyDown={onKeyDown}
-          placeholder="Add tag..." />
+          placeholder={i18n.t('Add tag...')} />
       }
     </div>
   )

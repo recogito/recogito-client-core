@@ -1,6 +1,7 @@
 import React from 'preact/compat';
 import { useState, useRef, useEffect } from 'preact/hooks';
 import setPosition from './setPosition';
+import i18n from '../i18n';
 
 /** We need to compare bounds by value, not by object ref **/
 const bounds = elem => {
@@ -112,17 +113,17 @@ const Editor = props => {
           <div className="footer">
             <button
               className="r6o-btn" 
-              onClick={props.onCancel}>Close</button>
+              onClick={props.onCancel}>{i18n.t('Close')}</button>
           </div>
         ) : (
           <div className="footer">
             <button 
               className="r6o-btn outline"
-              onClick={props.onCancel}>Cancel</button>
+              onClick={props.onCancel}>{i18n.t('Cancel')}</button>
 
             <button 
               className="r6o-btn "
-              onClick={onOk}>Ok</button>
+              onClick={onOk}>{i18n.t('Ok')}</button>
           </div>
         )}
       </div>

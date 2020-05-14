@@ -1,5 +1,6 @@
 import React, { Component } from 'preact/compat';
 import ContentEditable from 'react-contenteditable';
+import i18n from '../../../i18n';
 
 /** 
  * A basic text entry field, for reuse in different widgets.
@@ -28,7 +29,7 @@ export default class TextEntryField extends Component {
         innerRef={this.onRender}
         className="r6o-editable-text" 
         html={this.props.content}
-        data-placeholder={this.props.placeholder || "Add a comment..."}
+        data-placeholder={this.props.placeholder || i18n.t('Add a comment...')}
         disabled={!this.props.editable}
         onChange={this.props.onChange}
         onKeyDown={this.onKeyDown} />

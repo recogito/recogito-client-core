@@ -1,6 +1,7 @@
 import React from 'preact/compat';
 import Comment from './Comment';
 import TextEntryField from './TextEntryField';
+import i18n from '../../../i18n';
 
 /**
  * Comments are TextualBodies where the purpose field is either 
@@ -65,7 +66,7 @@ const CommentWidget = props => {
           <TextEntryField
             content={draftReply.value}
             editable={true}
-            placeholder={comments.length > 0 ? 'Add a reply...' : 'Add a comment...'}
+            placeholder={comments.length > 0 ? i18n.t('Add a reply...') : i18n.t('Add a comment...')}
             onChange={onEditReply}
             onSaveAndClose={() => props.onSaveAndClose()}
           /> 
