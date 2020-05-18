@@ -31,7 +31,7 @@ const CommentWidget = props => {
     props.annotation.bodies.filter(isComment) : [];
 
   // Last draft comment without a creator field goes into the reply field
-  const draftReply = getDraftReply(all.reverse().find(b => b.draft && !b.creator), all.length > 1); 
+  const draftReply = getDraftReply(all.slice().reverse().find(b => b.draft && !b.creator), all.length > 1); 
 
   // All except draft reply
   const comments = all.filter(b => b != draftReply);
