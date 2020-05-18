@@ -1,3 +1,8 @@
+/**
+ * Difference between server time and client time, in milliseconds
+ */
+let serverTimeDifference = 0;
+
 export default {
   
   /**
@@ -13,5 +18,14 @@ export default {
    * email ........ OPTIONAL
    * avatarURL .... OPTIONAL + not supported at the moment
    */
+
+   // Sets a server time to 
+   setServerTime: serverNow => {
+    const browserNow = Date.now()
+    serverTimeDifference = serverNow - browserNow;
+   },
+   
+   getCurrentTimeAdjusted: () =>
+     (new Date(Date.now() + serverTimeDifference)).toISOString()
 
 }

@@ -1,9 +1,18 @@
 .r6o-widget.comment {
   font-size:14px;
-  min-height:3em;
+  min-height:1em;
   background-color:#fff;
   position:relative;
   padding:8px 10px;
+
+  .lastmodified {
+    border:1px solid $lightgrey-border;
+    display:inline-block;
+    border-radius:2px;
+    padding:4px 5px;
+    line-height:100%;
+    font-size:12px;
+  }
 
   .arrow-down {
     position:absolute;

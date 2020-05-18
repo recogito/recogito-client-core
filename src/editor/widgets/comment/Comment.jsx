@@ -26,7 +26,10 @@ const Comment = props => {
 
   return props.readOnly ? (
     <div className="r6o-widget comment">
-      {props.body.value}
+      <div className="value">{props.body.value}</div>
+      <div className="lastmodified">
+        <div className="lastmodified-by">{props.body.creator?.name}</div>
+      </div>
     </div>
   ) : (
     <div className={ isEditable ? "r6o-widget comment editable" : "r6o-widget comment"}>
@@ -36,6 +39,12 @@ const Comment = props => {
         onChange={onUpdateComment} 
         onSaveAndClose={props.onSaveAndClose} 
       />
+      
+      { props.body.creator && 
+        <div className="lastmodified">
+          <div className="lastmodified-by">{props.body.creator.name}</div>
+        </div>
+      }
 
       <div 
         className={isMenuVisible ? "icon arrow-down menu-open" : "icon arrow-down"} 

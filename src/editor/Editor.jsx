@@ -1,5 +1,6 @@
 import React from 'preact/compat';
 import { useState, useRef, useEffect } from 'preact/hooks';
+import Environment from '../Environment';
 import setPosition from './setPosition';
 import i18n from '../i18n';
 
@@ -63,15 +64,36 @@ const Editor = props => {
     return () => resizeObserver.disconnect();
   }, []);
 
+  // Creator and created/modified timestamp metadata
+  const creationMeta = body => {
+    const meta = {};
+
+    // No point in adding meta while we're in draft state
+    if (!body.draft) {
+      const { user } = Environment;
+      if (user) meta.creator = {};
+      if (user.id) meta.creator.id = user.id;
+      if (user.displayName) meta.creator.name = user.displayName;
+
+      if (body.created)
+        body.modified = Environment.getCurrentTimeAdjusted();
+      else
+        body.created = Environment.getCurrentTimeAdjusted();
+    }
+
+    return meta;
+  }
+
   const onAppendBody = body => setCurrentAnnotation(
     currentAnnotation.clone({ 
-      body: [ ...currentAnnotation.bodies, body ] 
+      body: [ ...currentAnnotation.bodies, { ...body, ...creationMeta(body) } ] 
     })
   );
 
   const onUpdateBody = (previous, updated) => setCurrentAnnotation(
     currentAnnotation.clone({
-      body: currentAnnotation.bodies.map(body => body === previous ? updated : body)
+      body: currentAnnotation.bodies.map(body => 
+        body === previous ? { ...updated, ...creationMeta(updated) } : body)
     })
   );
 
@@ -84,7 +106,8 @@ const Editor = props => {
   const onOk = _ => {
     // Removes the 'draft' flag from all bodies
     const undraft = annotation => annotation.clone({
-      body : annotation.bodies.map(({ draft, ...rest }) => rest)
+      body : annotation.bodies.map(({ draft, ...rest }) =>
+        draft ? { ...rest, ...creationMeta(rest) } : rest )
     });
 
     // Current annotation is either a selection (if it was created from 
