@@ -68,10 +68,13 @@ const Editor = props => {
   const creationMeta = body => {
     const meta = {};
 
-    // No point in adding meta while we're in draft state
-    if (!body.draft) {
-      const { user } = Environment;
-      if (user) meta.creator = {};
+    const { user } = Environment;
+
+    // Metadata is only added when a user is set, otherwise
+    // the Editor operates in 'anonymous mode'. Also,
+    // no point in adding meta while we're in draft state
+    if (!body.draft && user) {
+      meta.creator = {};
       if (user.id) meta.creator.id = user.id;
       if (user.displayName) meta.creator.name = user.displayName;
 
