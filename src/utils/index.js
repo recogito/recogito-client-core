@@ -1,3 +1,5 @@
+import I18n from '../i18n';
+
 /**
  * 'Deflates' the HTML contained in the given parent node. 
  * Deflation will completely drop empty text nodes, and replace
@@ -48,6 +50,9 @@ const deflateNodeList = parents => {
 
 }
 
+/**
+ * Adds MS Edge polyfills for Element.matches and .closest methods.
+ */
 export const addPolyfills = () => {
 
   if (!Element.prototype.matches) {
@@ -67,4 +72,18 @@ export const addPolyfills = () => {
     };
   }
 
+}
+
+/**
+ * Helper to init the i18n class with a pre-defined or auto-detected locale.
+ */
+export const setLocale = locale => {
+  try {
+    const l = locale === 'auto' ?
+      window.navigator.userLanguage || window.navigator.language : locale;
+
+    I18n.init(l);
+  } catch (error) {
+    console.warn(`Unsupported locale '${locale}'. Falling back to default en.`);
+  }
 }
