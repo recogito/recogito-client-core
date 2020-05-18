@@ -1,8 +1,10 @@
 {
-  "Ok": "تم",
-  "Cancel": "إلغاء",
-  "Close": "إغلاق",
   "Add a comment...": "إضافة تعليق",
   "Add a reply...": "إضافة رد",
-  "Add tag...": "إضافة علامة" 
+  "Add tag...": "إضافة علامة",
+  "Cancel": "إلغاء",
+  "Close": "إغلاق",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "Ok": "تم"
 }

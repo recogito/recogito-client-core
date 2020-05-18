@@ -1,8 +1,10 @@
 {
-  "Ok": "Ok",
-  "Cancel": "Annulla",
-  "Close": "Chiudi",
   "Add a comment...": "Commenta...",
   "Add a reply...": "Rispondi...",
-  "Add tag...": "Aggiungi tag..." 
+  "Add tag...": "Aggiungi tag...",
+  "Cancel": "Annulla",
+  "Close": "Chiudi",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "Ok": "Ok"
 }

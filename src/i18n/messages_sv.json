@@ -1,8 +1,10 @@
 {
-  "Ok": "Ok",
-  "Cancel": "Cancel",
-  "Close": "Stäng",
   "Add a comment...": "Skriv en kommentar...",
   "Add a reply...": "Skriv ett svar...",
-  "Add tag...": "Tagg..." 
+  "Add tag...": "Tagg...",
+  "Cancel": "Cancel",
+  "Close": "Stäng",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "Ok": "Ok"
 }

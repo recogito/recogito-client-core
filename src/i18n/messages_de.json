@@ -1,8 +1,10 @@
 {
-  "Ok": "Ok",
-  "Cancel": "Abbrechen",
-  "Close": "Schliessen",
   "Add a comment...": "Kommentar schreiben...",
   "Add a reply...": "Antwort schreiben...",
-  "Add tag...": "Tag..." 
+  "Add tag...": "Tag...",
+  "Cancel": "Abbrechen",
+  "Close": "Schliessen",
+  "Edit": "Bearbeiten",
+  "Delete": "Löschen",
+  "Ok": "Ok"
 }
