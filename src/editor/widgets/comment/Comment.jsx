@@ -1,8 +1,10 @@
 import React from 'preact/compat';
 import { useState } from 'preact/hooks';
+import TimeAgo from 'timeago-react';
 import DropdownMenu from './DropdownMenu';
 import TextEntryField from './TextEntryField';
 import { ChevronDownIcon } from '../../../Icons';
+import Environment from '../../../Environment';
 
 /** A single comment inside the CommentWidget **/
 const Comment = props => {
@@ -43,7 +45,12 @@ const Comment = props => {
       
       { props.body.creator && 
         <div className="lastmodified">
-          <div className="lastmodified-by">{props.body.creator.name}</div>
+          <span className="lastmodified-by">{props.body.creator.name}</span>
+          { props.body.created && 
+            <span className="lastmodified-at">
+              <TimeAgo datetime={Environment.toClientTime(props.body.created)} />
+            </span> 
+          }
         </div>
       }
 

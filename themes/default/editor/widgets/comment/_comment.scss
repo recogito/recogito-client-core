@@ -12,6 +12,12 @@
     padding:4px 5px;
     line-height:100%;
     font-size:12px;
+
+    .lastmodified-at {
+      color:$lightgrey-type;
+      padding-left:3px;
+    }
+    
   }
 
   .arrow-down {
