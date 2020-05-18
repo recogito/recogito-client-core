@@ -11,6 +11,7 @@ const Comment = props => {
   const [ isMenuVisible, setIsMenuVisible ] = useState(false);
 
   const onMakeEditable = _ => {
+    props.body.draft = true;
     setIsEditable(true);
     setIsMenuVisible(false);
   }
