@@ -79,13 +79,13 @@ export const addPolyfills = () => {
  */
 export const setLocale = locale => {
   if (locale) {
-    try {
-      const l = locale === 'auto' ?
-        window.navigator.userLanguage || window.navigator.language : locale;
+    const l = locale === 'auto' ?
+      window.navigator.userLanguage || window.navigator.language : locale;
 
-      I18n.init(l);
+    try {
+      I18n.init(l.split('-')[0].toLowerCase());
     } catch (error) {
-      console.warn(`Unsupported locale '${locale}'. Falling back to default en.`);
+      console.warn(`Unsupported locale '${l}'. Falling back to default en.`);
     }
   }
 }
