@@ -56,12 +56,15 @@ const Editor = props => {
 
   // Attach resize listener on mount
   useEffect(() => {
-    const resizeObserver = new ResizeObserver(() => {
-      setPosition(props.wrapperEl, element.current, props.selectedElement);
-    });
+    // Older iOS Safaris don't support ResizeObserver
+    if (ResizeObserver) {
+      const resizeObserver = new ResizeObserver(() => {
+        setPosition(props.wrapperEl, element.current, props.selectedElement);
+      });
 
-    resizeObserver.observe(props.wrapperEl);
-    return () => resizeObserver.disconnect();
+      resizeObserver.observe(props.wrapperEl);
+      return () => resizeObserver.disconnect();
+    }
   }, []);
 
   // Creator and created/modified timestamp metadata
