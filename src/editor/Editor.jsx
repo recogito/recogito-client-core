@@ -57,7 +57,7 @@ const Editor = props => {
   // Attach resize listener on mount
   useEffect(() => {
     // Older iOS Safaris don't support ResizeObserver
-    if (ResizeObserver) {
+    if (window.ResizeObserver) {
       const resizeObserver = new ResizeObserver(() => {
         setPosition(props.wrapperEl, element.current, props.selectedElement);
       });
