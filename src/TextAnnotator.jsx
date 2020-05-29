@@ -70,7 +70,10 @@ export default class TextAnnotator extends Component {
       }, () => this.setState({
         selectedAnnotation: selection,
         selectedDOMElement: element
-      }))
+      }));
+
+      if (!selection.isSelection)
+        this.props.onAnnotationSelected(selection.clone());
     } else {
       this.clearState();
     }
