@@ -39,7 +39,7 @@ export default class TextAnnotator extends Component {
   componentDidMount() {
     this.highlighter = new Highlighter(this.props.contentEl, this.props.formatter);
 
-    this.selectionHandler = new SelectionHandler(this.props.contentEl, this.highlighter);
+    this.selectionHandler = new SelectionHandler(this.props.contentEl, this.highlighter, this.props.readOnly);
     this.selectionHandler.on('select', this.handleSelect);
 
     this.relationsLayer = new RelationsLayer(this.props.contentEl);

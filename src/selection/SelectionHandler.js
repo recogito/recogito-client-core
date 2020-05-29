@@ -5,11 +5,12 @@ const IS_TOUCH = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 export default class SelectionHandler extends EventEmitter {
 
-  constructor(element, highlighter) {
+  constructor(element, highlighter, readOnly) {
     super();
 
     this.el = element;
     this.highlighter = highlighter;
+    this.readOnly = readOnly;
 
     this.isEnabled = true;
 
@@ -47,7 +48,7 @@ export default class SelectionHandler extends EventEmitter {
           // De-select
           this.emit('select', {});
         }
-      } else {
+      } else if (!this.readOnly) {
         const selectedRange = trimRange(selection.getRangeAt(0));
 
         // Make sure the selection is entirely inside this.el
