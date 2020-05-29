@@ -35,23 +35,25 @@ const TagWidget = props => {
 
   return (
     <div className="tags">
-      <ul>
-        { tagBodies.map(tag => 
-          <li key={tag.value} onClick={toggle(tag.value)}>
-            <span className="label">{tag.value}</span>
+      { tagBodies.length > 0 &&
+        <ul>
+          { tagBodies.map(tag => 
+            <li key={tag.value} onClick={toggle(tag.value)}>
+              <span className="label">{tag.value}</span>
 
-            {!props.readOnly &&
-              <CSSTransition in={showDelete === tag.value} timeout={200} classNames="delete">
-                <span className="delete-wrapper" onClick={onDelete(tag)}>
-                  <span className="delete">
-                    <CloseIcon width={12} />
+              {!props.readOnly &&
+                <CSSTransition in={showDelete === tag.value} timeout={200} classNames="delete">
+                  <span className="delete-wrapper" onClick={onDelete(tag)}>
+                    <span className="delete">
+                      <CloseIcon width={12} />
+                    </span>
                   </span>
-                </span>
-              </CSSTransition>
-            }
-          </li>
-        )}
-      </ul>
+                </CSSTransition>
+              }
+            </li>
+          )}
+        </ul>
+      }
 
       { !props.readOnly &&
         <input 
