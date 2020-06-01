@@ -2,8 +2,9 @@ import uuid from 'uuid/v1';
 
 export default class WebAnnotation {
 
-  constructor(annotation) {
+  constructor(annotation, opts) {
     this.underlying = annotation;
+    this.readOnly = opts?.readOnly;
   }
 
   /** For convenience - creates an empty web annotation **/
