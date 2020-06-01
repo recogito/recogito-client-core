@@ -4,7 +4,7 @@ export default class WebAnnotation {
 
   constructor(annotation, opts) {
     this.underlying = annotation;
-    this.readOnly = opts?.readOnly;
+    this.opts = opts;
   }
 
   /** For convenience - creates an empty web annotation **/
@@ -21,7 +21,7 @@ export default class WebAnnotation {
 
   /** Creates a copy of this annotation **/
   clone = opt_props => {
-    return new WebAnnotation({ ...this.underlying, ...opt_props});
+    return new WebAnnotation({ ...this.underlying, ...opt_props}, this.opts);
   }
 
   /** An equality check based on the underlying object or (if given) ID **/
@@ -34,6 +34,10 @@ export default class WebAnnotation {
       return false;
     }
     return this.underlying.id === other.underlying.id
+  }
+
+  get readOnly() {
+    return this.opts?.readOnly;
   }
 
   /*************************************/ 
