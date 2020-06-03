@@ -50,13 +50,13 @@ const Editor = props => {
     if (shouldApplyTemplate && props.applyImmediately)
       props.onAnnotationCreated(annotation.toAnnotation());
 
-    if (element.current)
+    if (element.current) {
       setPosition(props.wrapperEl, element.current, props.selectedElement);
+      return initResizeObserver();
+    }
   }, [ props.selectedElement, bounds(props.selectedElement) ]);
 
-  // Attach resize listener on mount
-  useEffect(() => {
-    // Older iOS Safaris don't support ResizeObserver
+  const initResizeObserver = () => {
     if (window.ResizeObserver) {
       const resizeObserver = new ResizeObserver(() => {
         setPosition(props.wrapperEl, element.current, props.selectedElement);
@@ -64,8 +64,8 @@ const Editor = props => {
 
       resizeObserver.observe(props.wrapperEl);
       return () => resizeObserver.disconnect();
-    }
-  }, []);
+    }    
+  }
 
   // Creator and created/modified timestamp metadata
   const creationMeta = body => {
