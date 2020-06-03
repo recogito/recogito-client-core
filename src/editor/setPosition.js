@@ -23,11 +23,8 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
     editorEl.style.left = `${right - defaultOrientation.width + scrollX - containerBounds.left}px`;
   }
 
-  console.log(defaultOrientation.bottom, window.innerHeight)
-
   if (defaultOrientation.bottom + scrollY > window.innerHeight) {
     // Flip vertically
-    console.log('flipping');
     const annotationTop = top + scrollY; // Annotation bottom relative to parents
     const containerHeight = containerBounds.bottom + scrollY;
 
