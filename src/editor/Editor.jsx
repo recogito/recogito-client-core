@@ -51,7 +51,7 @@ const Editor = props => {
       props.onAnnotationCreated(annotation.toAnnotation());
 
     if (element.current) {
-      setPosition(props.wrapperEl, element.current, props.selectedElement);
+      // Note that ResizeObserver fires once when observation starts
       return initResizeObserver();
     }
   }, [ props.selectedElement, bounds(props.selectedElement) ]);
