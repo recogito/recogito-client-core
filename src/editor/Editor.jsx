@@ -64,7 +64,10 @@ const Editor = props => {
 
       resizeObserver.observe(props.wrapperEl);
       return () => resizeObserver.disconnect();
-    }    
+    } else {
+      // Fire setPosition *only* for devices that don't support ResizeObserver
+      setPosition(props.wrapperEl, element.current, props.selectedElement);
+    }  
   }
 
   // Creator and created/modified timestamp metadata
