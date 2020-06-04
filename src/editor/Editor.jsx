@@ -138,6 +138,7 @@ const Editor = props => {
       <div className="inner">
         {React.Children.map(props.children, child =>
           React.cloneElement(child, { 
+            ...child.props,
             annotation : currentAnnotation,
             readOnly : props.readOnly,
             onAppendBody : onAppendBody,
