@@ -26,7 +26,7 @@ export default class WebAnnotation {
 
   /** An equality check based on the underlying object or (if given) ID **/
   isEqual(other) {
-    if (!other || other?.type !== 'Annotation') {
+    if (other?.type !== 'Annotation') {
       return false;
     } else if (this.underlying === other.underlying) {
       return true;
