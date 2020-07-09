@@ -24,7 +24,12 @@
     font-size:14px;
     background-color:$blueish-white;
     cursor:text;
-    @include rounded-corners-left(3px);  
+    @include rounded-corners-left(3px);
+    
+    .r6o-autocomplete ul {
+      position:relative;
+      left:-6px;
+    }
   }
 
   .buttons {
