@@ -289,6 +289,7 @@ export default class TextAnnotator extends Component {
             onRelationUpdated={this.onCreateOrUpdateRelation}
             onRelationDeleted={this.onDeleteRelation}
             onCancel={this.closeRelationsEditor}
+            vocabulary={this.props.relationVocabulary}
           />
         }
       </>
