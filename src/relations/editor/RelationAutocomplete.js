@@ -26,11 +26,17 @@ const RelationAutocomplete = props => {
     getItemProps,
   } = useCombobox({ items: inputItems, onInputValueChange });
 
+  const onKeyDown = evt => {
+    // Only forward key events if the dropdown is closed, or no option selected)
+    if (!isOpen || highlightedIndex == -1) 
+      props.onKeyDown(evt);
+  }
+
   return (
     <div ref={element}>
       <div {...getComboboxProps()}>
         <input 
-          {...getInputProps({ onKeyDown: evt => { if (!isOpen) props.onKeyDown(evt); } })}
+          {...getInputProps({ onKeyDown  })}
           placeholder={props.placeholder}  
           value={props.content} />
       </div>

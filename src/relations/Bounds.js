@@ -93,13 +93,14 @@ const mergeBounds = clientBounds => {
     };
 
     const extend = function(a, b) {
+      const { bottom, height, top } = a;
+      
       const x = Math.min(a.x, b.x);
       const left = Math.min(a.left, b.left);
       const y = Math.max(a.y, b.y);
       const right = Math.max(a.right, b.right);
       const width = a.width + b.width;
 
-      const { bottom, height, top } = a;
       return { bottom, height, left, right, top, width, x, y };
     };
 
