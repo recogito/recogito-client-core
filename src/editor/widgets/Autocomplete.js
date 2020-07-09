@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useCombobox } from 'downshift'
 
-const RelationAutocomplete = props => {
+const Autocomplete = props => {
 
   const element = useRef();
 
@@ -33,7 +33,7 @@ const RelationAutocomplete = props => {
   }
 
   return (
-    <div ref={element}>
+    <div ref={element} className="r6o-autocomplete">
       <div {...getComboboxProps()}>
         <input 
           {...getInputProps({ onKeyDown  })}
@@ -58,4 +58,4 @@ const RelationAutocomplete = props => {
   
 }
 
-export default RelationAutocomplete;
+export default Autocomplete;

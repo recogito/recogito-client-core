@@ -1,6 +1,6 @@
 import React, { Component } from 'preact/compat';
 import { TrashIcon, CheckIcon } from '../../Icons';
-import RelationAutocomplete from './RelationAutocomplete';
+import Autocomplete from '../../editor/widgets/Autocomplete';
 
 /**
  * Shorthand to get the label (= first tag body value) from the
@@ -101,7 +101,7 @@ export default class RelationEditor extends Component {
     return(
       <div className="r6o-relation-editor" ref={this.element}>
         <div className="input-wrapper">
-          <RelationAutocomplete 
+          <Autocomplete 
             content={this.state.content}
             placeholder="Tag..."
             onChange={this.onChange}

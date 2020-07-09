@@ -3,6 +3,7 @@ import { useState } from 'preact/hooks';
 import { CSSTransition } from 'react-transition-group';
 import { CloseIcon } from '../../../Icons';
 import i18n from '../../../i18n';
+import Autocomplete from '../Autocomplete';
 
 /** The basic freetext tag control from original Recogito **/
 const TagWidget = props => {
@@ -34,9 +35,9 @@ const TagWidget = props => {
   }
 
   return (
-    <div className="tags">
+    <div className="r6o-widget tag">
       { tagBodies.length > 0 &&
-        <ul>
+        <ul className="r6o-taglist">
           { tagBodies.map(tag => 
             <li key={tag.value} onClick={toggle(tag.value)}>
               <span className="label">{tag.value}</span>
@@ -56,12 +57,12 @@ const TagWidget = props => {
       }
 
       { !props.readOnly &&
-        <input 
-          type="text" 
-          value={newTag} 
-          onChange={evt => setNewTag(evt.target.value)} 
-          onKeyDown={onKeyDown}
-          placeholder={i18n.t('Add tag...')} />
+        <Autocomplete 
+          content={newTag}
+          placeholder={i18n.t('Add tag...')}
+          onChange={setNewTag}
+          onKeyDown={onKeyDown} 
+          vocabulary={props.vocabulary || []} />
       }
     </div>
   )

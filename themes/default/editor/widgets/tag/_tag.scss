@@ -2,81 +2,97 @@
   display:none;
 }
 
-.tags {
+.r6o-widget.tag {
   background-color:$blueish-white;
   border-bottom:1px solid $lightgrey-border;
   padding:1px 3px;
+  display:flex;
 
-  ul, li {
-    padding:0;
+  ul {
     margin:0;
-    display:inline;
+    padding:0;
+    list-style-type:none;
   }
 
-  li {
-    display:inline-block;
-    margin:1px 1px 1px 0;
-    padding:0;
-    vertical-align:middle;
-    overflow:hidden;
-    font-size:12px;
-    background-color:#fff;
-    border:1px solid $lightgrey-border-darker;
-    cursor:pointer;
-    position:relative;
-    line-height:180%;
-    @include noselect();
-    @include rounded-corners(2px);
-    @include box-shadow(0, 0, 4px, 0.1);
+  ul.r6o-taglist {
+    flex:1;
+    white-space:nowrap;
 
-    .label {
-      padding:2px 8px;
+    li {
+      margin:0;
       display:inline-block;
-    }
+      margin:1px 1px 1px 0;
+      padding:0;
+      vertical-align:middle;
+      overflow:hidden;
+      font-size:12px;
+      background-color:#fff;
+      border:1px solid $lightgrey-border-darker;
+      cursor:pointer;
+      position:relative;
+      line-height:180%;
+      @include noselect();
+      @include rounded-corners(2px);
+      @include box-shadow(0, 0, 4px, 0.1);
 
-    .delete-wrapper {
-      display:inline-block;
-      padding:2px 0;
-      color:#fff;
-      width:0;
-      height:100%;
-      background-color:$ocean;
-      @include rounded-corners-right(2px);
+      .label {
+        padding:2px 8px;
+        display:inline-block;
+      }
 
-      .delete {
-        padding:2px 6px;
+      .delete-wrapper {
+        display:inline-block;
+        padding:2px 0;
+        color:#fff;
+        width:0;
+        height:100%;
+        background-color:$ocean;
+        @include rounded-corners-right(2px);
+
+        .delete {
+          padding:2px 6px;
+          
+          .icon {
+            height:11px;
+            padding-bottom:1px;
+          }
         
-        .icon {
-          height:11px;
-          padding-bottom:1px;
         }
-      
+
+        svg {
+          vertical-align:text-top;
+        }
+
       }
 
-      svg {
-        vertical-align:text-top;
+      .delete-enter-active {
+        width:24px;
+        transition:width 200ms;
+      }
+
+      .delete-enter-done {
+        width:24px;
+      }
+
+      .delete-exit {
+        width:24px;
+      }
+
+      .delete-exit-active {
+        width:0;
+        transition:width 200ms;
       }
 
     }
 
-    .delete-enter-active {
-      width:24px;
-      transition:width 200ms;
-    }
+  }
 
-    .delete-enter-done {
-      width:24px;
-    }
+  .r6o-autocomplete {
+    flex:2;
 
-    .delete-exit {
-      width:24px;
+    li {
+      font-size:14px;
     }
-
-    .delete-exit-active {
-      width:0;
-      transition:width 200ms;
-    }
-
   }
 
   input {
