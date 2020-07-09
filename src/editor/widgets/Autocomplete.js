@@ -12,6 +12,7 @@ const Autocomplete = props => {
 
   const onInputValueChange = ({ inputValue }) => {
     props.onChange(inputValue);
+
     setInputItems(
       props.vocabulary.filter(item =>
         item.toLowerCase().startsWith(inputValue.toLowerCase())))
@@ -26,10 +27,17 @@ const Autocomplete = props => {
     getItemProps,
   } = useCombobox({ items: inputItems, onInputValueChange });
 
+  // TODO onEnter?
   const onKeyDown = evt => {
-    // Only forward key events if the dropdown is closed, or no option selected)
-    if (!isOpen || highlightedIndex == -1) 
-      props.onKeyDown(evt);
+    if (evt.which == 13) {
+      if (!isOpen || highlightedIndex == -1) {
+        setInputItems([]); // To prevent the popup from showing up afterwards
+        props.onKeyDown(evt);
+      }
+    } else if (evt.which == 40 && props.content.length == 0) {
+      // To make options appear on key down
+      setInputItems(props.vocabulary);
+    }
   }
 
   return (

@@ -15,7 +15,7 @@
   }
 
   ul.r6o-taglist {
-    flex:1;
+    flex:0;
     white-space:nowrap;
 
     li {
@@ -88,7 +88,7 @@
   }
 
   .r6o-autocomplete {
-    flex:2;
+    flex:1;
 
     li {
       font-size:14px;
