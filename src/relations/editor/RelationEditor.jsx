@@ -1,6 +1,6 @@
 import React, { Component } from 'preact/compat';
-import ContentEditable from 'react-contenteditable';
 import { TrashIcon, CheckIcon } from '../../Icons';
+import RelationAutocomplete from './RelationAutocomplete';
 
 /**
  * Shorthand to get the label (= first tag body value) from the
@@ -54,13 +54,11 @@ export default class RelationEditor extends Component {
 
       el.style.top = `${midY}px`;
       el.style.left = `${midX}px`;
-
-      setTimeout(() => el.querySelector('.input').focus(), 0);
     }
   }
 
-  onChange = evt =>
-    this.setState({ content: evt.target.value });
+  onChange = value =>
+    this.setState({ content: value });
 
   onKeyDown = evt => {
     if (evt.which === 13) { // Enter = Submit
@@ -103,13 +101,12 @@ export default class RelationEditor extends Component {
     return(
       <div className="r6o-relation-editor" ref={this.element}>
         <div className="input-wrapper">
-          <ContentEditable
-            className="input"
-            html={this.state.content}
-            data-placeholder="Tag..."
+          <RelationAutocomplete 
+            content={this.state.content}
+            placeholder="Tag..."
             onChange={this.onChange}
-            onKeyDown={this.onKeyDown}
-          />
+            onKeyDown={this.onKeyDown} 
+            vocabulary={this.props.vocabulary || []} />
         </div>
 
         <div className="buttons">
