@@ -26,11 +26,6 @@ export default class RelationEditor extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      content: getContent(props.relation)
-    }
-
     this.element = React.createRef();
   }
 
@@ -42,11 +37,6 @@ export default class RelationEditor extends Component {
     this.setPosition();
   }
 
-  componentWillReceiveProps(next) {
-    if (this.props.relation !== next.relation)
-      this.setState({ content : getContent(next.relation) });
-  }
-
   setPosition() {
     if (this.element.current) {
       const el = this.element.current;
@@ -56,33 +46,20 @@ export default class RelationEditor extends Component {
       el.style.left = `${midX}px`;
     }
   }
-
-  onChange = value =>
-    this.setState({ content: value });
-
-  onKeyDown = evt => {
-    if (evt.which === 13) { // Enter = Submit
-      evt.preventDefault();
-      this.onSubmit();
-    } else if (evt.which === 27) {
-      this.props.onCancel();
-    }
-  }
   
-  onSubmit = () => {
+  onSubmit = value => {
     const updatedAnnotation = this.props.relation.annotation.clone({
       motivation: 'linking',
       body: [{
         type: 'TextualBody',
-        value: this.state.content,
+        value,
         purpose: 'tagging'
       }]
     });
 
     const updatedRelation = { ...this.props.relation, annotation: updatedAnnotation };
-
     
-    if (this.state.content) {
+    if (value) {
       // Fire create or update event
       if (this.props.relation.annotation.bodies.length === 0) 
         this.props.onRelationCreated(updatedRelation, this.props.relation);
@@ -102,10 +79,10 @@ export default class RelationEditor extends Component {
       <div className="r6o-relation-editor" ref={this.element}>
         <div className="input-wrapper">
           <Autocomplete 
-            content={this.state.content}
+            initialValue={getContent(this.props.relation)}
             placeholder="Tag..."
-            onChange={this.onChange}
-            onKeyDown={this.onKeyDown} 
+            onSubmit={this.onSubmit} 
+            onCancel={this.props.onCancel}
             vocabulary={this.props.vocabulary || []} />
         </div>
 

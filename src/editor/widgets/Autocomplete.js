@@ -5,19 +5,26 @@ const Autocomplete = props => {
 
   const element = useRef();
 
+  const [ value, setValue ] = useState('');
+
   const [ inputItems, setInputItems ] = useState(props.vocabulary);
 
-  useEffect(() =>
-    element.current?.querySelector('input').focus(), []);
+  useEffect(() => element.current?.querySelector('input')?.focus(), []);
 
+  const onSubmit = inputValue => {
+    setValue('');
+    setInputItems([]); // Force-hide the popup
+    if (inputValue.trim().length > 0)
+      props.onSubmit(inputValue);
+  }
+  
   const onInputValueChange = ({ inputValue }) => {
-    props.onChange(inputValue);
-
+    setValue(inputValue);
     setInputItems(
       props.vocabulary.filter(item =>
         item.toLowerCase().startsWith(inputValue.toLowerCase())))
   }
-
+  
   const {
     isOpen,
     getMenuProps,
@@ -25,19 +32,23 @@ const Autocomplete = props => {
     getComboboxProps,
     highlightedIndex,
     getItemProps,
-  } = useCombobox({ items: inputItems, onInputValueChange });
+    setInputValue
+  } = useCombobox({ 
+    items: inputItems, 
+    onInputValueChange, 
+    onSelectedItemChange: ({ inputValue }) => {
+      onSubmit(inputValue);
+      setInputValue('');
+    } 
+  });
 
-  // TODO onEnter?
   const onKeyDown = evt => {
-    if (evt.which == 13) {
-      if (!isOpen || highlightedIndex == -1) {
-        setInputItems([]); // To prevent the popup from showing up afterwards
-        props.onKeyDown(evt);
-      }
-    } else if (evt.which == 40 && props.content.length == 0) {
-      // To make options appear on key down
-      setInputItems(props.vocabulary);
-    }
+    if (evt.which == 13 && highlightedIndex == -1)
+      onSubmit(value);
+    else if (evt.which == 40 && value.length == 0)
+      setInputItems(props.vocabulary); // Show all options on key down
+    else if (evt.which == 27)
+      props.onCancel && props.onCancel();
   }
 
   return (
@@ -45,8 +56,9 @@ const Autocomplete = props => {
       <div {...getComboboxProps()}>
         <input 
           {...getInputProps({ onKeyDown  })}
-          placeholder={props.placeholder}  
-          value={props.content} />
+          placeholder={props.placeholder}
+          defaultValue={props.initialValue}
+          value={value} />
       </div>
       <ul {...getMenuProps()}>
         {isOpen && inputItems.map((item, index) => (

@@ -9,7 +9,6 @@ import Autocomplete from '../Autocomplete';
 const TagWidget = props => {
 
   const [ showDelete, setShowDelete ] = useState(false);
-  const [ newTag, setNewTag ] = useState('');
 
   // Every body with a 'tagging' purpose is considered a tag
   const tagBodies = props.annotation ? 
@@ -27,11 +26,8 @@ const TagWidget = props => {
     props.onRemoveBody(tag);
   }
 
-  const onKeyDown = evt => {
-    if (evt.which === 13) { // Enter
-      props.onAppendBody({ type: 'TextualBody', purpose: 'tagging', value: newTag.trim() });
-      setNewTag(''); // Clear the input
-    }
+  const onSubmit = tag => {
+    props.onAppendBody({ type: 'TextualBody', purpose: 'tagging', value: tag.trim() });
   }
 
   return (
@@ -58,10 +54,8 @@ const TagWidget = props => {
 
       { !props.readOnly &&
         <Autocomplete 
-          content={newTag}
           placeholder={i18n.t('Add tag...')}
-          onChange={setNewTag}
-          onKeyDown={onKeyDown} 
+          onSubmit={onSubmit}
           vocabulary={props.vocabulary || []} />
       }
     </div>
