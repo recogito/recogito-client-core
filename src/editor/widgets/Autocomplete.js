@@ -5,24 +5,23 @@ const Autocomplete = props => {
 
   const element = useRef();
 
-  const [ value, setValue ] = useState('');
-
   const [ inputItems, setInputItems ] = useState(props.vocabulary);
 
-  useEffect(() => element.current?.querySelector('input')?.focus(), []);
-
-  const onSubmit = inputValue => {
-    setValue('');
-    setInputItems([]); // Force-hide the popup
-    if (inputValue.trim().length > 0)
-      props.onSubmit(inputValue);
-  }
+  useEffect(() => 
+    element.current?.querySelector('input')?.focus(), []);
   
   const onInputValueChange = ({ inputValue }) => {
-    setValue(inputValue);
-    setInputItems(
-      props.vocabulary.filter(item =>
-        item.toLowerCase().startsWith(inputValue.toLowerCase())))
+    if (inputValue.length > 0) {
+      // Set suggestions to prefix matches...
+      const prefixMatches = props.vocabulary.filter(item => {
+        return item.toLowerCase().startsWith(inputValue.toLowerCase());
+      });
+
+      setInputItems(prefixMatches);
+    } else {
+      // ...or none, if the input is empty
+      setInputItems([]);
+    }      
   }
   
   const {
@@ -42,13 +41,22 @@ const Autocomplete = props => {
     } 
   });
 
+  const onSubmit = inputValue => {
+    setInputValue('');
+    if (inputValue.trim().length > 0)
+      props.onSubmit(inputValue);
+  }
+
   const onKeyDown = evt => {
-    if (evt.which == 13 && highlightedIndex == -1)
+    const { value } = evt.target;
+    
+    if (evt.which == 13 && highlightedIndex == -1) {
       onSubmit(value);
-    else if (evt.which == 40 && value.length == 0)
+    } else if (evt.which == 40 && value.length == 0) {
       setInputItems(props.vocabulary); // Show all options on key down
-    else if (evt.which == 27)
+    } else if (evt.which == 27) {
       props.onCancel && props.onCancel();
+    }
   }
 
   return (
@@ -58,7 +66,7 @@ const Autocomplete = props => {
           {...getInputProps({ onKeyDown  })}
           placeholder={props.placeholder}
           defaultValue={props.initialValue}
-          value={value} />
+           />
       </div>
       <ul {...getMenuProps()}>
         {isOpen && inputItems.map((item, index) => (
