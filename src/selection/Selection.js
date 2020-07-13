@@ -1,5 +1,5 @@
 import WebAnnotation from '../WebAnnotation';
-import uuid from 'uuid/v1';
+import { v4 as uuid } from 'uuid';
 
 /**
  * An "annotation in draft mode". Really the same
