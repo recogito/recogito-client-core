@@ -50,6 +50,32 @@ export const rangeToSelection = (range, containerEl) => {
 
 };
 
+/**
+ * Util function that checks if the given selection is an exact overlap to any
+ * existing annotations, and returns them, if so
+ */
+export const getExactOverlaps = (newAnnotation, selectedSpans) => {
+  // All existing annotations at this point
+  const existingAnnotations = [];
+
+  selectedSpans.forEach(span => {
+    const enclosingAnnotationSpan = span.closest('.r6o-annotation');
+    const enclosingAnnotation = enclosingAnnotationSpan?.annotation;
+
+    if (enclosingAnnotation && !existingAnnotations.includes(enclosingAnnotation))
+      existingAnnotations.push(enclosingAnnotation);
+  });
+
+  if (existingAnnotations.length > 0)
+    return existingAnnotations.filter(anno => {
+      const isSameAnchor = anno.anchor == newAnnotation.anchor;
+      const isSameQuote = anno.quote == newAnnotation.quote;
+      return isSameAnchor && isSameQuote;
+    });
+  else
+    return [];
+};
+
 export const enableTouch = (element, selectHandler) => {
   let touchTimeout;
   let lastTouchEvent;

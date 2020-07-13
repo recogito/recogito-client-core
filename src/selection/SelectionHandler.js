@@ -1,4 +1,4 @@
-import { trimRange, rangeToSelection, enableTouch } from './SelectionUtils';
+import { trimRange, rangeToSelection, enableTouch, getExactOverlaps } from './SelectionUtils';
 import EventEmitter from 'tiny-emitter';
 
 const IS_TOUCH = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -62,10 +62,20 @@ export default class SelectionHandler extends EventEmitter {
 
           this._hideNativeSelection();
 
-          this.emit('select', {
-            selection: stub,
-            element: selectedRange
-          });
+          const exactOverlaps = getExactOverlaps(stub, spans);
+          if (exactOverlaps.length > 0) {
+            // User selected existing - reuse top-most original to avoid stratification
+            this.clearSelection();
+            this.emit('select', {
+              selection: exactOverlaps[0],
+              element: evt.target.closest('.r6o-annotation')
+            });
+          } else {
+            this.emit('select', {
+              selection: stub,
+              element: selectedRange
+            });
+          }
         }
       }
     }
