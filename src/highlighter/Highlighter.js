@@ -41,15 +41,21 @@ export default class Highlighter {
   })
 
   _addAnnotation = annotation => {
-    const [ domStart, domEnd ] = this.charOffsetsToDOMPosition([ annotation.start, annotation.end ]);
+    try {
+      const [ domStart, domEnd ] = this.charOffsetsToDOMPosition([ annotation.start, annotation.end ]);
 
-    const range = document.createRange();
-    range.setStart(domStart.node, domStart.offset);
-    range.setEnd(domEnd.node, domEnd.offset);
+      const range = document.createRange();
+      range.setStart(domStart.node, domStart.offset);
+      range.setEnd(domEnd.node, domEnd.offset);
 
-    const spans = this.wrapRange(range);
-    this.applyStyles(annotation, spans);
-    this.bindAnnotation(annotation, spans);
+      const spans = this.wrapRange(range);
+      this.applyStyles(annotation, spans);
+      this.bindAnnotation(annotation, spans);
+    } catch (error) {
+      console.warn('Could not render annotation')
+      console.warn(error);
+      console.warn(annotation.underlying);
+    }
   }
 
   _findAnnotationSpans = annotation => {
