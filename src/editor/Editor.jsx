@@ -112,6 +112,9 @@ const Editor = props => {
     })
   );
 
+  const onCancel = () => 
+    props.onCancel(currentAnnotation);
+
   const onOk = _ => {
     // Removes the 'draft' flag from all bodies
     const undraft = annotation => annotation.clone({
@@ -124,7 +127,7 @@ const Editor = props => {
     // opened for editing)
     if (currentAnnotation.bodies.length === 0) {
       if (currentAnnotation.isSelection)
-        props.onCancel();
+        onCancel();
       else 
         props.onAnnotationDeleted(props.annotation);
     } else {
@@ -155,13 +158,13 @@ const Editor = props => {
           <div className="footer">
             <button
               className="r6o-btn" 
-              onClick={props.onCancel}>{i18n.t('Close')}</button>
+              onClick={onCancel}>{i18n.t('Close')}</button>
           </div>
         ) : (
           <div className="footer">
             <button 
               className="r6o-btn outline"
-              onClick={props.onCancel}>{i18n.t('Cancel')}</button>
+              onClick={onCancel}>{i18n.t('Cancel')}</button>
 
             <button 
               className="r6o-btn "
