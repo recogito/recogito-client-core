@@ -54,7 +54,7 @@ const Editor = props => {
       // Note that ResizeObserver fires once when observation starts
       return initResizeObserver();
     }
-  }, [ props.selectedElement, bounds(props.selectedElement) ]);
+  }, [ props.annotation, props.selectedElement, bounds(props.selectedElement) ]);
 
   const initResizeObserver = () => {
     if (window.ResizeObserver) {
