@@ -57,7 +57,7 @@ const Editor = props => {
   }, [ props.annotation, props.selectedElement, bounds(props.selectedElement) ]);
 
   const initResizeObserver = () => {
-    if (window.ResizeObserver) {
+    if (window?.ResizeObserver) {
       const resizeObserver = new ResizeObserver(() => {
         setPosition(props.wrapperEl, element.current, props.selectedElement);
       });
