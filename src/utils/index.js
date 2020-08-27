@@ -72,6 +72,7 @@ export const addPolyfills = () => {
     };
   }
 
+  /*
   if (!String.prototype.startsWith) {
       Object.defineProperty(String.prototype, 'startsWith', {
           value: function(search, rawPos) {
@@ -80,6 +81,7 @@ export const addPolyfills = () => {
           }
       });
   }
+  */
 
   if (!String.prototype.includes) {
     String.prototype.includes = function(search, start) {
