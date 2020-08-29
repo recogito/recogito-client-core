@@ -10,12 +10,12 @@ export default class RelationsLayer extends EventEmitter {
   constructor(contentEl) {
     super();
 
-    this.connections = []; 
+    this.connections = [];
 
     this.contentEl = contentEl;
 
     this.svg = document.createElementNS(CONST.NAMESPACE, 'svg');
-    this.svg.classList.add('r6o-relations-layer');
+    this.svg.setAttribute('class', 'r6o-relations-layer');
     this.contentEl.appendChild(this.svg);
 
     this.drawingTool = new DrawingTool(contentEl, this.svg);
@@ -33,7 +33,7 @@ export default class RelationsLayer extends EventEmitter {
   /** Shorthand **/
   createConnection = annotation => {
     const c = new Connection(this.contentEl, this.svg, annotation);
-    
+
     // Forward click event as selection, unless we're read-only
     c.on('click', relation => this.emit('selectRelation', relation));
 
@@ -62,9 +62,9 @@ export default class RelationsLayer extends EventEmitter {
       conn.recompute();
     });
   }
-  
+
   addOrUpdateRelation = (relation, maybePrevious) => {
-    const previous = maybePrevious ? 
+    const previous = maybePrevious ?
       this.connections.find(c => c.matchesRelation(relation)) : null;
 
     if (previous) {
@@ -152,9 +152,9 @@ export default class RelationsLayer extends EventEmitter {
 
   set readOnly(readOnly) {
     if (readOnly)
-      this.svg.classList.add('readonly');
+      this.svg.setAttribute('class', 'r6o-relations-layer readonly');
     else
-      this.svg.classList.remove('readonly');
+      this.svg.setAttribute('class', 'r6o-relations-layer');
   }
 
 }

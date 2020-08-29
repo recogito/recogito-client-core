@@ -49,6 +49,6 @@
     "react-transition-group": "^4.3.0",
     "timeago-react": "^3.0.0",
     "tiny-emitter": "^2.1.0",
-    "uuid": "^8.2.0"
+    "uuid": "^8.3.0"
   }
 }
