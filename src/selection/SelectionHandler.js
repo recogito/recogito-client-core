@@ -1,7 +1,26 @@
 import { trimRange, rangeToSelection, enableTouch, getExactOverlaps } from './SelectionUtils';
+import { isInternetExplorer } from '../utils';
 import EventEmitter from 'tiny-emitter';
 
 const IS_TOUCH = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+const IS_INTERNET_EXPLORER =
+  window?.navigator.userAgent.match(/(MSIE|Trident)/);
+
+/** Tests whether maybeChildEl is contained in containerEl **/
+const contains = (containerEl, maybeChildEl) => {
+  if (IS_INTERNET_EXPLORER) {
+    // In IE, .contains returns false for text nodes
+    // https://stackoverflow.com/questions/44140712/ie-acting-strange-with-node-contains-and-text-nodes
+    if (maybeChildEl.nodeType == Node.TEXT_NODE)
+      return containerEl === maybeChildEl.parentNode || containerEl.contains(maybeChildEl.parentNode);
+    else
+      return containerEl.contains(maybeChildEl);
+  } else {
+    // Things can be so simple, unless you're in IE
+    return containerEl.contains(maybeChildEl);
+  }
+}
 
 export default class SelectionHandler extends EventEmitter {
 
@@ -54,7 +73,7 @@ export default class SelectionHandler extends EventEmitter {
         // Make sure the selection is entirely inside this.el
         const { commonAncestorContainer } = selectedRange;
 
-        if (this.el.contains(commonAncestorContainer)) {
+        if (contains(this.el, commonAncestorContainer)) {
           const stub = rangeToSelection(selectedRange, this.el);
 
           const spans = this.highlighter.wrapRange(selectedRange);
