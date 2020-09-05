@@ -89,6 +89,7 @@
 
   .r6o-autocomplete {
     flex:1;
+    position:relative;
 
     li {
       font-size:14px;
@@ -96,6 +97,7 @@
   }
 
   input {
+    width:100%;
     padding:0 3px;
     min-width:80px;
     outline:none;

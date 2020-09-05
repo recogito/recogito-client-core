@@ -3,7 +3,10 @@
   min-height:3em;
   background-color:#fff;
   position:relative;
-  padding:8px 10px;
+
+  .r6o-editable-text {
+    padding:8px 10px;
+  }
 
   .lastmodified {
     border:1px solid $lightgrey-border;

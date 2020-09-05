@@ -7,8 +7,8 @@ const Autocomplete = props => {
 
   const [ inputItems, setInputItems ] = useState(props.vocabulary);
 
-  useEffect(() => 
-    element.current?.querySelector('input')?.focus(), []);
+  // useEffect(() => 
+  //   element.current?.querySelector('input')?.focus(), []);
   
   const onInputValueChange = ({ inputValue }) => {
     if (inputValue.length > 0) {

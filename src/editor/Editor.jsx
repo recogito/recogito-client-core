@@ -155,13 +155,13 @@ const Editor = props => {
         }
         
         { props.readOnly ? (
-          <div className="footer">
+          <div className="r6o-footer">
             <button
               className="r6o-btn" 
               onClick={onCancel}>{i18n.t('Close')}</button>
           </div>
         ) : (
-          <div className="footer">
+          <div className="r6o-footer">
             <button 
               className="r6o-btn outline"
               onClick={onCancel}>{i18n.t('Cancel')}</button>
