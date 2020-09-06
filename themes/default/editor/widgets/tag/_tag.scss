@@ -2,6 +2,20 @@
   display:none;
 }
 
+/* IE11-specific hackery */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+
+  .r6o-widget.tag .r6o-taglist li {
+    height:27px;
+
+    .delete-wrapper .delete {
+      position:relative;
+      top:-4px;
+    }
+  }
+
+}
+
 .r6o-widget.tag {
   background-color:$blueish-white;
   border-bottom:1px solid $lightgrey-border;
@@ -51,12 +65,12 @@
 
         .delete {
           padding:2px 6px;
-          
+
           .icon {
             height:11px;
             padding-bottom:1px;
           }
-        
+
         }
 
         svg {

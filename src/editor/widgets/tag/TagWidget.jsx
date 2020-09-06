@@ -11,17 +11,17 @@ const TagWidget = props => {
   const [ showDelete, setShowDelete ] = useState(false);
 
   // Every body with a 'tagging' purpose is considered a tag
-  const tagBodies = props.annotation ? 
+  const tagBodies = props.annotation ?
     props.annotation.bodies.filter(b => b.purpose === 'tagging') : [];
 
   const toggle = tag => _ => {
     if (showDelete === tag) // Removes delete button
       setShowDelete(false);
-    else 
+    else
       setShowDelete(tag); // Sets delete button on a different tag
   }
 
-  const onDelete = tag => evt => { 
+  const onDelete = tag => evt => {
     evt.stopPropagation();
     props.onRemoveBody(tag);
   }
@@ -32,28 +32,30 @@ const TagWidget = props => {
 
   return (
     <div className="r6o-widget tag">
-      { tagBodies.length > 0 &&
-        <ul className="r6o-taglist">
-          { tagBodies.map(tag => 
-            <li key={tag.value} onClick={toggle(tag.value)}>
-              <span className="label">{tag.value}</span>
+      <div>
+        { tagBodies.length > 0 &&
+          <ul className="r6o-taglist">
+            { tagBodies.map(tag =>
+              <li key={tag.value} onClick={toggle(tag.value)}>
+                <span className="label">{tag.value}</span>
 
-              {!props.readOnly &&
-                <CSSTransition in={showDelete === tag.value} timeout={200} classNames="delete">
-                  <span className="delete-wrapper" onClick={onDelete(tag)}>
-                    <span className="delete">
-                      <CloseIcon width={12} />
+                {!props.readOnly &&
+                  <CSSTransition in={showDelete === tag.value} timeout={200} classNames="delete">
+                    <span className="delete-wrapper" onClick={onDelete(tag)}>
+                      <span className="delete">
+                        <CloseIcon width={12} />
+                      </span>
                     </span>
-                  </span>
-                </CSSTransition>
-              }
-            </li>
-          )}
-        </ul>
-      }
+                  </CSSTransition>
+                }
+              </li>
+            )}
+          </ul>
+        }
+      </div>
 
       { !props.readOnly &&
-        <Autocomplete 
+        <Autocomplete
           placeholder={i18n.t('Add tag...')}
           onSubmit={onSubmit}
           vocabulary={props.vocabulary || []} />
