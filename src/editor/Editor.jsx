@@ -1,6 +1,7 @@
 import React from 'preact/compat';
 import { useState, useRef, useEffect } from 'preact/hooks';
 import Environment from '../Environment';
+import DOMWidget from './DOMWidget';
 import setPosition from './setPosition';
 import i18n from '../i18n';
 
@@ -18,6 +19,8 @@ const bounds = elem => {
  * with CTRL+Z.
  */
 const Editor = props => {
+
+  const widgets = props.widgets.map(fn => <DOMWidget widget={fn} />);
   
   // The current state of the edited annotation vs. original
   const [ currentAnnotation, setCurrentAnnotation ] = useState();
@@ -147,12 +150,23 @@ const Editor = props => {
             ...child.props,
             annotation : currentAnnotation,
             readOnly : props.readOnly,
-            onAppendBody : onAppendBody,
-            onUpdateBody : onUpdateBody,
-            onRemoveBody : onRemoveBody,
+            onAppendBody,
+            onUpdateBody,
+            onRemoveBody,
             onSaveAndClose : onOk              
           }))
         }
+
+        {widgets.map(widget => 
+          React.cloneElement(widget, { 
+            annotation : currentAnnotation,
+            readOnly : props.readOnly,
+            onAppendBody,
+            onUpdateBody,
+            onRemoveBody,
+            onSaveAndClose : onOk              
+          })
+        )}
         
         { props.readOnly ? (
           <div className="r6o-footer">
