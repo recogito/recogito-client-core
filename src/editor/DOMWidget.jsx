@@ -1,41 +1,31 @@
-import React from 'preact/compat';
-import { useRef, useEffect } from 'preact/hooks';
+import React, { Component } from 'preact/compat';
 
-const DOMWidget = props => {
+export default class DOMWidget extends Component {
 
-  const element = useRef();
+  constructor(props) {
+    super(props);
+    this.element = React.createRef();
+  }
 
-  const { 
-    annotation, 
-    readOnly, 
-    onAppendBody,
-    onUpdateBody,
-    onRemoveBody,
-    onSaveAndClose
-  } = props;
-
-  useEffect(() => {
-    if (element.current) {
-
-      // Instantiate the widget...
-      const widgetEl = props.widget({
-        annotation,
-        readOnly,
-        onAppendBody,
-        onUpdateBody,
-        onRemoveBody,
-        onSaveAndClose
+  componentDidMount() {
+    if (this.element.current) {
+      const widgetEl = this.props.widget({
+        annotation: this.props.annotation,
+        readOnly: this.props.readOnly,
+        onAppendBody: body => this.props.onAppendBody(body),
+        onUpdateBody: (previous, updated) => this.props.onUpdateBody(previous, updated),
+        onRemoveBody: body => this.props.onRemoveBody(body),
+        onSaveAndClose: () => this.props.onSaveAndClose()
       });
 
-      // ...and append to JSX wrapper
-      element.current.appendChild(widgetEl);
+      this.element.current.appendChild(widgetEl);
     }
-  }, []);
+  }
 
-  return (
-    <div ref={element} class="widget"></div>
-  )
+  render() {
+    return (
+      <div ref={this.element} className="widget"></div>
+    )
+  }
 
 }
-
-export default DOMWidget;
