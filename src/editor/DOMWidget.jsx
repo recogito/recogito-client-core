@@ -7,18 +7,24 @@ export default class DOMWidget extends Component {
     this.element = React.createRef();
   }
 
-  componentDidMount() {
+  componentWillReceiveProps(next) {
     if (this.element.current) {
-      const widgetEl = this.props.widget({
-        annotation: this.props.annotation,
-        readOnly: this.props.readOnly,
-        onAppendBody: body => this.props.onAppendBody(body),
-        onUpdateBody: (previous, updated) => this.props.onUpdateBody(previous, updated),
-        onRemoveBody: body => this.props.onRemoveBody(body),
-        onSaveAndClose: () => this.props.onSaveAndClose()
-      });
+      if (this.props.annotation !== next.annotation) {
+        const widgetEl = this.props.widget({
+          annotation: this.props.annotation,
+          readOnly: this.props.readOnly,
+          onAppendBody: body => this.props.onAppendBody(body),
+          onUpdateBody: (previous, updated) => this.props.onUpdateBody(previous, updated),
+          onRemoveBody: body => this.props.onRemoveBody(body),
+          onSaveAndClose: () => this.props.onSaveAndClose()
+        });
 
-      this.element.current.appendChild(widgetEl);
+        // Delete previous rendered state
+        while (this.element.current.firstChild)
+          this.element.current.removeChild(this.element.current.lastChild);
+  
+        this.element.current.appendChild(widgetEl);  
+      }
     }
   }
 
