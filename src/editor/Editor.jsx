@@ -19,8 +19,6 @@ const bounds = elem => {
  * with CTRL+Z.
  */
 const Editor = props => {
-
-  const widgets = props.widgets.map(fn => <DOMWidget widget={fn} />);
   
   // The current state of the edited annotation vs. original
   const [ currentAnnotation, setCurrentAnnotation ] = useState();
@@ -140,6 +138,8 @@ const Editor = props => {
         props.onAnnotationUpdated(undraft(currentAnnotation), props.annotation);
     }
   };
+
+  const widgets = props.widget ? props.widgets.map(fn => <DOMWidget widget={fn} />) : [];
 
   return (
     <div ref={element} className="r6o-editor">
