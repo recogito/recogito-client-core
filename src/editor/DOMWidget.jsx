@@ -11,12 +11,12 @@ export default class DOMWidget extends Component {
     if (this.element.current) {
       if (this.props.annotation !== next.annotation) {
         const widgetEl = this.props.widget({
-          annotation: this.props.annotation,
-          readOnly: this.props.readOnly,
-          onAppendBody: body => this.props.onAppendBody(body),
-          onUpdateBody: (previous, updated) => this.props.onUpdateBody(previous, updated),
-          onRemoveBody: body => this.props.onRemoveBody(body),
-          onSaveAndClose: () => this.props.onSaveAndClose()
+          annotation: next.annotation,
+          readOnly: next.readOnly,
+          onAppendBody: body => next.onAppendBody(body),
+          onUpdateBody: (previous, updated) => next.onUpdateBody(previous, updated),
+          onRemoveBody: body => next.onRemoveBody(body),
+          onSaveAndClose: () => next.onSaveAndClose()
         });
 
         // Delete previous rendered state
