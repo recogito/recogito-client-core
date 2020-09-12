@@ -1,5 +1,4 @@
 import { trimRange, rangeToSelection, enableTouch, getExactOverlaps } from './SelectionUtils';
-import { isInternetExplorer } from '../utils';
 import EventEmitter from 'tiny-emitter';
 
 const IS_TOUCH = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
