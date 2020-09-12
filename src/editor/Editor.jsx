@@ -141,7 +141,7 @@ const Editor = props => {
 
   // Use default comment + tag widget unless host app overrides
   const widgets = props.config.widgets ? 
-    props.widgets.map(getWidget) : DEFAULT_WIDGETS;
+    props.config.widgets.map(getWidget) : DEFAULT_WIDGETS;
 
   return (
     <div ref={element} className="r6o-editor">
