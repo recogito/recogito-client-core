@@ -1,15 +1,17 @@
 import React, { Component } from 'preact/compat';
 
-export default class DOMWidget extends Component {
+export default class WrappedWidget extends Component {
 
   constructor(props) {
     super(props);
+
     this.element = React.createRef();
   }
 
   componentWillReceiveProps(next) {
     if (this.element.current) {
       if (this.props.annotation !== next.annotation) {
+        
         const widgetEl = this.props.widget({
           annotation: next.annotation,
           readOnly: next.readOnly,

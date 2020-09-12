@@ -1,7 +1,7 @@
 import React from 'preact/compat';
 import { useState, useRef, useEffect } from 'preact/hooks';
 import Environment from '../Environment';
-import DOMWidget from './widgets/DOMWidget';
+import { getWidget, DEFAULT_WIDGETS } from './widgets';
 import setPosition from './setPosition';
 import i18n from '../i18n';
 
@@ -139,7 +139,9 @@ const Editor = props => {
     }
   };
 
-  const widgets = props.widgets ? props.widgets.map(fn => <DOMWidget widget={fn} />) : [];
+  // Use default comment + tag widget unless host app overrides
+  const widgets = props.config.widgets ? 
+    props.widgets.map(getWidget) : DEFAULT_WIDGETS;
 
   return (
     <div ref={element} className="r6o-editor">
