@@ -1,7 +1,7 @@
 import React from 'preact/compat';
 import { useState, useRef, useEffect } from 'preact/hooks';
 import Environment from '../Environment';
-import DOMWidget from './DOMWidget';
+import DOMWidget from './widgets/DOMWidget';
 import setPosition from './setPosition';
 import i18n from '../i18n';
 
@@ -139,32 +139,21 @@ const Editor = props => {
     }
   };
 
-  const widgets = props.widget ? props.widgets.map(fn => <DOMWidget widget={fn} />) : [];
+  const widgets = props.widgets ? props.widgets.map(fn => <DOMWidget widget={fn} />) : [];
 
   return (
     <div ref={element} className="r6o-editor">
       <div className="arrow" />
       <div className="inner">
-        {React.Children.map(props.children, child =>
-          React.cloneElement(child, { 
-            ...child.props,
-            annotation : currentAnnotation,
-            readOnly : props.readOnly,
-            onAppendBody,
-            onUpdateBody,
-            onRemoveBody,
-            onSaveAndClose : onOk              
-          }))
-        }
-
         {widgets.map(widget => 
           React.cloneElement(widget, { 
             annotation : currentAnnotation,
             readOnly : props.readOnly,
+            config: props.config,
             onAppendBody,
             onUpdateBody,
             onRemoveBody,
-            onSaveAndClose : onOk              
+            onSaveAndClose: onOk              
           })
         )}
         
