@@ -34,9 +34,9 @@ export default class TextAnnotator extends Component {
   }
 
   componentDidMount() {
-    this.highlighter = new Highlighter(this.props.contentEl, this.props.formatter);
+    this.highlighter = new Highlighter(this.props.contentEl, this.props.config.formatter);
 
-    this.selectionHandler = new SelectionHandler(this.props.contentEl, this.highlighter, this.props.readOnly);
+    this.selectionHandler = new SelectionHandler(this.props.contentEl, this.highlighter, this.props.config.readOnly);
     this.selectionHandler.on('select', this.handleSelect);
 
     this.relationsLayer = new RelationsLayer(this.props.contentEl);
@@ -266,8 +266,7 @@ export default class TextAnnotator extends Component {
             wrapperEl={this.props.wrapperEl}
             annotation={this.state.selectedAnnotation}
             selectedElement={this.state.selectedDOMElement}
-            readOnly={this.props.readOnly}
-            headless={this.state.headless}
+            config={this.props.config}
             applyTemplate={this.state.applyTemplate}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
             onAnnotationUpdated={this.onCreateOrUpdateAnnotation('onAnnotationUpdated')}
