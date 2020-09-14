@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { useCombobox } from 'downshift'
 
 const Autocomplete = props => {
@@ -6,9 +6,6 @@ const Autocomplete = props => {
   const element = useRef();
 
   const [ inputItems, setInputItems ] = useState(props.vocabulary);
-
-  // useEffect(() => 
-  //   element.current?.querySelector('input')?.focus(), []);
   
   const onInputValueChange = ({ inputValue }) => {
     if (inputValue.length > 0) {

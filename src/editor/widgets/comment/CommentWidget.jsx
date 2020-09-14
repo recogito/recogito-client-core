@@ -67,7 +67,7 @@ const CommentWidget = props => {
       // The current user
       const me = Environment.user;
 
-      return !(me === creator);
+      return me !== creator;
     }
 
     // Global setting as last possible option
