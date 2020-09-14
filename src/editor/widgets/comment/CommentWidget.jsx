@@ -49,12 +49,37 @@ const CommentWidget = props => {
     }
   }
 
+  // A comment should be read-only if:
+  // - the global read-only flag is set
+  // - the current rule is 'MINE_ONLY' and the creator ID differs 
+  // The 'editable' config flag overrides the global setting, if any
+  const isReadOnly = body =>  {
+    if (props.editable === true)
+      return false;
+
+    if (props.editable === false)
+      return true;
+
+    if (props.editable === 'MINE_ONLY') {
+      // The original creator of the body
+      const creator = body.creator?.id;
+
+      // The current user
+      const me = Environment.user;
+
+      return !(me === creator);
+    }
+
+    // Global setting as last possible option
+    return props.readOnly;
+  }
+  
   return (
     <>
       { comments.map((body, idx) => 
         <Comment 
           key={idx} 
-          readOnly={props.readOnly} 
+          readOnly={isReadOnly(body)} 
           body={body} 
           onUpdate={props.onUpdateBody}
           onDelete={props.onRemoveBody}
