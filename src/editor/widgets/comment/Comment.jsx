@@ -39,7 +39,7 @@ const Comment = props => {
 
   return props.readOnly ? (
     <div className="r6o-widget comment">
-      <div className="value">{props.body.value}</div>
+      <div className="r6o-readonly-comment">{props.body.value}</div>
       { creatorInfo }
     </div>
   ) : (

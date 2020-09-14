@@ -4,7 +4,8 @@
   background-color:#fff;
   position:relative;
 
-  .r6o-editable-text {
+  .r6o-editable-text,
+  .r6o-readonly-comment {
     padding:8px 10px;
   }
 
@@ -12,6 +13,7 @@
     border:1px solid $lightgrey-border;
     display:inline-block;
     border-radius:2px;
+    margin:0 10px 8px 10px;
     padding:4px 5px;
     line-height:100%;
     font-size:12px;
