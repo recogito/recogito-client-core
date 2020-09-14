@@ -4,7 +4,7 @@ import EventEmitter from 'tiny-emitter';
 const IS_TOUCH = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 const IS_INTERNET_EXPLORER =
-  window?.navigator?.userAgent.match(/(MSIE|Trident)/);
+  navigator?.userAgent.match(/(MSIE|Trident)/);
 
 /** Tests whether maybeChildEl is contained in containerEl **/
 const contains = (containerEl, maybeChildEl) => {
