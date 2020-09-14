@@ -95,9 +95,9 @@ export default class Highlighter {
   }
 
   /** 
-   * Forces a new ID on the given annotation (or annotation with the given ID). 
-   * This method handles the ID update within the Highlighter ONLY. It's up to 
-   * the application to keep the RelationsLayer in sync! 
+   * Forces a new ID on the annotation with the given ID. This method handles 
+   * the ID update within the Highlighter ONLY. It's up to the application to 
+   * keep the RelationsLayer in sync! 
    * 
    * @returns the updated annotation for convenience
    */
