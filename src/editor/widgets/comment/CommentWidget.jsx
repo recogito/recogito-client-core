@@ -66,7 +66,7 @@ const CommentWidget = props => {
       const creator = body.creator?.id;
 
       // The current user
-      const me = Environment.user;
+      const me = Environment.user?.id;
 
       return me !== creator;
     }
