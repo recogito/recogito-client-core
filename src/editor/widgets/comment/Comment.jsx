@@ -29,7 +29,7 @@ const Comment = props => {
 
   const creatorInfo = props.body.creator && 
     <div className="lastmodified">
-      <span className="lastmodified-by">{props.body.creator.name}</span>
+      <span className="lastmodified-by">{props.body.creator.name || props.body.creator.id}</span>
       { props.body.created && 
         <span className="lastmodified-at">
           <TimeAgo datetime={Environment.toClientTime(props.body.created)} />
