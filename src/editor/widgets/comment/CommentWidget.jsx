@@ -2,6 +2,7 @@ import React from 'preact/compat';
 import Comment from './Comment';
 import TextEntryField from './TextEntryField';
 import i18n from '../../../i18n';
+import Environment from '../../../Environment';
 
 /**
  * Comments are TextualBodies where the purpose field is either 
