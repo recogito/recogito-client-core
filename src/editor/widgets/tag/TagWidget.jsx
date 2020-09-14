@@ -58,7 +58,7 @@ const TagWidget = props => {
         <Autocomplete
           placeholder={i18n.t('Add tag...')}
           onSubmit={onSubmit}
-          vocabulary={props.config.tagVocabulary || []} />
+          vocabulary={props.vocabulary || []} />
       }
     </div>
   )
