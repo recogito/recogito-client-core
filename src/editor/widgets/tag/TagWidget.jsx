@@ -5,14 +5,25 @@ import { CloseIcon } from '../../../Icons';
 import i18n from '../../../i18n';
 import Autocomplete from '../Autocomplete';
 
+const getDraftTag = existingDraft =>
+  existingDraft ? existingDraft : {
+    type: 'TextualBody', value: '', purpose: 'tagging', draft: true
+  };
+
 /** The basic freetext tag control from original Recogito **/
 const TagWidget = props => {
 
-  const [ showDelete, setShowDelete ] = useState(false);
+  // All tags (draft + non-draft)
+  const all = props.annotation ? 
+    props.annotation.bodies.filter(b => b.type === 'TextualBody' && b.purpose === 'tagging') : [];
 
-  // Every body with a 'tagging' purpose is considered a tag
-  const tagBodies = props.annotation ?
-    props.annotation.bodies.filter(b => b.purpose === 'tagging') : [];
+  // Last draft tag goes into the input field
+  const draftTag = getDraftTag(all.slice().reverse().find(b => b.draft)); 
+
+  // All except draft tag
+  const tags = all.filter(b => b != draftTag);
+
+  const [ showDelete, setShowDelete ] = useState(false);
 
   const toggle = tag => _ => {
     if (showDelete === tag) // Removes delete button
@@ -26,16 +37,31 @@ const TagWidget = props => {
     props.onRemoveBody(tag);
   }
 
+  const onDraftChange = evt => {
+    const prev = draftTag.value.trim();
+    const updated = evt.target.value.trim();
+
+    if (prev.length === 0 && updated.length > 0) {
+      props.onAppendBody({ ...draftTag, value: updated });
+    } else if (prev.length > 0 && updated.length === 0) {
+      props.onRemoveBody(draftTag);
+    } else {
+      props.onUpdateBody(draftTag, { ...draftTag, value: updated });
+    }
+  }
+
   const onSubmit = tag => {
-    props.onAppendBody({ type: 'TextualBody', purpose: 'tagging', value: tag.trim() });
+    // Just 'undraft' the current draft tag
+    const { draft, ...undrafted } = draftTag;
+    props.onUpdateBody(draftTag, undrafted);
   }
 
   return (
     <div className="r6o-widget tag">
       <div>
-        { tagBodies.length > 0 &&
+        { tags.length > 0 &&
           <ul className="r6o-taglist">
-            { tagBodies.map(tag =>
+            { tags.map(tag =>
               <li key={tag.value} onClick={toggle(tag.value)}>
                 <span className="label">{tag.value}</span>
 
@@ -54,9 +80,11 @@ const TagWidget = props => {
         }
       </div>
 
-      { !props.readOnly &&
+      {!props.readOnly &&
         <Autocomplete
           placeholder={i18n.t('Add tag...')}
+          initialValue={draftTag.value}
+          onChange={onDraftChange}
           onSubmit={onSubmit}
           vocabulary={props.vocabulary || []} />
       }

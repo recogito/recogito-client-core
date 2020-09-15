@@ -9,7 +9,6 @@ const Autocomplete = props => {
   
   const onInputValueChange = ({ inputValue }) => {
     if (inputValue.length > 0) {
-      // Set suggestions to prefix matches...
       const prefixMatches = props.vocabulary.filter(item => {
         return item.toLowerCase().startsWith(inputValue.toLowerCase());
       });
@@ -61,6 +60,7 @@ const Autocomplete = props => {
       <div {...getComboboxProps()}>
         <input 
           {...getInputProps({ onKeyDown  })}
+          onChange={evt => props.onChange && props.onChange(evt)}
           placeholder={props.placeholder}
           defaultValue={props.initialValue}
            />
