@@ -3,7 +3,7 @@
  */
 let serverTimeDifference = 0;
 
-export default {
+export default () => ({
   
   /**
    * A generic container for RecogitoJS/Annotorious 
@@ -40,4 +40,4 @@ export default {
    toClientTime: serverTime =>
      Date.parse(serverTime) - serverTimeDifference
 
-}
+})
