@@ -1,4 +1,4 @@
-.tags:empty {
+.r6o-tags:empty {
   display:none;
 }
 
@@ -8,7 +8,7 @@
   .r6o-widget.tag .r6o-taglist li {
     height:27px;
 
-    .delete-wrapper .delete {
+    .r6o-delete-wrapper .r6o-delete {
       position:relative;
       top:-4px;
     }
@@ -16,7 +16,7 @@
 
 }
 
-.r6o-widget.tag {
+.r6o-widget.r6o-tag {
   background-color:$blueish-white;
   border-bottom:1px solid $lightgrey-border;
   padding:1px 3px;
@@ -45,16 +45,16 @@
       cursor:pointer;
       position:relative;
       line-height:180%;
-      @include noselect();
+      @include r6o-noselect();
       @include rounded-corners(2px);
       @include box-shadow(0, 0, 4px, 0.1);
 
-      .label {
+      .r6o-label {
         padding:2px 8px;
         display:inline-block;
       }
 
-      .delete-wrapper {
+      .r6o-delete-wrapper {
         display:inline-block;
         padding:2px 0;
         color:#fff;
@@ -63,14 +63,8 @@
         background-color:$ocean;
         @include rounded-corners-right(2px);
 
-        .delete {
+        .r6o-delete {
           padding:2px 6px;
-
-          .icon {
-            height:11px;
-            padding-bottom:1px;
-          }
-
         }
 
         svg {
@@ -79,20 +73,20 @@
 
       }
 
-      .delete-enter-active {
+      .r6o-delete-enter-active {
         width:24px;
         transition:width 200ms;
       }
 
-      .delete-enter-done {
+      .r6o-delete-enter-done {
         width:24px;
       }
 
-      .delete-exit {
+      .r6o-delete-exit {
         width:24px;
       }
 
-      .delete-exit-active {
+      .r6o-delete-exit-active {
         width:0;
         transition:width 200ms;
       }

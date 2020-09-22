@@ -57,18 +57,18 @@ const TagWidget = props => {
   }
 
   return (
-    <div className="r6o-widget tag">
+    <div className="r6o-widget r6o-tag">
       <div>
         { tags.length > 0 &&
           <ul className="r6o-taglist">
             { tags.map(tag =>
               <li key={tag.value} onClick={toggle(tag.value)}>
-                <span className="label">{tag.value}</span>
+                <span className="r6o-label">{tag.value}</span>
 
                 {!props.readOnly &&
-                  <CSSTransition in={showDelete === tag.value} timeout={200} classNames="delete">
-                    <span className="delete-wrapper" onClick={onDelete(tag)}>
-                      <span className="delete">
+                  <CSSTransition in={showDelete === tag.value} timeout={200} classNames="r6o-delete">
+                    <span className="r6o-delete-wrapper" onClick={onDelete(tag)}>
+                      <span className="r6o-delete">
                         <CloseIcon width={12} />
                       </span>
                     </span>

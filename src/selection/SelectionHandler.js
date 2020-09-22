@@ -100,7 +100,7 @@ export default class SelectionHandler extends EventEmitter {
   }
 
   _hideNativeSelection = () => {
-    this.el.classList.add('hide-selection');
+    this.el.classList.add('r6o-hide-selection');
   }
 
   clearSelection = () => {
@@ -117,7 +117,7 @@ export default class SelectionHandler extends EventEmitter {
       document.selection.empty();
     }
 
-    this.el.classList.remove('hide-selection');
+    this.el.classList.remove('r6o-hide-selection');
 
     const spans = Array.prototype.slice.call(this.el.querySelectorAll('.r6o-selection'));
     if (spans) {

@@ -14,8 +14,14 @@
   min-width:70px;
   vertical-align:middle;
   @include rounded-corners(2px);
-  * { vertical-align:middle; }
-  .icon { margin-right:4px; }
+
+  * { 
+    vertical-align:middle; 
+  }
+
+  .r6o-icon { 
+    margin-right:4px; 
+  }
 }
 
 .r6o-btn:disabled {

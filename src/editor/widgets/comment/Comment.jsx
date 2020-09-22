@@ -27,10 +27,10 @@ const Comment = props => {
   }
 
   const creatorInfo = props.body.creator && 
-    <div className="lastmodified">
-      <span className="lastmodified-by">{props.body.creator.name || props.body.creator.id}</span>
+    <div className="r6o-lastmodified">
+      <span className="r6o-lastmodified-by">{props.body.creator.name || props.body.creator.id}</span>
       { props.body.created && 
-        <span className="lastmodified-at">
+        <span className="r6o-lastmodified-at">
           <TimeAgo datetime={props.env.toClientTime(props.body.created)} />
         </span> 
       }
@@ -53,7 +53,7 @@ const Comment = props => {
       { creatorInfo }
 
       <div 
-        className={isMenuVisible ? "icon arrow-down menu-open" : "icon arrow-down"} 
+        className={isMenuVisible ? "r6o-icon r6o-arrow-down r6o-menu-open" : "r6o-icon r6o-arrow-down"} 
         onClick={() => setIsMenuVisible(!isMenuVisible)}>
         <ChevronDownIcon width={12} />
       </div>

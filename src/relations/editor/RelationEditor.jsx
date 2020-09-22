@@ -88,13 +88,13 @@ export default class RelationEditor extends Component {
 
         <div className="buttons">
           <span 
-            className="icon delete"
+            className="r6o-icon delete"
             onClick={this.onDelete}>
             <TrashIcon width={14} />
           </span>
 
           <span
-            className="icon ok"
+            className="r6o-icon ok"
             onClick={this.onSubmit}>
             <CheckIcon width={14} />
           </span>

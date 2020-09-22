@@ -42,7 +42,7 @@ export default class Handle extends EventEmitter {
     this.rect.setAttribute('width', Math.round(this.bounds.width) + 5);
     this.rect.setAttribute('height',  Math.round(this.bounds.height));
 
-    this.arrow.setAttribute('class', 'arrow');    
+    this.arrow.setAttribute('class', 'r6o-arrow');    
 
     this.rect.addEventListener('click', () => this.emit('click'));
   }

@@ -144,8 +144,8 @@ const Editor = props => {
 
   return (
     <div ref={element} className="r6o-editor">
-      <div className="arrow" />
-      <div className="inner">
+      <div className="r6o-arrow" />
+      <div className="r6o-editor-inner">
         {widgets.map(widget => 
           React.cloneElement(widget, { 
             annotation : currentAnnotation,

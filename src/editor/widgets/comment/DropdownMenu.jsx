@@ -11,7 +11,7 @@ const DropdownMenu = props => {
   useClickOutside(ref, () => props.onClickOutside());
 
   return (
-    <ul ref={ref} className="comment-dropdown-menu">
+    <ul ref={ref} className="r6o-comment-dropdown-menu">
       <li onClick={props.onEdit}>{i18n.t('Edit')}</li>
       <li onClick={props.onDelete}>{i18n.t('Delete')}</li>
     </ul>

@@ -9,7 +9,7 @@
     padding:8px 10px;
   }
 
-  .lastmodified {
+  .r6o-lastmodified {
     border:1px solid $lightgrey-border;
     display:inline-block;
     border-radius:2px;
@@ -18,14 +18,14 @@
     line-height:100%;
     font-size:12px;
 
-    .lastmodified-at {
+    .r6o-lastmodified-at {
       color:$lightgrey-type;
       padding-left:3px;
     }
     
   }
 
-  .arrow-down {
+  .r6o-arrow-down {
     position:absolute;
     height: 20px;
     width: 20px;
@@ -40,11 +40,11 @@
     @include rounded-corners(1px);
   }
 
-  .arrow-down.menu-open {
+  .r6o-arrow-down.r6o-menu-open {
     border-color:$ocean;
   }
 
-  .comment-dropdown-menu {
+  .r6o-comment-dropdown-menu {
     position:absolute;
     top:32px;
     right:8px;

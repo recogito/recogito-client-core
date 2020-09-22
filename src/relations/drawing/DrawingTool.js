@@ -31,7 +31,7 @@ export default class DrawingTool extends EventEmitter {
   }
 
   attachHandlers = () => {
-    this.contentEl.classList.add('noselect');
+    this.contentEl.classList.add('r6o-noselect');
 
     this.contentEl.addEventListener('mousedown', this.onMouseDown);
     this.contentEl.addEventListener('mousemove', this.onMouseMove);
@@ -44,7 +44,7 @@ export default class DrawingTool extends EventEmitter {
   }
 
   detachHandlers = () => {
-    this.contentEl.classList.remove('noselect');
+    this.contentEl.classList.remove('r6o-noselect');
 
     this.contentEl.removeEventListener('mousedown', this.onMouseDown);
     this.contentEl.removeEventListener('mousemove', this.onMouseMove);
