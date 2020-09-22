@@ -2,7 +2,6 @@ import React from 'preact/compat';
 import Comment from './Comment';
 import TextEntryField from './TextEntryField';
 import i18n from '../../../i18n';
-import Environment from '../../../Environment';
 
 /**
  * Comments are TextualBodies where the purpose field is either 
@@ -66,7 +65,7 @@ const CommentWidget = props => {
       const creator = body.creator?.id;
 
       // The current user
-      const me = Environment.user?.id;
+      const me = props.env.user?.id;
 
       return me !== creator;
     }
@@ -80,6 +79,7 @@ const CommentWidget = props => {
       { comments.map((body, idx) => 
         <Comment 
           key={idx} 
+          env={props.env}
           readOnly={isReadOnly(body)} 
           body={body} 
           onUpdate={props.onUpdateBody}

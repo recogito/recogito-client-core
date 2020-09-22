@@ -1,6 +1,5 @@
 import React from 'preact/compat';
 import { useState, useRef, useEffect } from 'preact/hooks';
-import Environment from '../Environment';
 import { getWidget, DEFAULT_WIDGETS } from './widgets';
 import setPosition from './setPosition';
 import i18n from '../i18n';
@@ -19,7 +18,7 @@ const bounds = elem => {
  * with CTRL+Z.
  */
 const Editor = props => {
-  
+
   // The current state of the edited annotation vs. original
   const [ currentAnnotation, setCurrentAnnotation ] = useState();
 
@@ -75,7 +74,7 @@ const Editor = props => {
   const creationMeta = body => {
     const meta = {};
 
-    const { user } = Environment;
+    const { user } = props.env;
 
     // Metadata is only added when a user is set, otherwise
     // the Editor operates in 'anonymous mode'. Also,
@@ -86,9 +85,9 @@ const Editor = props => {
       if (user.displayName) meta.creator.name = user.displayName;
 
       if (body.created)
-        body.modified = Environment.getCurrentTimeAdjusted();
+        body.modified = props.env.getCurrentTimeAdjusted();
       else
-        body.created = Environment.getCurrentTimeAdjusted();
+        body.created = props.env.getCurrentTimeAdjusted();
     }
 
     return meta;
@@ -152,6 +151,7 @@ const Editor = props => {
             annotation : currentAnnotation,
             readOnly : props.readOnly,
             config: props.config,
+            env: props.env,
             onAppendBody,
             onUpdateBody,
             onRemoveBody,

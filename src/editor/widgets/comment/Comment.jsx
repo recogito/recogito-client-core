@@ -4,7 +4,6 @@ import TimeAgo from 'timeago-react';
 import DropdownMenu from './DropdownMenu';
 import TextEntryField from './TextEntryField';
 import { ChevronDownIcon } from '../../../Icons';
-import Environment from '../../../Environment';
 
 /** A single comment inside the CommentWidget **/
 const Comment = props => {
@@ -32,7 +31,7 @@ const Comment = props => {
       <span className="lastmodified-by">{props.body.creator.name || props.body.creator.id}</span>
       { props.body.created && 
         <span className="lastmodified-at">
-          <TimeAgo datetime={Environment.toClientTime(props.body.created)} />
+          <TimeAgo datetime={props.env.toClientTime(props.body.created)} />
         </span> 
       }
     </div>
