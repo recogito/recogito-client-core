@@ -51,9 +51,12 @@ const TagWidget = props => {
   }
 
   const onSubmit = tag => {
-    // Just 'undraft' the current draft tag
-    const { draft, ...undrafted } = draftTag;
-    props.onUpdateBody(draftTag, undrafted);
+    const { draft, ...toSubmit } =  { ...draftTag, value: tag }; 
+    if (draftTag.value.trim().length === 0) {
+      props.onAppendBody(toSubmit);
+    } else {
+      props.onUpdateBody(draftTag, toSubmit); 
+    }
   }
 
   return (
