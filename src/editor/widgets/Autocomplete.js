@@ -43,7 +43,7 @@ const Autocomplete = props => {
       props.onSubmit(inputValue);
   }
 
-  const onKeyDown = evt => {
+  const onKeyUp = evt => {
     const { value } = evt.target;
     
     if (evt.which == 13 && highlightedIndex == -1) {
@@ -52,6 +52,8 @@ const Autocomplete = props => {
       setInputItems(props.vocabulary); // Show all options on key down
     } else if (evt.which == 27) {
       props.onCancel && props.onCancel();
+    } else {
+      props.onChange && props.onChange(value);
     }
   }
 
@@ -59,11 +61,9 @@ const Autocomplete = props => {
     <div ref={element} className="r6o-autocomplete">
       <div {...getComboboxProps()}>
         <input 
-          {...getInputProps({ onKeyDown  })}
-          onChange={evt => props.onChange && props.onChange(evt)}
+          {...getInputProps({ onKeyUp })}
           placeholder={props.placeholder}
-          defaultValue={props.initialValue}
-           />
+          defaultValue={props.initialValue} />
       </div>
       <ul {...getMenuProps()}>
         {isOpen && inputItems.map((item, index) => (

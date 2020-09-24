@@ -37,9 +37,9 @@ const TagWidget = props => {
     props.onRemoveBody(tag);
   }
 
-  const onDraftChange = evt => {
+  const onDraftChange = value => {
     const prev = draftTag.value.trim();
-    const updated = evt.target.value.trim();
+    const updated = value.trim();
 
     if (prev.length === 0 && updated.length > 0) {
       props.onAppendBody({ ...draftTag, value: updated });
