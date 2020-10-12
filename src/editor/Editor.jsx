@@ -150,7 +150,6 @@ const Editor = props => {
           React.cloneElement(widget, { 
             annotation : currentAnnotation,
             readOnly : props.readOnly,
-            config: props.config,
             env: props.env,
             onAppendBody,
             onUpdateBody,

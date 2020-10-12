@@ -15,6 +15,7 @@ export default class WrappedWidget extends Component {
         const widgetEl = this.props.widget({
           annotation: next.annotation,
           readOnly: next.readOnly,
+          ...this.props.config,
           onAppendBody: body => next.onAppendBody(body),
           onUpdateBody: (previous, updated) => next.onUpdateBody(previous, updated),
           onRemoveBody: body => next.onRemoveBody(body),
