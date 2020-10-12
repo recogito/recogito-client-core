@@ -1,9 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { useCombobox } from 'downshift'
 
 const Autocomplete = props => {
-
-  const element = useRef();
 
   const [ inputItems, setInputItems ] = useState(props.vocabulary);
   
@@ -58,12 +56,11 @@ const Autocomplete = props => {
   }
 
   return (
-    <div ref={element} className="r6o-autocomplete">
+    <div className="r6o-autocomplete">
       <div {...getComboboxProps()}>
         <input 
           {...getInputProps({ onKeyUp })}
-          placeholder={props.placeholder}
-          defaultValue={props.initialValue} />
+          placeholder={props.placeholder} />
       </div>
       <ul {...getMenuProps()}>
         {isOpen && inputItems.map((item, index) => (
