@@ -62,7 +62,7 @@ export default class Autocomplete extends Component {
       if (evt.which == 13 && highlightedIndex == -1) {
         onSubmit(value);
       } else if (evt.which == 40 && value.length == 0) {
-        setInputItems(this.props.vocabulary); // Show all options on key down
+        this.setState({ inputItems: this.props.vocabulary }); // Show all options on key down
       } else if (evt.which == 27) {
         this.props.onCancel && this.props.onCancel();
       } else {

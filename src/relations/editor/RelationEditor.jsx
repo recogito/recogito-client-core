@@ -26,6 +26,7 @@ export default class RelationEditor extends Component {
 
   constructor(props) {
     super(props);
+
     this.element = React.createRef();
   }
 
@@ -47,7 +48,9 @@ export default class RelationEditor extends Component {
     }
   }
   
-  onSubmit = value => {
+  onSubmit = () => {
+    const value = this.element.current.querySelector('input').value;
+
     const updatedAnnotation = this.props.relation.annotation.clone({
       motivation: 'linking',
       body: [{
