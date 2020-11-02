@@ -3,8 +3,10 @@ import { useState } from 'preact/hooks';
 import TimeAgo from 'timeago-react';
 import DropdownMenu from './DropdownMenu';
 import TextEntryField from './TextEntryField';
+import TypeDropdown from './TypeDropdown';
 import { ChevronDownIcon } from '../../../Icons';
 import i18n from '../../../i18n';
+
 
 /** A single comment inside the CommentWidget **/
 const Comment = props => {
@@ -38,7 +40,6 @@ const Comment = props => {
         </span> 
       }
     </div>
-
   return props.readOnly ? (
     <div className="r6o-widget comment">
       <div className="r6o-readonly-comment">{props.body.value}</div>
@@ -50,9 +51,15 @@ const Comment = props => {
         editable={isEditable}
         content={props.body.value} 
         onChange={onUpdateComment} 
-        onSaveAndClose={props.onSaveAndClose} 
+        onSaveAndClose={props.onSaveAndClose}
       />
-      
+
+      <TypeDropdown 
+        editable={isEditable}
+        content={props.body.purpose} 
+        onChange={onUpdateComment} 
+        onSaveAndClose={props.onSaveAndClose}
+      />
       { creatorInfo }
 
       <div 
