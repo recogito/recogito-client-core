@@ -99,6 +99,12 @@ const Editor = props => {
     })
   );
 
+  const onUpdateAnnotation = body => setCurrentAnnotation(
+    currentAnnotation.clone({
+      ...body
+    })
+  );
+
   const onUpdateBody = (previous, updated) => setCurrentAnnotation(
     currentAnnotation.clone({
       body: currentAnnotation.bodies.map(body => 
@@ -153,6 +159,7 @@ const Editor = props => {
             env: props.env,
             onAppendBody,
             onUpdateBody,
+            onUpdateAnnotation,
             onRemoveBody,
             onSaveAndClose: onOk              
           })

@@ -18,6 +18,7 @@ export default class WrappedWidget extends Component {
           ...this.props.config,
           onAppendBody: body => next.onAppendBody(body),
           onUpdateBody: (previous, updated) => next.onUpdateBody(previous, updated),
+          onUpdateAnnotation: contents => next.onUpdateAnnotation(contents),
           onRemoveBody: body => next.onRemoveBody(body),
           onSaveAndClose: () => next.onSaveAndClose()
         });
