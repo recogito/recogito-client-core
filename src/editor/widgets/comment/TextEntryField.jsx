@@ -15,10 +15,7 @@ export default class TextEntryField extends Component {
 
   // Focus on render
   onRender = ref => {
-    /*
-    if (ref && this.props.editable)
-      setTimeout(() => ref.focus(), 1);
-    */
+    // Note: we could use this to set automatic focus (but leave this out for now)
   }
 
   render() {
