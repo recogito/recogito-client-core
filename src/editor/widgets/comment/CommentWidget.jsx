@@ -37,8 +37,8 @@ const CommentWidget = props => {
   const comments = all.filter(b => b != draftReply);
 
   const onEditReply = evt => {
-    const prev = draftReply.value.trim();
-    const updated = evt.target.value.trim();
+    const prev = draftReply.value;
+    const updated = evt.target.value;
 
     if (prev.length === 0 && updated.length > 0) {
       props.onAppendBody({ ...draftReply, value: updated });
