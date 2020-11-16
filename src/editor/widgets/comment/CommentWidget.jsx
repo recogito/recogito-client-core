@@ -2,8 +2,9 @@ import React from 'preact/compat';
 import Comment from './Comment';
 import TextEntryField from './TextEntryField';
 import i18n from '../../../i18n';
+import TypeDropdown from './TypeDropdown';
+
 const purposes = ['assessing', 'bookmarking', 'classifying', 'commenting', 'describing', 'editing', 'highlighting', 'identifying', 'linking', 'moderating', 'questioning']
-console.log(purposes)
 /**
  * Comments are TextualBodies where the purpose field is either 
  * blank or 'commenting' or 'replying'
@@ -28,10 +29,12 @@ const getDraftReply = (existingDraft, isReply) => {
  */
 const CommentWidget = props => {
   // All comments (draft + non-draft)
+  console.log(props.annotation)
   const all = props.annotation ? 
     props.annotation.bodies.filter(isComment) : [];
 
   // Last draft comment without a creator field goes into the reply field
+  console.log(all)
   const draftReply = getDraftReply(all.slice().reverse().find(b => b.draft && !b.creator), all.length > 1); 
 
   // All except draft reply
@@ -80,6 +83,7 @@ const CommentWidget = props => {
         <Comment 
           key={idx} 
           env={props.env}
+          purpose={props.purpose}
           readOnly={isReadOnly(body)} 
           body={body} 
           onUpdate={props.onUpdateBody}
@@ -92,6 +96,7 @@ const CommentWidget = props => {
           <TextEntryField
             content={draftReply.value}
             editable={true}
+            purpose={props.purpose}
             placeholder={comments.length > 0 ? i18n.t('Add a reply...') : i18n.t('Add a comment...')}
             onChange={onEditReply}
             onSaveAndClose={() => props.onSaveAndClose()}

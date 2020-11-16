@@ -24,9 +24,15 @@ const Comment = props => {
     props.onDelete(props.body);
     setIsMenuVisible(false); 
   }
-
   const onUpdateComment = evt => {
     props.onUpdate(props.body, { ...props.body, value: evt.target.value });
+  }
+
+  const onUpdateDropdown = evt => {
+    console.log('update dropdown')
+    console.log(evt)
+    console.log(props.body)
+    props.onUpdate(props.body, { ...props.body, purpose: evt.target.value });
   }
 
   const creatorInfo = props.body.creator && 
@@ -53,15 +59,13 @@ const Comment = props => {
         onChange={onUpdateComment} 
         onSaveAndClose={props.onSaveAndClose}
       />
-
-      <TypeDropdown 
-        editable={isEditable}
-        content={props.body.purpose} 
-        onChange={onUpdateComment} 
-        onSaveAndClose={props.onSaveAndClose}
-      />
-      { creatorInfo }
-
+      { props.purpose == true &&
+        <TypeDropdown  
+            editable={isEditable}
+            content={props.body.purpose} 
+            onChange={onUpdateDropdown} 
+            onSaveAndClose={props.onSaveAndClose}
+          /> } 
       <div 
         className={isMenuVisible ? "r6o-icon r6o-arrow-down r6o-menu-open" : "r6o-icon r6o-arrow-down"} 
         onClick={() => setIsMenuVisible(!isMenuVisible)}>
