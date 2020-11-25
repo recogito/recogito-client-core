@@ -1,29 +1,20 @@
 import React, { Component } from 'preact/compat';
 import ContentEditable from 'react-contenteditable';
 import i18n from '../../../i18n';
+import Select from 'react-select';
 
-const purposes = ['assessing', 'bookmarking', 'classifying', 'commenting', 'describing', 'editing', 'highlighting', 'identifying', 'linking', 'moderating', 'questioning']
+const purposes = [{'value': 'assessing', 'label': 'Assessing'}, {'value': 'bookmarking', 'label': 'Bookmarking'}, {'value': 'classifying', 'label': 'Classifying'}, {'value': 'commenting', 'label': 'Commenting'}, {'value': 'describing', 'label': 'Describing'},{'value': 'editing', 'label': 'Editing'}, {'value': 'highlighting', 'label': 'Highlighting'},{'value': 'identifying', 'label': 'Identifying'},{'value': 'linking', 'label': 'Linking'},{'value': 'moderating', 'label': 'Moderating'},{'value': 'questioning', 'label': 'Questioning'}]
 
 export default class TypeDropdown extends Component {
-
-  // CTRL+Enter functions as Ok
-  onKeyDown = evt => {
-    if (evt.which === 13 && evt.ctrlKey)
-      this.props.onSaveAndClose();
-  }
-
   render() {
+    const selectedOption = this.props.content ? {'value': this.props.content, 'label': this.props.content.charAt(0).toUpperCase() + this.props.content.slice(1) } : undefined;
     return (
-      <div>
-        <div>{this.props.content}</div>
-      <select name="purpose" id="purpose" disabled={this.props.editable ? false : true }>
-        {purposes.map(purpose => (
-          <option value={purpose} selected={purpose == this.props.content}>
-            {purpose}
-          </option>
-        ))}
-      </select>
-      </div>
-    )
+      <Select
+        value={selectedOption}
+        onChange={this.props.onChange}
+        options={purposes}
+        isDisabled={!this.props.editable}
+      />
+    );
   }
 } 

@@ -29,12 +29,10 @@ const getDraftReply = (existingDraft, isReply) => {
  */
 const CommentWidget = props => {
   // All comments (draft + non-draft)
-  console.log(props.annotation)
   const all = props.annotation ? 
     props.annotation.bodies.filter(isComment) : [];
 
   // Last draft comment without a creator field goes into the reply field
-  console.log(all)
   const draftReply = getDraftReply(all.slice().reverse().find(b => b.draft && !b.creator), all.length > 1); 
 
   // All except draft reply
@@ -51,6 +49,12 @@ const CommentWidget = props => {
     } else {
       props.onUpdateBody(draftReply, { ...draftReply, value: updated });
     }
+  }
+
+  const onUpdatePurpose = evt => {
+    const prev = draftReply.purpose.trim();
+    const updated = evt.value.trim();
+    props.onUpdateBody(draftReply, { ...draftReply, purpose: updated });
   }
 
   // A comment should be read-only if:
@@ -77,6 +81,7 @@ const CommentWidget = props => {
     // Global setting as last possible option
     return props.readOnly;
   }
+
   return (
     <>
       { comments.map((body, idx) => 
@@ -96,11 +101,18 @@ const CommentWidget = props => {
           <TextEntryField
             content={draftReply.value}
             editable={true}
-            purpose={props.purpose}
             placeholder={comments.length > 0 ? i18n.t('Add a reply...') : i18n.t('Add a comment...')}
             onChange={onEditReply}
             onSaveAndClose={() => props.onSaveAndClose()}
           /> 
+        { props.purpose == true &&
+          <TypeDropdown  
+              editable={true}
+              content={draftReply.purpose ? draftReply.purpose : 'replying'} 
+              onChange={onUpdatePurpose} 
+              onSaveAndClose={props.onSaveAndClose}
+            />
+          } 
         </div>
       }
     </>

@@ -29,10 +29,7 @@ const Comment = props => {
   }
 
   const onUpdateDropdown = evt => {
-    console.log('update dropdown')
-    console.log(evt)
-    console.log(props.body)
-    props.onUpdate(props.body, { ...props.body, purpose: evt.target.value });
+    props.onUpdate(props.body, { ...props.body, purpose: evt.value });
   }
 
   const creatorInfo = props.body.creator && 
