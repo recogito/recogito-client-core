@@ -18,6 +18,7 @@ import hi from 'timeago.js/lib/lang/hi_IN';
 import it from 'timeago.js/lib/lang/it';
 import pt from 'timeago.js/lib/lang/pt_BR';
 import sv from 'timeago.js/lib/lang/sv';
+import tr from 'timeago.js/lib/lang/tr';
 // import ur from 'timeago.js/lib/lang/ur'; // Not currently supported by TimeAgo 
 
 timeago.register('ar', ar);
@@ -29,5 +30,6 @@ timeago.register('hi', hi);
 timeago.register('it', it);
 timeago.register('pt', pt);
 timeago.register('sv', sv);
+timeago.register('tr', tr);
 
 export default i18n;

@@ -1,13 +1,9 @@
 import React, { Component } from 'preact/compat';
-import ContentEditable from 'react-contenteditable';
+import TextareaAutosize from 'react-autosize-textarea';
 import i18n from '../../../i18n';
 
 /** 
  * A basic text entry field, for reuse in different widgets.
- * 
- * Note that react-contenteditable seems to have compatibility 
- * issues with React hooks, therefore this component is 
- * implemented as a class.
  */
 export default class TextEntryField extends Component {
 
@@ -19,17 +15,16 @@ export default class TextEntryField extends Component {
 
   // Focus on render
   onRender = ref => {
-    if (ref && this.props.editable)
-      setTimeout(() => ref.focus(), 1);
+    // Note: we could use this to set automatic focus (but leave this out for now)
   }
 
   render() {
     return (
-      <ContentEditable
-        innerRef={this.onRender}
+      <TextareaAutosize
+        ref={this.onRender}
         className="r6o-editable-text" 
-        html={this.props.content}
-        data-placeholder={this.props.placeholder || i18n.t('Add a comment...')}
+        value={this.props.content}
+        placeholder={this.props.placeholder || i18n.t('Add a comment...')}
         disabled={!this.props.editable}
         onChange={this.props.onChange}
         onKeyDown={this.onKeyDown} />

@@ -6,7 +6,13 @@
 
   .r6o-editable-text,
   .r6o-readonly-comment {
-    padding:8px 10px;
+    padding:10px;
+    width:100%;
+    box-sizing:border-box;
+    outline:none;
+    border:none;
+    background-color:transparent;
+    resize:none;
   }
 
   .r6o-lastmodified {

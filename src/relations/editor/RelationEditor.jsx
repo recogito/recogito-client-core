@@ -17,10 +17,6 @@ const getContent = relation => {
  * to be used separately by the implementing application. We
  * still keep it in the /recogito-relations folder though, so that
  * all code that belongs together stays together.
- * 
- * Note that react-contenteditable seems to have compatibility 
- * issues with React hooks, therefore this component is implemented 
- * as a class.
  */
 export default class RelationEditor extends Component {
 
