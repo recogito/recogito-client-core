@@ -56,6 +56,7 @@ const Comment = props => {
         onChange={onUpdateComment} 
         onSaveAndClose={props.onSaveAndClose}
       />
+      { creatorInfo }
       { props.purpose == true &&
         <TypeDropdown  
             editable={isEditable}

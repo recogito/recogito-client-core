@@ -1,5 +1,4 @@
 import React, { Component } from 'preact/compat';
-import ContentEditable from 'react-contenteditable';
 import i18n from '../../../i18n';
 import Select from 'react-select';
 
