@@ -1,5 +1,6 @@
 import WebAnnotation from '../WebAnnotation';
 import { v4 as uuid } from 'uuid';
+import * as equals from 'fast-deep-equal';
 
 /**
  * An "annotation in draft mode". Really the same
@@ -8,10 +9,10 @@ import { v4 as uuid } from 'uuid';
  */
 export default class Selection {
 
-  constructor(target) {
+  constructor(target, body) {
     this.underlying = {
       type: 'Selection',
-      body: [],
+      body: body || [],
       target
     }
   }
@@ -45,7 +46,7 @@ export default class Selection {
     if (!other) {
       return false;
     } else {
-      return this.underlying === other.underlying;
+      return equals(this.underlying, other.underlying);
     }
   }
   

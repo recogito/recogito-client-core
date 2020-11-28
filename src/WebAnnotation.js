@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import * as equals from 'fast-deep-equal';
 
 export default class WebAnnotation {
 
@@ -24,7 +25,7 @@ export default class WebAnnotation {
     return new WebAnnotation({ ...this.underlying, ...opt_props}, this.opts);
   }
 
-  /** An equality check based on the underlying object or (if given) ID **/
+  /** An equality check based on the underlying object **/
   isEqual(other) {
     if (other?.type !== 'Annotation') {
       return false;
@@ -32,8 +33,9 @@ export default class WebAnnotation {
       return true;
     } else if (!this.underlying.id || !other.underlying.id) {
       return false;
+    } else {
+      return equals(this.underlying, other.underlying);
     }
-    return this.underlying.id === other.underlying.id
   }
 
   get readOnly() {
