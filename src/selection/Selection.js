@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid';
 export default class Selection {
 
   constructor(target) {
-    this._stub = {
+    this._underlying = {
       type: 'Selection',
       body: [],
       target
@@ -19,25 +19,25 @@ export default class Selection {
   /** Creates a copy of this selection **/
   clone = opt_props => {
     // Deep-clone target
-    const clonedTarget = JSON.parse(JSON.stringify(this._stub.target));    
+    const clonedTarget = JSON.parse(JSON.stringify(this._underlying.target));    
     const cloned = new Selection(clonedTarget);
 
     if (opt_props)
-      cloned._stub = { ...cloned._stub, ...opt_props };
+      cloned._underlying = { ...cloned._underlying, ...opt_props };
 
     return cloned;
   }
 
   get type() {
-    return this._stub.type;
+    return this._underlying.type;
   }
 
   get body() {
-    return this._stub.body;
+    return this._underlying.body;
   }
 
   get target() {
-    return this._stub.target;
+    return this._underlying.target;
   }
 
   /** For consistency with WebAnnotation **/
@@ -45,16 +45,16 @@ export default class Selection {
     if (!other) {
       return false;
     } else {
-      return this._stub === other._stub;
+      return this._underlying === other._underlying;
     }
   }
   
   get bodies() {
-    return this._stub.body;
+    return this._underlying.body;
   }
 
   selector = type => {
-    const { target } = this._stub;
+    const { target } = this._underlying;
 
     if (target.selector) {
       // Normalize to array
@@ -79,7 +79,7 @@ export default class Selection {
   }
 
   toAnnotation = () => {
-    const a = Object.assign({}, this._stub, {
+    const a = Object.assign({}, this._underlying, {
       '@context': 'http://www.w3.org/ns/anno.jsonld',
       'type': 'Annotation',
       'id': `#${uuid()}`
