@@ -9,7 +9,6 @@ const purposes = ['assessing', 'bookmarking', 'classifying', 'commenting', 'desc
  * Comments are TextualBodies where the purpose field is either 
  * blank or 'commenting' or 'replying'
  */
-
 const isComment = body => 
   body.type === 'TextualBody' && (
     !body.hasOwnProperty('purpose') || purposes.indexOf(body.purpose) > -1
@@ -19,9 +18,11 @@ const isComment = body =>
  * The draft reply is a comment body with a 'draft' flag
  */
 const getDraftReply = (existingDraft, isReply) => {
-  return existingDraft ? existingDraft : {
-    type: 'TextualBody', value: '', purpose: isReply ? 'replying' : 'commenting', draft: true
+  let draft = existingDraft ? existingDraft : {
+    type: 'TextualBody', value: '', draft: true
   };
+  draft.purpose = draft.purpose ? draft.purpose : isReply ? 'replying' : 'commenting';
+  return draft;
 };
 
 /** 
@@ -31,13 +32,11 @@ const CommentWidget = props => {
   // All comments (draft + non-draft)
   const all = props.annotation ? 
     props.annotation.bodies.filter(isComment) : [];
-
   // Last draft comment without a creator field goes into the reply field
   const draftReply = getDraftReply(all.slice().reverse().find(b => b.draft && !b.creator), all.length > 1); 
-
   // All except draft reply
-  const comments = all.filter(b => b != draftReply);
-
+  let comments = all.filter(b => b != draftReply);
+  comments = comments.map(elem => getDraftReply(elem));
   const onEditReply = evt => {
     const prev = draftReply.value;
     const updated = evt.target.value;
@@ -54,7 +53,12 @@ const CommentWidget = props => {
   const onUpdatePurpose = evt => {
     const prev = draftReply.purpose.trim();
     const updated = evt.value.trim();
-    props.onUpdateBody(draftReply, { ...draftReply, purpose: updated });
+    if (draftReply.value == '' && updated.length > 0) {
+      draftReply.purpose = updated;
+      this.setState({purpose: updated});
+    } else {
+      props.onUpdateBody(draftReply, { ...draftReply, purpose: updated });
+    }
   }
 
   // A comment should be read-only if:
@@ -108,7 +112,7 @@ const CommentWidget = props => {
         { props.purpose == true &&
           <TypeDropdown  
               editable={true}
-              content={draftReply.purpose ? draftReply.purpose : 'replying'} 
+              content={draftReply.purpose}
               onChange={onUpdatePurpose} 
               onSaveAndClose={props.onSaveAndClose}
             />
