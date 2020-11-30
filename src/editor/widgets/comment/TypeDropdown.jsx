@@ -8,12 +8,14 @@ export default class TypeDropdown extends Component {
   render() {
     const selectedOption = this.props.content ? {'value': this.props.content, 'label': this.props.content.charAt(0).toUpperCase() + this.props.content.slice(1) } : undefined;
     return (
-      <Select
-        value={selectedOption}
-        onChange={this.props.onChange}
-        options={purposes}
-        isDisabled={!this.props.editable}
-      />
+      <div class="purposedropdown">
+        <Select
+          value={selectedOption}
+          onChange={this.props.onChange}
+          options={purposes}
+          isDisabled={!this.props.editable}
+        />
+      </div>
     );
   }
 } 

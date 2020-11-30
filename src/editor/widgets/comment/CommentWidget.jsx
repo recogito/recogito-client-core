@@ -35,8 +35,7 @@ const CommentWidget = props => {
   // Last draft comment without a creator field goes into the reply field
   const draftReply = getDraftReply(all.slice().reverse().find(b => b.draft && !b.creator), all.length > 1); 
   // All except draft reply
-  let comments = all.filter(b => b != draftReply);
-  comments = comments.map(elem => getDraftReply(elem));
+  const comments = all.filter(b => b != draftReply);
   const onEditReply = evt => {
     const prev = draftReply.value;
     const updated = evt.target.value;
@@ -55,7 +54,6 @@ const CommentWidget = props => {
     const updated = evt.value.trim();
     if (draftReply.value == '' && updated.length > 0) {
       draftReply.purpose = updated;
-      this.setState({purpose: updated});
     } else {
       props.onUpdateBody(draftReply, { ...draftReply, purpose: updated });
     }
@@ -109,12 +107,12 @@ const CommentWidget = props => {
             onChange={onEditReply}
             onSaveAndClose={() => props.onSaveAndClose()}
           /> 
-        { props.purpose == true &&
+        { props.purpose == true && draftReply.value.length > 0 &&
           <TypeDropdown  
               editable={true}
               content={draftReply.purpose}
               onChange={onUpdatePurpose} 
-              onSaveAndClose={props.onSaveAndClose}
+              onSaveAndClose={() => props.onSaveAndClose()}
             />
           } 
         </div>
