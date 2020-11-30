@@ -50,7 +50,6 @@ const CommentWidget = props => {
   }
 
   const onUpdatePurpose = evt => {
-    const prev = draftReply.purpose.trim();
     const updated = evt.value.trim();
     if (draftReply.value == '' && updated.length > 0) {
       draftReply.purpose = updated;
