@@ -2,7 +2,7 @@ import React from 'preact/compat';
 import Comment from './Comment';
 import TextEntryField from './TextEntryField';
 import i18n from '../../../i18n';
-import TypeDropdown from './TypeDropdown';
+import PurposeDropdown from './PurposeDropdown';
 
 const purposes = ['assessing', 'bookmarking', 'classifying', 'commenting', 'describing', 'editing', 'highlighting', 'identifying', 'linking', 'moderating', 'questioning']
 /**
@@ -108,7 +108,7 @@ const CommentWidget = props => {
             onSaveAndClose={() => props.onSaveAndClose()}
           /> 
         { props.purpose == true && draftReply.value.length > 0 &&
-          <TypeDropdown  
+          <PurposeDropdown
               editable={true}
               content={draftReply.purpose}
               onChange={onUpdatePurpose} 

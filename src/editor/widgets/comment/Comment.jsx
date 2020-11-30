@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks';
 import TimeAgo from 'timeago-react';
 import DropdownMenu from './DropdownMenu';
 import TextEntryField from './TextEntryField';
-import TypeDropdown from './TypeDropdown';
+import PurposeDropdown from './PurposeDropdown';
 import { ChevronDownIcon } from '../../../Icons';
 import i18n from '../../../i18n';
 
@@ -58,7 +58,7 @@ const Comment = props => {
       />
       { creatorInfo }
       { props.purpose == true &&
-        <TypeDropdown  
+        <PurposeDropdown
             editable={isEditable}
             content={props.body.purpose} 
             onChange={onUpdateDropdown} 
