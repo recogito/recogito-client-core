@@ -2,16 +2,16 @@ import React from 'preact/compat';
 import Comment from './Comment';
 import TextEntryField from './TextEntryField';
 import i18n from '../../../i18n';
-import PurposeDropdown from './PurposeDropdown';
+import PurposeDropdown, {purposes} from './PurposeDropdown';
 
-const purposes = ['assessing', 'bookmarking', 'classifying', 'commenting', 'describing', 'editing', 'highlighting', 'identifying', 'linking', 'moderating', 'questioning']
+const purposeValues = purposes.map(p => p.value);
 /**
  * Comments are TextualBodies where the purpose field is either 
  * blank or 'commenting' or 'replying'
  */
 const isComment = body => 
   body.type === 'TextualBody' && (
-    !body.hasOwnProperty('purpose') || purposes.indexOf(body.purpose) > -1
+    !body.hasOwnProperty('purpose') || purposeValues.indexOf(body.purpose) > -1
   );
   
 /**
