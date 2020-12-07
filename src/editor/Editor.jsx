@@ -116,7 +116,8 @@ const Editor = props => {
 
   const onOk = _ => {
     // Removes the 'draft' flag from all bodies
-    const undraft = annotation => annotation.clone({
+    const undraft = annotation => 
+    annotation.clone({
       body : annotation.bodies.map(({ draft, ...rest }) =>
         draft ? { ...rest, ...creationMeta(rest) } : rest )
     });
@@ -140,7 +141,6 @@ const Editor = props => {
   // Use default comment + tag widget unless host app overrides
   const widgets = props.config.widgets ? 
     props.config.widgets.map(getWidget) : DEFAULT_WIDGETS;
-
   return (
     <div ref={element} className="r6o-editor">
       <div className="r6o-arrow" />

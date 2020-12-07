@@ -3,8 +3,10 @@ import { useState } from 'preact/hooks';
 import TimeAgo from 'timeago-react';
 import DropdownMenu from './DropdownMenu';
 import TextEntryField from './TextEntryField';
+import PurposeDropdown from './PurposeDropdown';
 import { ChevronDownIcon } from '../../../Icons';
 import i18n from '../../../i18n';
+
 
 /** A single comment inside the CommentWidget **/
 const Comment = props => {
@@ -22,9 +24,12 @@ const Comment = props => {
     props.onDelete(props.body);
     setIsMenuVisible(false); 
   }
-
   const onUpdateComment = evt => {
     props.onUpdate(props.body, { ...props.body, value: evt.target.value });
+  }
+
+  const onUpdateDropdown = evt => {
+    props.onUpdate(props.body, { ...props.body, purpose: evt.value });
   }
 
   const creatorInfo = props.body.creator && 
@@ -38,7 +43,6 @@ const Comment = props => {
         </span> 
       }
     </div>
-
   return props.readOnly ? (
     <div className="r6o-widget comment">
       <div className="r6o-readonly-comment">{props.body.value}</div>
@@ -50,11 +54,16 @@ const Comment = props => {
         editable={isEditable}
         content={props.body.value} 
         onChange={onUpdateComment} 
-        onSaveAndClose={props.onSaveAndClose} 
+        onSaveAndClose={props.onSaveAndClose}
       />
-      
       { creatorInfo }
-
+      { props.purpose == true &&
+        <PurposeDropdown
+            editable={isEditable}
+            content={props.body.purpose} 
+            onChange={onUpdateDropdown} 
+            onSaveAndClose={props.onSaveAndClose}
+          /> } 
       <div 
         className={isMenuVisible ? "r6o-icon r6o-arrow-down r6o-menu-open" : "r6o-icon r6o-arrow-down"} 
         onClick={() => setIsMenuVisible(!isMenuVisible)}>
