@@ -1,7 +1,7 @@
 import React, { Component } from 'preact/compat';
 import Select from 'react-select';
 
-export const purposes = [{'value': 'assessing', 'label': 'Assessing'}, {'value': 'bookmarking', 'label': 'Bookmarking'}, {'value': 'classifying', 'label': 'Classifying'}, {'value': 'commenting', 'label': 'Commenting'}, {'value': 'describing', 'label': 'Describing'},{'value': 'editing', 'label': 'Editing'}, {'value': 'highlighting', 'label': 'Highlighting'},{'value': 'identifying', 'label': 'Identifying'},{'value': 'linking', 'label': 'Linking'},{'value': 'moderating', 'label': 'Moderating'},{'value': 'questioning', 'label': 'Questioning'}]
+export const purposes = [{'value': 'assessing', 'label': 'Assessing'}, {'value': 'bookmarking', 'label': 'Bookmarking'}, {'value': 'classifying', 'label': 'Classifying'}, {'value': 'commenting', 'label': 'Commenting'}, {'value': 'describing', 'label': 'Describing'},{'value': 'editing', 'label': 'Editing'}, {'value': 'highlighting', 'label': 'Highlighting'},{'value': 'identifying', 'label': 'Identifying'},{'value': 'linking', 'label': 'Linking'},{'value': 'moderating', 'label': 'Moderating'},{'value': 'questioning', 'label': 'Questioning'},{'value': 'replying', 'label': 'Replying'}]
 
 export default class PurposeDropdown extends Component {
   render() {
