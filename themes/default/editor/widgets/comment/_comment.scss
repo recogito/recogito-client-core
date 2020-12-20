@@ -15,6 +15,11 @@
     resize:none;
   }
 
+  .r6o-editable-text::-webkit-input-placeholder { color:#c2c2c2; }
+  .r6o-editable-text::-moz-placeholder { color:#c2c2c2; }
+  .r6o-editable-text:-moz-placeholder { color:#c2c2c2; }
+  .r6o-editable-text:-ms-input-placeholder { color:#c2c2c2; }
+
   .r6o-lastmodified {
     border:1px solid $lightgrey-border;
     display:inline-block;
