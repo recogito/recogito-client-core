@@ -24,6 +24,7 @@ const Comment = props => {
     props.onDelete(props.body);
     setIsMenuVisible(false); 
   }
+
   const onUpdateComment = evt => {
     props.onUpdate(props.body, { ...props.body, value: evt.target.value });
   }
@@ -43,6 +44,7 @@ const Comment = props => {
         </span> 
       }
     </div>
+  
   return props.readOnly ? (
     <div className="r6o-widget comment">
       <div className="r6o-readonly-comment">{props.body.value}</div>
@@ -57,13 +59,15 @@ const Comment = props => {
         onSaveAndClose={props.onSaveAndClose}
       />
       { creatorInfo }
-      { props.purpose == true &&
+
+      { props.purpose &&
         <PurposeDropdown
             editable={isEditable}
             content={props.body.purpose} 
             onChange={onUpdateDropdown} 
             onSaveAndClose={props.onSaveAndClose}
           /> } 
+          
       <div 
         className={isMenuVisible ? "r6o-icon r6o-arrow-down r6o-menu-open" : "r6o-icon r6o-arrow-down"} 
         onClick={() => setIsMenuVisible(!isMenuVisible)}>
