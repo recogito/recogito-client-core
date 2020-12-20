@@ -18,16 +18,16 @@ export const purposes = [
 
 const PurposeDropdown = props => {
 
-  const selectedOption = this.props.content ?
+  const selectedOption = props.content ?
     purposes.find(p => p.value === props.content) : null;
 
   return (
     <div class="r6o-purposedropdown">
       <Select
         value={selectedOption}
-        onChange={this.props.onChange}
+        onChange={props.onChange}
         options={purposes}
-        isDisabled={!this.props.editable}
+        isDisabled={!props.editable}
       />
     </div>
   );
