@@ -19,7 +19,7 @@ export const purposes = [
 const PurposeDropdown = props => {
 
   const selectedOption = this.props.content ?
-    { 'value': this.props.content, 'label': this.props.content.charAt(0).toUpperCase() + this.props.content.slice(1) } : undefined;
+    purposes.find(p => p.value === props.content) : null;
 
   return (
     <div class="r6o-purposedropdown">
