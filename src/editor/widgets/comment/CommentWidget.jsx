@@ -9,14 +9,21 @@ const purposeValues = purposes.map(p => p.value);
  * Comments are TextualBodies where the purpose field is either 
  * blank or 'commenting' or 'replying'
  */
-const isComment = body => 
+const isComment = (body, purposenabled) =>
   body.type === 'TextualBody' && (
-    !body.hasOwnProperty('purpose') || purposeValues.indexOf(body.purpose) > -1
+    !body.hasOwnProperty('purpose') || purposeCheck(body.purpose, purposenabled)
   );
-  
 /**
  * The draft reply is a comment body with a 'draft' flag
  */
+const purposeCheck = (purpose, purposenabled) => {
+  if (purposenabled){
+    return purposeValues.indexOf(purpose) > -1
+  } else {
+    return purpose == 'commenting' || purpose == 'replying'
+  }
+}
+
 const getDraftReply = (existingDraft, isReply) => {
   let draft = existingDraft ? existingDraft : {
     type: 'TextualBody', value: '', draft: true
@@ -31,7 +38,7 @@ const getDraftReply = (existingDraft, isReply) => {
 const CommentWidget = props => {
   // All comments (draft + non-draft)
   const all = props.annotation ? 
-    props.annotation.bodies.filter(isComment) : [];
+    props.annotation.bodies.filter(body => isComment(body, props.purpose)) : [];
   // Last draft comment without a creator field goes into the reply field
   const draftReply = getDraftReply(all.slice().reverse().find(b => b.draft && !b.creator), all.length > 1); 
   // All except draft reply
