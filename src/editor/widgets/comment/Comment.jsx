@@ -3,10 +3,9 @@ import { useState } from 'preact/hooks';
 import TimeAgo from 'timeago-react';
 import DropdownMenu from './DropdownMenu';
 import TextEntryField from './TextEntryField';
-import PurposeDropdown from './PurposeDropdown';
+import PurposeSelect from './PurposeSelect';
 import { ChevronDownIcon } from '../../../Icons';
 import i18n from '../../../i18n';
-
 
 /** A single comment inside the CommentWidget **/
 const Comment = props => {
@@ -15,7 +14,6 @@ const Comment = props => {
   const [ isMenuVisible, setIsMenuVisible ] = useState(false);
 
   const onMakeEditable = _ => {
-    props.body.draft = true;
     setIsEditable(true);
     setIsMenuVisible(false);
   }
@@ -25,13 +23,13 @@ const Comment = props => {
     setIsMenuVisible(false); 
   }
 
-  const onUpdateComment = evt => {
+  const onUpdateComment = evt =>
     props.onUpdate(props.body, { ...props.body, value: evt.target.value });
-  }
 
-  const onUpdateDropdown = evt => {
+  const onChangePurpose = evt =>
     props.onUpdate(props.body, { ...props.body, purpose: evt.value });
-  }
+
+  const timestamp = props.body.modified || props.body.created;
 
   const creatorInfo = props.body.creator && 
     <div className="r6o-lastmodified">
@@ -39,7 +37,7 @@ const Comment = props => {
       { props.body.created && 
         <span className="r6o-lastmodified-at">
           <TimeAgo 
-            datetime={props.env.toClientTime(props.body.created)}
+            datetime={props.env.toClientTime(timestamp)}
             locale={i18n.locale()} />
         </span> 
       }
@@ -58,13 +56,13 @@ const Comment = props => {
         onChange={onUpdateComment} 
         onSaveAndClose={props.onSaveAndClose}
       />
-      { creatorInfo }
+      { !isEditable && creatorInfo }
 
-      { props.purpose &&
-        <PurposeDropdown
+      { props.purposeSelector &&
+        <PurposeSelect
             editable={isEditable}
             content={props.body.purpose} 
-            onChange={onUpdateDropdown} 
+            onChange={onChangePurpose} 
             onSaveAndClose={props.onSaveAndClose}
           /> } 
           

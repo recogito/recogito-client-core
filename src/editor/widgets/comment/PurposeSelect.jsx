@@ -1,7 +1,7 @@
 import React from 'preact/compat';
 import Select from 'react-select';
 
-export const purposes = [
+export const PURPOSES = [
   {'value': 'assessing', 'label': 'Assessing'}, 
   {'value': 'bookmarking', 'label': 'Bookmarking'}, 
   {'value': 'classifying', 'label': 'Classifying'}, 
@@ -16,17 +16,17 @@ export const purposes = [
   {'value': 'replying', 'label': 'Replying'}
 ]
 
-const PurposeDropdown = props => {
+const PurposeSelect = props => {
 
   const selectedOption = props.content ?
-    purposes.find(p => p.value === props.content) : null;
+    PURPOSES.find(p => p.value === props.content) : null;
 
   return (
     <div class="r6o-purposedropdown">
       <Select
         value={selectedOption}
         onChange={props.onChange}
-        options={purposes}
+        options={PURPOSES}
         isDisabled={!props.editable}
       />
     </div>
@@ -34,4 +34,4 @@ const PurposeDropdown = props => {
 
 }
 
-export default PurposeDropdown;
+export default PurposeSelect;

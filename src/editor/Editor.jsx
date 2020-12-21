@@ -41,8 +41,8 @@ const Editor = props => {
     // on move. Therefore, don't update if a) props.annotation equals
     // the currentAnnotation, or props.annotation and currentAnnotations are
     // a selection, just created by the user. 
-    const preventUpdate = setCurrentAnnotation.isSelection ? 
-      annotation.isSelection : currentAnnotation.annotationId === annotation.annotationId;
+    const preventUpdate = currentAnnotation?.isSelection ? 
+      annotation?.isSelection : currentAnnotation?.id === annotation.id;
         
     if (!preventUpdate)
       setCurrentAnnotation(annotation);
@@ -77,9 +77,8 @@ const Editor = props => {
     const { user } = props.env;
 
     // Metadata is only added when a user is set, otherwise
-    // the Editor operates in 'anonymous mode'. Also,
-    // no point in adding meta while we're in draft state
-    if (!body.draft && user) {
+    // the Editor operates in 'anonymous mode'.
+    if (user) {
       meta.creator = {};
       if (user.id) meta.creator.id = user.id;
       if (user.displayName) meta.creator.name = user.displayName;
@@ -116,12 +115,11 @@ const Editor = props => {
     props.onCancel(currentAnnotation);
 
   const onOk = _ => {
-    // Removes the 'draft' flag from all bodies
+    // Removes the state payload from all bodies
     const undraft = annotation => 
-    annotation.clone({
-      body : annotation.bodies.map(({ draft, ...rest }) =>
-        draft ? { ...rest, ...creationMeta(rest) } : rest )
-    });
+      annotation.clone({
+        body : annotation.bodies.map(({ draft, ...rest }) => rest)
+      });
 
     // Current annotation is either a selection (if it was created from 
     // scratch just now) or an annotation (if it existed already and was
