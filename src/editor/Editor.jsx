@@ -41,8 +41,11 @@ const Editor = props => {
     // on move. Therefore, don't update if a) props.annotation equals
     // the currentAnnotation, or props.annotation and currentAnnotations are
     // a selection, just created by the user. 
-    const preventUpdate = currentAnnotation?.isSelection ? 
-      annotation?.isSelection : currentAnnotation?.id === annotation.id;
+    const preventUpdate = 
+      currentAnnotation && ( // Always update if there is no current annotation
+        (currentAnnotation.isSelection && annotation.isSelection) || // Don't update selection
+        (currentAnnotation.id === annotation.id) // Don't update if annotation ID is the same
+      )
         
     if (!preventUpdate)
       setCurrentAnnotation(annotation);
