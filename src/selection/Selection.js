@@ -51,7 +51,8 @@ export default class Selection {
   }
   
   get bodies() {
-    return this.underlying.body;
+    return (Array.isArray(this.underlying.body)) ?
+      this.underlying.body : [ this.underlying.body ];
   }
 
   selector = type => {
