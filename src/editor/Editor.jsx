@@ -25,39 +25,17 @@ const Editor = props => {
   // Reference to the DOM element, so we can set position
   const element = useRef();
 
-  // Re-render: set derived annotation state & position the editor
+  // Set derived annotation state
+  useEffect(() => 
+    setCurrentAnnotation(props.annotation), [ props.annotation ]);
+
+  // Change editor position if element has moved
   useEffect(() => {
-    // Shorthand: user wants a template applied and this is a selection
-    const shouldApplyTemplate = props.applyTemplate && props.annotation?.isSelection;
-
-    // Apply template if needed
-    const annotation = shouldApplyTemplate ? 
-      props.annotation.clone({ body: [ ...props.applyTemplate ]}) : 
-      props.annotation;
-
-    // The 'currentAnnotation' differs from props.annotation because
-    // the user has been editing. Moving the selection bounds will
-    // trigger the re-render effect, but we don't want to update the currentAnnotation
-    // on move. Therefore, don't update if a) props.annotation equals
-    // the currentAnnotation, or props.annotation and currentAnnotations are
-    // a selection, just created by the user. 
-    const preventUpdate = 
-      currentAnnotation && ( // Always update if there is no current annotation
-        (currentAnnotation.isSelection && annotation.isSelection) || // Don't update selection
-        (currentAnnotation.id === annotation.id) // Don't update if annotation ID is the same
-      )
-        
-    if (!preventUpdate)
-      setCurrentAnnotation(annotation);
-
-    if (shouldApplyTemplate && props.applyImmediately)
-      props.onAnnotationCreated(annotation.toAnnotation());
-
     if (element.current) {
       // Note that ResizeObserver fires once when observation starts
       return initResizeObserver();
     }
-  }, [ props.annotation, props.selectedElement, bounds(props.selectedElement) ]);
+  }, [ bounds(props.selectedElement) ]);
 
   const initResizeObserver = () => {
     if (window?.ResizeObserver) {
