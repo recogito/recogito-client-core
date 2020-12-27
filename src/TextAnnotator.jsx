@@ -15,8 +15,6 @@ export default class TextAnnotator extends Component {
     selectedAnnotation: null,
     selectedDOMElement: null,
     selectedRelation: null,
-
-    applyTemplate: null,
     headless: false
   }
 
@@ -255,9 +253,6 @@ export default class TextAnnotator extends Component {
     }
   }
 
-  applyTemplate = (bodies, headless) =>
-    this.setState({ applyTemplate: bodies, headless })
-
   render() {
     return (
       <>
@@ -268,7 +263,6 @@ export default class TextAnnotator extends Component {
             selectedElement={this.state.selectedDOMElement}
             config={this.props.config}
             env={this.props.env}
-            applyTemplate={this.state.applyTemplate}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
             onAnnotationUpdated={this.onCreateOrUpdateAnnotation('onAnnotationUpdated')}
             onAnnotationDeleted={this.onDeleteAnnotation}
