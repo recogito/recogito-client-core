@@ -21,8 +21,8 @@ export default class WebAnnotation {
   }
 
   /** Creates a copy of this annotation **/
-  clone = opt_props => {
-    return new WebAnnotation({ ...this.underlying, ...opt_props}, this.opts);
+  clone = (opt_props, opt_opts) => {
+    return new WebAnnotation({ ...this.underlying, ...opt_props}, { ...this.opts, ...opt_opts });
   }
 
   /** An equality check based on the underlying object **/
