@@ -64,10 +64,7 @@ const Editor = props => {
       if (user.id) meta.creator.id = user.id;
       if (user.displayName) meta.creator.name = user.displayName;
 
-      if (body.created)
-        meta.modified = props.env.getCurrentTimeAdjusted();
-      else
-        meta.created = props.env.getCurrentTimeAdjusted();
+      meta[body.created ? 'modified' : 'created'] = props.env.getCurrentTimeAdjusted();
     }
 
     return meta;
