@@ -12,6 +12,7 @@ i18n.init = lang => {
 import ar from 'timeago.js/lib/lang/ar';
 import cs from 'timeago.js/lib/lang/cs';
 import de from 'timeago.js/lib/lang/de';
+import de from 'timeago.js/lib/lang/el';
 import es from 'timeago.js/lib/lang/es';
 import gl from 'timeago.js/lib/lang/gl';
 import hi from 'timeago.js/lib/lang/hi_IN';
@@ -25,6 +26,7 @@ import tr from 'timeago.js/lib/lang/tr';
 timeago.register('ar', ar);
 timeago.register('cs', cs);
 timeago.register('de', de);
+timeago.register('el', el);
 timeago.register('es', es);
 timeago.register('gl', gl);
 timeago.register('hi', hi);
