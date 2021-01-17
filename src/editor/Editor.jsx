@@ -26,8 +26,9 @@ const Editor = props => {
   const element = useRef();
 
   // Set derived annotation state
-  useEffect(() => 
-    setCurrentAnnotation(props.annotation), [ props.annotation ]);
+  useEffect(() => {
+    setCurrentAnnotation(props.annotation);
+  }, [ props.annotation ]);
 
   // Change editor position if element has moved
   useEffect(() => {
@@ -89,6 +90,22 @@ const Editor = props => {
     })
   );
 
+  const onSetProperty = (property, value) => {
+    // A list of properties the user is NOT allowed to set
+    const isForbidden = [ '@context', 'id', 'type', 'body', 'target' ].includes(property); 
+
+    if (isForbidden)
+      throw new Exception(`Cannot set ${property} - not allowed`);
+
+    if (value) {
+      setCurrentAnnotation(currentAnnotation.clone({ [property]: value }));
+    } else {
+      const updated = currentAnnotation.clone();
+      delete updated[property];
+      setCurrentAnnotation(updated);
+    }
+  };
+
   const onCancel = () => 
     props.onCancel(currentAnnotation);
 
@@ -130,6 +147,7 @@ const Editor = props => {
             onAppendBody,
             onUpdateBody,
             onRemoveBody,
+            onSetProperty,
             onSaveAndClose: onOk              
           })
         )}

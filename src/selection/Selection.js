@@ -19,9 +19,9 @@ export default class Selection {
 
   /** Creates a copy of this selection **/
   clone = opt_props => {
-    // Deep-clone target
-    const clonedTarget = JSON.parse(JSON.stringify(this.underlying.target));    
-    const cloned = new Selection(clonedTarget);
+    // Deep-clone
+    const cloned = new Selection();
+    cloned.underlying = JSON.parse(JSON.stringify(this.underlying));  
 
     if (opt_props)
       cloned.underlying = { ...cloned.underlying, ...opt_props };
