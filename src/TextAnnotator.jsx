@@ -263,6 +263,7 @@ export default class TextAnnotator extends Component {
             selectedElement={this.state.selectedDOMElement}
             config={this.props.config}
             env={this.props.env}
+            isRemovable={this.props.isRemovable}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
             onAnnotationUpdated={this.onCreateOrUpdateAnnotation('onAnnotationUpdated')}
             onAnnotationDeleted={this.onDeleteAnnotation}
