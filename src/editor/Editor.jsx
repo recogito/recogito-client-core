@@ -38,6 +38,11 @@ const Editor = props => {
     }
   }, [ bounds(props.selectedElement) ]);
 
+  useEffect(() => {
+    if (currentAnnotation)
+      setCurrentAnnotation(currentAnnotation.clone({ target: props.modifiedTarget }));
+  }, [ props.modifiedTarget ])
+
   const initResizeObserver = () => {
     if (window?.ResizeObserver) {
       const resizeObserver = new ResizeObserver(() => {
