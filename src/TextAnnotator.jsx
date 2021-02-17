@@ -254,6 +254,8 @@ export default class TextAnnotator extends Component {
   }
 
   render() {
+    const readOnly = this.props.config.readOnly || this.state.selectedAnnotation?.readOnly
+
     return (
       <>
         { this.state.selectedAnnotation &&
@@ -261,6 +263,7 @@ export default class TextAnnotator extends Component {
             wrapperEl={this.props.wrapperEl}
             annotation={this.state.selectedAnnotation}
             selectedElement={this.state.selectedDOMElement}
+            readOnly={readOnly}
             config={this.props.config}
             env={this.props.env}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
