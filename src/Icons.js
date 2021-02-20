@@ -42,7 +42,6 @@ export const CheckIcon = props => {
   )
 }
 
-
 /**
  * Icon from FontAwesome https://fontawesome.com/icons/trash-alt, 
  * licensed under the CC BY 4.0 license https://fontawesome.com/license
