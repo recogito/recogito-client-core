@@ -1,4 +1,5 @@
 export { default as Editor } from './editor/Editor';
+export { default as Autocomplete } from './editor/widgets/Autocomplete';
 export { default as createEnvironment } from './Environment';
 export { default as I18n } from './i18n';
 export { default as WebAnnotation } from './WebAnnotation';
