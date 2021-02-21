@@ -95,6 +95,11 @@ const Editor = props => {
     })
   );
 
+  // Just a convenience shorthand
+  const onUpsertBody = (maybePrevious, updated) => maybePrevious ? 
+    onUpdateBody(maybePrevious, updated) :
+    onAppendBody(updated);
+
   const onSetProperty = (property, value) => {
     // A list of properties the user is NOT allowed to set
     const isForbidden = [ '@context', 'id', 'type', 'body', 'target' ].includes(property); 
@@ -152,6 +157,7 @@ const Editor = props => {
             onAppendBody,
             onUpdateBody,
             onRemoveBody,
+            onUpsertBody,
             onSetProperty,
             onSaveAndClose: onOk              
           })
