@@ -13,14 +13,14 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
   // Default orientation
   const { left, top, right, height } = selectedEl.getBoundingClientRect();
   editorEl.style.top = `${top + height - containerBounds.top}px`;
-  editorEl.style.left = `${left + pageXOffset - containerBounds.left}px`;
+  editorEl.style.left = `${left - containerBounds.left}px`;
 
   const defaultOrientation = editorEl.getBoundingClientRect();
 
   if (defaultOrientation.right > window.innerWidth) {
     // Default bounds clipped - flip horizontally
     editorEl.classList.add('align-right');
-    editorEl.style.left = `${right - defaultOrientation.width + pageXOffset - containerBounds.left}px`;
+    editorEl.style.left = `${right - defaultOrientation.width - containerBounds.left}px`;
   }
 
   if (defaultOrientation.bottom > window.innerHeight) {
