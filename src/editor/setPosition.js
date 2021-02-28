@@ -2,7 +2,7 @@
 const setPosition = (wrapperEl, editorEl, selectedEl) => {
   // Container element offset
   const containerBounds = wrapperEl.getBoundingClientRect();
-  const { pageXOffset, pageYOffset } = window;
+  const { pageYOffset } = window;
 
   // Re-set orientation class
   editorEl.className = 'r6o-editor';
