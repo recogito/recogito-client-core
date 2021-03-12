@@ -117,7 +117,7 @@ const Editor = props => {
   };
 
   const onCancel = () => 
-    props.onCancel(currentAnnotation);
+    props.onCancel(props.annotation);
 
   const onOk = _ => {
     // Removes the state payload from all bodies
