@@ -41,6 +41,11 @@ export default class Selection {
     return this.underlying.target;
   }
 
+  get targets() {
+    return (Array.isArray(this.underlying.target)) ?
+      this.underlying.target : [ this.underlying.target ];
+  }
+
   /** For consistency with WebAnnotation **/
   isEqual(other) {
     if (!other) {
