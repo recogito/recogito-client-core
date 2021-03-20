@@ -142,9 +142,18 @@ const Editor = props => {
     }
   };
 
+  const onRemove = () => props.onAnnotationDeleted(props.annotation);
+
   // Use default comment + tag widget unless host app overrides
   const widgets = props.config.widgets ? 
     props.config.widgets.map(getWidget) : DEFAULT_WIDGETS;
+
+  const removable = 
+    currentAnnotation &&
+    currentAnnotation.bodies.length > 0 &&
+    !currentAnnotation.isSelection &&
+    (props.isRemovable ? props.isRemovable(currentAnnotation) : true);
+
   return (
     <div ref={element} className="r6o-editor">
       <div className="r6o-arrow" />
@@ -171,6 +180,12 @@ const Editor = props => {
           </div>
         ) : (
           <div className="r6o-footer">
+            { removable && (
+              <button className="r6o-btn highlight left outline" onClick={onRemove}>
+                {i18n.t('Remove')}
+              </button>
+            )}
+
             <button 
               className="r6o-btn outline"
               onClick={onCancel}>{i18n.t('Cancel')}</button>
