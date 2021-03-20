@@ -40,3 +40,14 @@
   background-color:transparent;
   text-shadow:none;
 }
+
+.r6o-btn.left {
+  margin-left: 8px;
+  margin-right: 0px;
+  float: left;
+}
+
+.r6o-btn.highlight.outline {
+  border:1px solid $orange;
+  color:$orange;
+}
