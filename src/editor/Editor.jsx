@@ -1,6 +1,7 @@
 import React from 'preact/compat';
 import { useState, useRef, useEffect } from 'preact/hooks';
 import { getWidget, DEFAULT_WIDGETS } from './widgets';
+import { TrashIcon } from '../Icons';
 import setPosition from './setPosition';
 import i18n from '../i18n';
 
@@ -189,8 +190,11 @@ const Editor = props => {
         ) : (
           <div className="r6o-footer">
             { hasDelete && (
-              <button className="r6o-btn highlight left outline" onClick={onDelete}>
-                {i18n.t('Remove')}
+              <button 
+                className="r6o-btn left delete-annotation" 
+                title={i18n.t('Delete')}
+                onClick={onDelete}>
+                <TrashIcon width={15} />
               </button>
             )}
 

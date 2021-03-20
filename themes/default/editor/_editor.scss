@@ -54,11 +54,34 @@
   }
 
   .r6o-footer {
+    position:relative;
     text-align:right;
     padding:8px 0;
 
     .r6o-btn {
       margin-right:8px;
+    }
+
+    .r6o-btn.delete-annotation {
+      position:absolute;
+      top:5px;
+      left:5px;
+      background-color:transparent;
+      border:none;
+      color:rgba($ocean, .8);
+      width:36px;
+      height:36px;
+      min-width:0;
+      border-radius: 100%;
+      padding:0;
+      display: flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .r6o-btn.delete-annotation:hover {
+      color:$ocean;
+      background-color:$blueish-white-hi;
     }
   }
 
