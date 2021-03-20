@@ -142,17 +142,25 @@ const Editor = props => {
     }
   };
 
-  const onRemove = () => props.onAnnotationDeleted(props.annotation);
+  const onDelete = () => 
+    props.onAnnotationDeleted(props.annotation);
 
   // Use default comment + tag widget unless host app overrides
   const widgets = props.config.widgets ? 
     props.config.widgets.map(getWidget) : DEFAULT_WIDGETS;
 
-  const removable = 
-    currentAnnotation &&
-    currentAnnotation.bodies.length > 0 &&
-    !currentAnnotation.isSelection &&
-    (props.isRemovable ? props.isRemovable(currentAnnotation) : true);
+  const isReadOnlyWidget = w => w.type.disableDelete ?
+    w.type.disableDelete(currentAnnotation, {
+      ...w.props,
+      readOnly:props.readOnly,
+      env: props.env
+    }) : false;
+
+  const hasDelete = currentAnnotation && 
+    currentAnnotation.bodies.length > 0 && // annotation has bodies,
+    !props.readOnly && // we are not in read-only config,
+    !currentAnnotation.isSelection && // this is not a selection, and
+    !widgets.some(isReadOnlyWidget);  // every widget is deletable
 
   return (
     <div ref={element} className="r6o-editor">
@@ -180,8 +188,8 @@ const Editor = props => {
           </div>
         ) : (
           <div className="r6o-footer">
-            { removable && (
-              <button className="r6o-btn highlight left outline" onClick={onRemove}>
+            { hasDelete && (
+              <button className="r6o-btn highlight left outline" onClick={onDelete}>
                 {i18n.t('Remove')}
               </button>
             )}

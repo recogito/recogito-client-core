@@ -19,6 +19,33 @@ const isComment = (body, matchAllPurposes) => {
   );
 }
 
+/** 
+/* A comment should be read-only if:
+/* - the global read-only flag is set
+/* - the current rule is 'MINE_ONLY' and the creator ID differs 
+/* The 'editable' config flag overrides the global setting, if any
+*/
+const isReadOnlyComment = (body, props) =>  {
+  if (props.editable === true)
+    return false;
+
+  if (props.editable === false)
+    return true;
+
+  if (props.editable === 'MINE_ONLY') {
+    // The original creator of the body
+    const creator = body.creator?.id;
+
+    // The current user
+    const me = props.env.user?.id;
+
+    return me !== creator;
+  }
+
+  // Global setting as last possible option
+  return props.readOnly;
+}
+
 /**
  * The draft reply is a comment body with a 'draft' flag
  */
@@ -59,31 +86,6 @@ const CommentWidget = props => {
   const onChangeReplyPurpose = purpose =>
     props.onUpdateBody(draftReply, { ...draftReply, purpose: purpose.value });
 
-  // A comment should be read-only if:
-  // - the global read-only flag is set
-  // - the current rule is 'MINE_ONLY' and the creator ID differs 
-  // The 'editable' config flag overrides the global setting, if any
-  const isReadOnly = body =>  {
-    if (props.editable === true)
-      return false;
-
-    if (props.editable === false)
-      return true;
-
-    if (props.editable === 'MINE_ONLY') {
-      // The original creator of the body
-      const creator = body.creator?.id;
-
-      // The current user
-      const me = props.env.user?.id;
-
-      return me !== creator;
-    }
-
-    // Global setting as last possible option
-    return props.readOnly;
-  }
-
   return (
     <>
       { comments.map((body, idx) => 
@@ -91,7 +93,7 @@ const CommentWidget = props => {
           key={idx} 
           env={props.env}
           purposeSelector={props.purposeSelector}
-          readOnly={isReadOnly(body)} 
+          readOnly={isReadOnlyComment(body, props)} 
           body={body} 
           onUpdate={props.onUpdateBody}
           onDelete={props.onRemoveBody}
@@ -120,6 +122,13 @@ const CommentWidget = props => {
     </>
   )
 
+}
+
+CommentWidget.disableDelete = (annotation, props) => {
+  const commentBodies = 
+    annotation.bodies.filter(body => isComment(body, props.purposeSelector));
+    
+  return commentBodies.some(comment => isReadOnlyComment(comment, props));
 }
 
 export default CommentWidget;
