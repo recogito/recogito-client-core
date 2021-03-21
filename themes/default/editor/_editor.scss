@@ -64,24 +64,28 @@
 
     .r6o-btn.delete-annotation {
       position:absolute;
-      top:5px;
-      left:5px;
+      top:7px;
+      left:7px;
       background-color:transparent;
       border:none;
-      color:rgba($ocean, .8);
-      width:36px;
-      height:36px;
+      color:$ocean;
+      width:32px;
+      height:32px;
       min-width:0;
       border-radius: 100%;
       padding:0;
       display: flex;
       justify-content:center;
       align-items:center;
+      -webkit-transition:all .1s ease-in;
+         -moz-transition:all .1s ease-in;
+           -o-transition:all .1s ease-in;
+              transition:all .1s ease-in;
     }
 
     .r6o-btn.delete-annotation:hover {
-      color:$ocean;
-      background-color:$blueish-white-hi;
+      color:#fff;
+      background-color:#ef352c;
     }
   }
 

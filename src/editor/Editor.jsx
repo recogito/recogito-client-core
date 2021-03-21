@@ -194,7 +194,7 @@ const Editor = props => {
                 className="r6o-btn left delete-annotation" 
                 title={i18n.t('Delete')}
                 onClick={onDelete}>
-                <TrashIcon width={15} />
+                <TrashIcon width={12} />
               </button>
             )}
 
