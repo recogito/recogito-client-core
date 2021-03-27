@@ -130,7 +130,7 @@ const Editor = props => {
     // Current annotation is either a selection (if it was created from 
     // scratch just now) or an annotation (if it existed already and was
     // opened for editing)
-    if (currentAnnotation.bodies.length === 0) {
+    if (currentAnnotation.bodies.length === 0 && !props.config.allowEmpty) {
       if (currentAnnotation.isSelection)
         onCancel();
       else 
