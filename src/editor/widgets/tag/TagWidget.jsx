@@ -61,27 +61,25 @@ const TagWidget = props => {
 
   return (
     <div className="r6o-widget r6o-tag">
-      <div>
-        { tags.length > 0 &&
-          <ul className="r6o-taglist">
-            { tags.map(tag =>
-              <li key={tag.value} onClick={toggle(tag.value)}>
-                <span className="r6o-label">{tag.value}</span>
+      { tags.length > 0 &&
+        <ul className="r6o-taglist">
+          { tags.map(tag =>
+            <li key={tag.value} onClick={toggle(tag.value)}>
+              <span className="r6o-label">{tag.value}</span>
 
-                {!props.readOnly &&
-                  <CSSTransition in={showDelete === tag.value} timeout={200} classNames="r6o-delete">
-                    <span className="r6o-delete-wrapper" onClick={onDelete(tag)}>
-                      <span className="r6o-delete">
-                        <CloseIcon width={12} />
-                      </span>
+              {!props.readOnly &&
+                <CSSTransition in={showDelete === tag.value} timeout={200} classNames="r6o-delete">
+                  <span className="r6o-delete-wrapper" onClick={onDelete(tag)}>
+                    <span className="r6o-delete">
+                      <CloseIcon width={12} />
                     </span>
-                  </CSSTransition>
-                }
-              </li>
-            )}
-          </ul>
-        }
-      </div>
+                  </span>
+                </CSSTransition>
+              }
+            </li>
+          )}
+        </ul>
+      }
 
       {!props.readOnly &&
         <Autocomplete
