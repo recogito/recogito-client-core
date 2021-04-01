@@ -15,7 +15,7 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
   editorEl.style.top = `${top + height - containerBounds.top}px`;
   editorEl.style.left = `${left - containerBounds.left}px`;
 
-  const defaultOrientation = editorEl.getBoundingClientRect();
+  const defaultOrientation = editorEl.children[1].getBoundingClientRect();
 
   if (defaultOrientation.right > window.innerWidth) {
     // Default bounds clipped - flip horizontally
