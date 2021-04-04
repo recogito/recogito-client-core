@@ -158,7 +158,8 @@ const Editor = props => {
     }) : false;
 
   const hasDelete = currentAnnotation && 
-    currentAnnotation.bodies.length > 0 && // annotation has bodies,
+    // annotation has bodies or allowEmpty,
+    (currentAnnotation.bodies.length > 0 || props.config.allowEmpty) && 
     !props.readOnly && // we are not in read-only config,
     !currentAnnotation.isSelection && // this is not a selection, and
     !widgets.some(isReadOnlyWidget);  // every widget is deletable
