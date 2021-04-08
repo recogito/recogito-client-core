@@ -14,6 +14,22 @@ export const DEFAULT_WIDGETS = [
   <CommentWidget />, <TagWidget />
 ]
 
+// https://stackoverflow.com/questions/33199959/how-to-detect-a-react-component-vs-a-react-element
+const isReactComponent = component => {  
+  const isClassComponent = component => 
+    typeof component === 'function' && !!component.prototype.isReactComponent;
+  
+  const isFunctionComponent = component =>
+    // There's no good way to match function components (they are just functions), but
+    // this RegEx pattern should catch most minified and unminified variants, e.g.:
+    // - return React.createElement('div', {
+    // - return pe("div",{
+    typeof component === 'function' && String(component).match(/return .+\(['|"].+['|"],\s*\{/g);
+  
+  return isClassComponent(component) || isFunctionComponent(component);
+}
+
+
 /**
  * There are multiple ways in which users can specify widgets:
  * 
@@ -32,13 +48,13 @@ export const getWidget = arg => {
   const instantiate = (widget, config) => {
     if (typeof widget === 'string' || widget instanceof String) {
       return React.createElement(BUILTIN_WIDGETS[widget], config);
+    } else if (isReactComponent(widget)) {
+      return React.createElement(widget, config);
     } else if (typeof widget === 'function' || widget instanceof Function) {
       return <WrappedWidget widget={widget} config={config} />
-    } else if (React.isValidElement(widget)) {
-      return React.createElement(widget, config);
     } else {
       throw `${widget} is not a valid plugin`
-    } 
+    }
   }
 
   // First, check 'top-level' vs. 'nested object' case
