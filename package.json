@@ -1,6 +1,6 @@
 {
   "name": "@recogito/recogito-client-core",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "Core functions, classes and components for RecogitoJS",
   "main": "src/index.js",
   "scripts": {
