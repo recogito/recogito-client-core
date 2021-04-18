@@ -11,7 +11,7 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
   editorEl.style.opacity = 1;
 
   // Default orientation
-  const { left, top, right, height } = selectedEl.getBoundingClientRect();
+  const { left, top, right, height, bottom } = selectedEl.getBoundingClientRect();
   editorEl.style.top = `${top + height - containerBounds.top}px`;
   editorEl.style.left = `${left - containerBounds.left}px`;
 
@@ -38,6 +38,12 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
   if (currentOrientation.top < 0) {
     editorEl.style.top = `${-containerBounds.top}px`;
     editorEl.style.bottom = 'auto';
+
+    const shapeBottom = bottom - containerBounds.top;
+    const editorBottom = currentOrientation.height - containerBounds.top;
+
+    if (editorBottom > shapeBottom)
+      editorEl.classList.remove('align-bottom');
   }
 
 }
