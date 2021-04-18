@@ -1,5 +1,5 @@
-import React, { Component, createRef } from 'react'
-import { useCombobox } from 'downshift'
+import React, { Component, createRef } from 'react';
+import { useCombobox } from 'downshift';
 
 export default class Autocomplete extends Component {
 
