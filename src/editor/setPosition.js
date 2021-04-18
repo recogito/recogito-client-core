@@ -32,6 +32,14 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
     editorEl.style.top = 'auto';
     editorEl.style.bottom = `${containerHeight - annotationTop}px`;
   }
+
+  // Check if vertical flipping helped, push down if not 
+  const currentOrientation = editorEl.children[1].getBoundingClientRect();
+  if (currentOrientation.top < 0) {
+    editorEl.style.top = `${-containerBounds.top}px`;
+    editorEl.style.bottom = 'auto';
+  }
+
 }
 
 export default setPosition;
