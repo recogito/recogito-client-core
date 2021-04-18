@@ -3,9 +3,14 @@ import * as timeago from 'timeago.js';
 
 const i18n = new Polyglot({ allowMissing: true });
 
-i18n.init = lang => {
-  i18n.locale(lang);
-  i18n.extend(require(`./messages_${lang}.json`));
+i18n.init = (lang, opt_messages) => {
+  if (lang) {
+    i18n.locale(lang);
+    i18n.extend(require(`./messages_${lang}.json`));  
+  }
+
+  if (opt_messages)
+    i18n.extend(opt_messages);
 }
 
 /** Load and register TimeAgo locales **/
