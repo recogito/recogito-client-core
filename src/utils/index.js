@@ -37,5 +37,7 @@ export const setLocale = (locale, opt_messages) => {
     } catch (error) {
       console.warn(`Unsupported locale '${l}'. Falling back to default en.`);
     }
+  } else {
+    I18n.init(null, opt_messages);
   }
 }
