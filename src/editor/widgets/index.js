@@ -16,6 +16,7 @@ export const DEFAULT_WIDGETS = [
 
 // https://stackoverflow.com/questions/33199959/how-to-detect-a-react-component-vs-a-react-element
 const isReactComponent = component => {  
+
   const isClassComponent = component => 
     typeof component === 'function' && !!component.prototype.isReactComponent;
   
@@ -24,8 +25,11 @@ const isReactComponent = component => {
     // this RegEx pattern should catch most minified and unminified variants, e.g.:
     // - return React.createElement('div', {
     // - return pe("div",{
-    typeof component === 'function' && String(component).match(/return .+\(['|"].+['|"],\s*\{/g);
-  
+    typeof component === 'function' && ( 
+      String(component).match(/return .+\(['|"].+['|"],\s*\{/g) ||
+      String(component).match(/return .+preact_compat/)
+    );
+      
   return isClassComponent(component) || isFunctionComponent(component);
 }
 
