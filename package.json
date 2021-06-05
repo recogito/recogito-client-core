@@ -3,6 +3,7 @@
   "version": "1.1.1",
   "description": "Core functions, classes and components for RecogitoJS",
   "main": "src/index.js",
+  "sideEffects": false,
   "scripts": {
     "test": "./node_modules/.bin/mocha --require @babel/register",
     "build": "webpack --mode=production"
@@ -21,21 +22,6 @@
     "url": "https://github.com/recogito/recogito-client-core/issues"
   },
   "homepage": "https://github.com/recogito/recogito-client-core/wiki",
-  "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/preset-env": "^7.14.4",
-    "@babel/preset-react": "^7.13.13",
-    "@babel/register": "^7.13.16",
-    "babel-loader": "^8.0.6",
-    "chai": "^4.2.0",
-    "css-loader": "^5.2.4",
-    "mocha": "^7.1.1",
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.2.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^4.7.0"
-  },
   "dependencies": {
     "downshift": "^5.4.6",
     "fast-deep-equal": "^3.1.3",
