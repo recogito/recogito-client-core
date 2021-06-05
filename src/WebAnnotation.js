@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import * as equals from 'fast-deep-equal';
+import equals from 'fast-deep-equal';
 
 export default class WebAnnotation {
 

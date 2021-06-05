@@ -1,6 +1,6 @@
 import WebAnnotation from './WebAnnotation';
 import { v4 as uuid } from 'uuid';
-import * as equals from 'fast-deep-equal';
+import equals from 'fast-deep-equal';
 
 /**
  * An "annotation in draft mode". Really the same

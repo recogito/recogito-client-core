@@ -1,4 +1,4 @@
-import * as Polyglot from 'node-polyglot';
+import Polyglot from 'node-polyglot';
 import * as timeago from 'timeago.js';
 
 const i18n = new Polyglot({ allowMissing: true });
