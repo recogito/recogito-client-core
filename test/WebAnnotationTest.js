@@ -27,11 +27,13 @@ const fixtureAnnotation = {
 
 describe("WebAnnotation", function() {
   describe("#isEqual()", function() {
+    
     it("should return true if the other is the same object", () => {
       const a = new WebAnnotation(fixtureAnnotation);
       const b = new WebAnnotation(fixtureAnnotation);
       assert(a.isEqual(b));
     });
+
     it("should return false if either annotation has no ID set", () => {
       const a = new WebAnnotation({
         ...fixtureAnnotation,
@@ -41,27 +43,6 @@ describe("WebAnnotation", function() {
       assert.strictEqual(a.isEqual(b), false);
       assert.strictEqual(b.isEqual(a), false);
     });
-    it("should return true iff annotation IDs do match", () => {
-      const a = new WebAnnotation({
-        ...fixtureAnnotation,
-        id: "https://www.example.com/anno1"
-      });
-      const b = new WebAnnotation({
-        ...fixtureAnnotation,
-        id: "https://www.example.com/anno2"
-      });
-      const c = new WebAnnotation({
-        ...fixtureAnnotation,
-        id: "https://www.example.com/anno1",
-        body: [
-          {
-            type: "TextualBody",
-            value: "foobar"
-          }
-        ]
-      });
-      assert.strictEqual(a.isEqual(b), false);
-      assert.strictEqual(a.isEqual(c), true);
-    });
+  
   });
 });
