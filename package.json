@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "Core functions, classes and components for RecogitoJS",
   "sideEffects": false,
+  "main": "src/index.js",
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --require @babel/register"
   },
