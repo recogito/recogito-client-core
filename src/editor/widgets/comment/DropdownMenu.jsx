@@ -1,5 +1,4 @@
-import React from 'preact/compat';
-import { useRef } from 'preact/hooks';
+import React, { useRef } from 'react';
 import useClickOutside from '../../useClickOutside';
 import i18n from '../../../i18n';
 

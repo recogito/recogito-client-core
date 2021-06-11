@@ -1,5 +1,4 @@
-import React from 'preact/compat';
-import { useState, useRef, useEffect } from 'preact/hooks';
+import React, { useState, useRef, useEffect } from 'react';
 import { getWidget, DEFAULT_WIDGETS } from './widgets';
 import { TrashIcon } from '../Icons';
 import setPosition from './setPosition';

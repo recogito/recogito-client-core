@@ -1,4 +1,4 @@
-import React, { Component } from 'preact/compat';
+import React, { Component } from 'react';
 
 export default class WrappedWidget extends Component {
 

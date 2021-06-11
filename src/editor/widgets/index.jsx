@@ -1,14 +1,16 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import CommentWidget from './comment/CommentWidget'
 import TagWidget from './tag/TagWidget';
 import WrappedWidget from './WrappedWidget';
 
 /**
- * We'll add React to the global window, so that 
+ * We'll add React and ReactDOM to the global window, so that 
  * plugins can use it without re-bundling. Also,
  * without this, hooks won't work!
  */
 window.React = React;
+window.ReactDOM = ReactDOM;
 
 /** Standard widgets included by default **/
 const BUILTIN_WIDGETS = {

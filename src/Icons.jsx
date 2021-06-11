@@ -1,4 +1,4 @@
-import React from 'preact/compat';
+import React from 'react';
 
 /**
  * Icon from IcoFont https://icofont.com/, licensed under the CC BY 4.0 license.

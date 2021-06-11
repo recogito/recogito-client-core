@@ -1,5 +1,4 @@
-import React from 'preact/compat';
-import { useState } from 'preact/hooks';
+import React, { useState } from 'react';
 import TimeAgo from 'timeago-react';
 import DropdownMenu from './DropdownMenu';
 import TextEntryField from './TextEntryField';

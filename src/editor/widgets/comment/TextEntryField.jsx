@@ -1,4 +1,4 @@
-import React, { Component } from 'preact/compat';
+import React, { Component } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import i18n from '../../../i18n';
 

@@ -1,4 +1,4 @@
-import React from 'preact/compat';
+import React from 'react';
 import Comment from './Comment';
 import TextEntryField from './TextEntryField';
 import i18n from '../../../i18n';
