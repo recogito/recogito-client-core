@@ -3,6 +3,13 @@ import CommentWidget from './comment/CommentWidget'
 import TagWidget from './tag/TagWidget';
 import WrappedWidget from './WrappedWidget';
 
+/**
+ * We'll add React to the global window, so that 
+ * plugins can use it without re-bundling. Also,
+ * without this, hooks won't work!
+ */
+window.React = React;
+
 /** Standard widgets included by default **/
 const BUILTIN_WIDGETS = {
   COMMENT: CommentWidget,
@@ -18,7 +25,7 @@ export const DEFAULT_WIDGETS = [
 const isReactComponent = component => {  
 
   const isClassComponent = component => 
-    typeof component === 'function' && !!component.prototype.isReactComponent;
+    typeof component === 'function' && !!component.prototype?.isReactComponent;
   
   const isFunctionComponent = component =>
     // There's no good way to match function components (they are just functions), but
@@ -27,7 +34,8 @@ const isReactComponent = component => {
     // - return pe("div",{
     typeof component === 'function' && ( 
       String(component).match(/return .+\(['|"].+['|"],\s*\{/g) ||
-      String(component).match(/return .+preact_compat/)
+      String(component).match(/return .+preact_compat/) ||
+      String(component).match(/return .+\.createElement/g)
     );
       
   return isClassComponent(component) || isFunctionComponent(component);
