@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Draggable from 'react-draggable';
 import { getWidget, DEFAULT_WIDGETS } from './widgets';
 import { TrashIcon } from '../Icons';
 import setPosition from './setPosition';
@@ -21,6 +22,8 @@ const Editor = props => {
 
   // The current state of the edited annotation vs. original
   const [ currentAnnotation, setCurrentAnnotation ] = useState();
+
+  const [ dragged, setDragged ] = useState(false);
 
   // Reference to the DOM element, so we can set position
   const element = useRef();
@@ -46,14 +49,16 @@ const Editor = props => {
   const initResizeObserver = () => {
     if (window?.ResizeObserver) {
       const resizeObserver = new ResizeObserver(() => {
-        setPosition(props.wrapperEl, element.current, props.selectedElement);
+        if (!dragged)
+          setPosition(props.wrapperEl, element.current, props.selectedElement);
       });
 
       resizeObserver.observe(props.wrapperEl);
       return () => resizeObserver.disconnect();
     } else {
       // Fire setPosition *only* for devices that don't support ResizeObserver
-      setPosition(props.wrapperEl, element.current, props.selectedElement);
+      if (!dragged)
+        setPosition(props.wrapperEl, element.current, props.selectedElement);
     }  
   }
 
@@ -164,51 +169,53 @@ const Editor = props => {
     !widgets.some(isReadOnlyWidget);  // every widget is deletable
 
   return (
-    <div ref={element} className="r6o-editor">
-      <div className="r6o-arrow" />
-      <div className="r6o-editor-inner">
-        {widgets.map(widget => 
-          React.cloneElement(widget, { 
-            annotation : currentAnnotation,
-            readOnly : props.readOnly,
-            env: props.env,
-            onAppendBody,
-            onUpdateBody,
-            onRemoveBody,
-            onUpsertBody,
-            onSetProperty,
-            onSaveAndClose: onOk              
-          })
-        )}
-        
-        { props.readOnly ? (
-          <div className="r6o-footer">
-            <button
-              className="r6o-btn" 
-              onClick={onCancel}>{i18n.t('Close')}</button>
-          </div>
-        ) : (
-          <div className="r6o-footer">
-            { hasDelete && (
+    <Draggable onStart={() => setDragged(true)}>
+      <div ref={element} className="r6o-editor">
+        <div className="r6o-arrow" />
+        <div className="r6o-editor-inner">
+          {widgets.map(widget => 
+            React.cloneElement(widget, { 
+              annotation : currentAnnotation,
+              readOnly : props.readOnly,
+              env: props.env,
+              onAppendBody,
+              onUpdateBody,
+              onRemoveBody,
+              onUpsertBody,
+              onSetProperty,
+              onSaveAndClose: onOk              
+            })
+          )}
+          
+          { props.readOnly ? (
+            <div className="r6o-footer">
+              <button
+                className="r6o-btn" 
+                onClick={onCancel}>{i18n.t('Close')}</button>
+            </div>
+          ) : (
+            <div className="r6o-footer">
+              { hasDelete && (
+                <button 
+                  className="r6o-btn left delete-annotation" 
+                  title={i18n.t('Delete')}
+                  onClick={onDelete}>
+                  <TrashIcon width={12} />
+                </button>
+              )}
+
               <button 
-                className="r6o-btn left delete-annotation" 
-                title={i18n.t('Delete')}
-                onClick={onDelete}>
-                <TrashIcon width={12} />
-              </button>
-            )}
+                className="r6o-btn outline"
+                onClick={onCancel}>{i18n.t('Cancel')}</button>
 
-            <button 
-              className="r6o-btn outline"
-              onClick={onCancel}>{i18n.t('Cancel')}</button>
-
-            <button 
-              className="r6o-btn "
-              onClick={onOk}>{i18n.t('Ok')}</button>
-          </div>
-        )}
+              <button 
+                className="r6o-btn "
+                onClick={onOk}>{i18n.t('Ok')}</button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </Draggable>
   )
 
 }
