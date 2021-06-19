@@ -59,7 +59,7 @@ const TagWidget = props => {
   }
 
   return (
-    <div className="r6o-widget r6o-tag">
+    <div className="r6o-widget r6o-tag r6o-nodrag">
       { tags.length > 0 &&
         <ul className="r6o-taglist">
           { tags.map(tag =>

@@ -169,8 +169,11 @@ const Editor = props => {
     !widgets.some(isReadOnlyWidget);  // every widget is deletable
 
   return (
-    <Draggable onStart={() => setDragged(true)}>
-      <div ref={element} className="r6o-editor">
+    <Draggable 
+      cancel=".r6o-btn, .r6o-nodrag" 
+      onDrag={() => setDragged(true)}>
+
+      <div ref={element} className={dragged ? 'r6o-editor dragged' : 'r6o-editor'}>
         <div className="r6o-arrow" />
         <div className="r6o-editor-inner">
           {widgets.map(widget => 
@@ -215,6 +218,7 @@ const Editor = props => {
           )}
         </div>
       </div>
+
     </Draggable>
   )
 
