@@ -22,7 +22,7 @@ export default class TextEntryField extends Component {
     return (
       <TextareaAutosize
         ref={this.onRender}
-        className="r6o-editable-text" 
+        className={this.props.editable ? 'r6o-editable-text r6o-nodrag' : 'r6o-editable-text'} 
         value={this.props.content}
         placeholder={this.props.placeholder || i18n.t('Add a comment...')}
         disabled={!this.props.editable}
