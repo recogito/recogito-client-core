@@ -134,7 +134,7 @@ const Editor = props => {
     // Current annotation is either a selection (if it was created from 
     // scratch just now) or an annotation (if it existed already and was
     // opened for editing)
-    if (currentAnnotation.bodies.length === 0 && !props.config.allowEmpty) {
+    if (currentAnnotation.bodies.length === 0 && !props.allowEmpty) {
       if (currentAnnotation.isSelection)
         onCancel();
       else 
@@ -151,8 +151,8 @@ const Editor = props => {
     props.onAnnotationDeleted(props.annotation);
 
   // Use default comment + tag widget unless host app overrides
-  const widgets = props.config.widgets ? 
-    props.config.widgets.map(getWidget) : DEFAULT_WIDGETS;
+  const widgets = props.widgets ? 
+    props.widgets.map(getWidget) : DEFAULT_WIDGETS;
 
   const isReadOnlyWidget = w => w.type.disableDelete ?
     w.type.disableDelete(currentAnnotation, {
@@ -163,9 +163,9 @@ const Editor = props => {
 
   const hasDelete = currentAnnotation && 
     // annotation has bodies or allowEmpty,
-    (currentAnnotation.bodies.length > 0 || props.config.allowEmpty) && 
-    !props.readOnly && // we are not in read-only config,
-    !currentAnnotation.isSelection && // this is not a selection, and
+    (currentAnnotation.bodies.length > 0 || props.allowEmpty) && // AND
+    !props.readOnly && // we are not in read-only mode AND
+    !currentAnnotation.isSelection && // this is not a selection AND
     !widgets.some(isReadOnlyWidget);  // every widget is deletable
 
   return (
