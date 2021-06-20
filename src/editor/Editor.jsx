@@ -170,6 +170,7 @@ const Editor = props => {
 
   return (
     <Draggable 
+      disabled={!props.detachable}
       cancel=".r6o-btn, .r6o-nodrag" 
       onDrag={() => setDragged(true)}>
 
