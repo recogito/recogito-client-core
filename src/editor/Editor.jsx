@@ -100,10 +100,24 @@ const Editor = props => {
     })
   );
 
-  // Just a convenience shorthand
-  const onUpsertBody = (maybePrevious, updated) => maybePrevious ? 
-    onUpdateBody(maybePrevious, updated) :
-    onAppendBody(updated);
+  /** A convenience shorthand **/
+  const onUpsertBody = (arg1, arg2) => {
+    if (arg1 == null && arg2 != null) {
+      // Append arg 2 as a new body
+      onAppendBody(arg2);
+    } else if (arg1 != null && arg2 != null) {
+      // Replace body arg1 with body arg2
+      onUpdateBody(arg1, arg2);
+    } else if (arg1 != null && arg2 == null) {
+      // Find the first body with the same purpose as arg1,
+      // and upsert
+      const existing = currentAnnotation.bodies.find(b => b.purpose === arg1.purpose);
+      if (existing)
+        onUpdateBody(existing, arg1);
+      else
+        onAppendBody(arg1);
+    }
+  }
 
   const onSetProperty = (property, value) => {
     // A list of properties the user is NOT allowed to set
