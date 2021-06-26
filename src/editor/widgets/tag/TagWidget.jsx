@@ -82,6 +82,7 @@ const TagWidget = props => {
 
       {!props.readOnly &&
         <Autocomplete
+          focus={props.focus}
           placeholder={i18n.t('Add tag...')}
           initialValue={draftTag.value}
           onChange={onDraftChange}

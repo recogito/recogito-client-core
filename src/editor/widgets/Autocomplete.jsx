@@ -14,8 +14,13 @@ export default class Autocomplete extends Component {
   }
 
   componentDidMount() {
-    if (this.props.initialValue && this.element.current)
-      this.element.current.querySelector('input').value = this.props.initialValue;
+    if (this.element.current) {
+      if (this.props.initialValue)
+        this.element.current.querySelector('input').value = this.props.initialValue;
+        
+      if (this.props.focus)
+        this.element.current.querySelector('input').focus();
+    }
   }
   
   onInputValueChange = ({ inputValue }) => {

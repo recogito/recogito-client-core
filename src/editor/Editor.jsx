@@ -191,8 +191,9 @@ const Editor = props => {
       <div ref={element} className={dragged ? 'r6o-editor dragged' : 'r6o-editor'}>
         <div className="r6o-arrow" />
         <div className="r6o-editor-inner">
-          {widgets.map(widget => 
+          {widgets.map((widget, idx) => 
             React.cloneElement(widget, { 
+              focus: idx === 0,
               annotation : currentAnnotation,
               readOnly : props.readOnly,
               env: props.env,

@@ -60,6 +60,7 @@ const getDraftReply = (existingDraft, isReply) => {
  * Renders a list of comment bodies, followed by a 'reply' field.
  */
 const CommentWidget = props => {
+
   // All comments
   const all = props.annotation ? 
     props.annotation.bodies.filter(body => isComment(body, props.purposeSelector)) : [];
@@ -103,6 +104,7 @@ const CommentWidget = props => {
       { !props.readOnly && props.annotation &&
         <div className="r6o-widget comment editable">
           <TextEntryField
+            focus={props.focus}
             content={draftReply.value}
             editable={true}
             placeholder={comments.length > 0 ? i18n.t('Add a reply...') : i18n.t('Add a comment...')}

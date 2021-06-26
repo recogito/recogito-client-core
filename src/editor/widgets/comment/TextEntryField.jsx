@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import i18n from '../../../i18n';
 
@@ -7,21 +7,27 @@ import i18n from '../../../i18n';
  */
 export default class TextEntryField extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.element = createRef();
+  }
+
   // CTRL+Enter functions as Ok
   onKeyDown = evt => {
     if (evt.which === 13 && evt.ctrlKey)
       this.props.onSaveAndClose();
   }
 
-  // Focus on render
-  onRender = ref => {
-    // Note: we could use this to set automatic focus (but leave this out for now)
+  componentDidMount() {
+    if (this.props.focus && this.element.current)
+      this.element.current.focus();
   }
 
   render() {
     return (
       <TextareaAutosize
-        ref={this.onRender}
+        ref={this.element}
         className={this.props.editable ? 'r6o-editable-text r6o-nodrag' : 'r6o-editable-text'} 
         value={this.props.content}
         placeholder={this.props.placeholder || i18n.t('Add a comment...')}
