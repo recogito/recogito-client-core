@@ -5,12 +5,6 @@ import { TrashIcon } from '../Icons';
 import setPosition from './setPosition';
 import i18n from '../i18n';
 
-/** We need to compare bounds by value, not by object ref **/
-const bounds = elem => {
-  const { top, left, width, height } = elem.getBoundingClientRect();
-  return `${top}, ${left}, ${width}, ${height}`;
-}
-
 /**
  * The popup editor component.
  * 
@@ -92,41 +86,44 @@ export default class Editor extends Component {
   }
 
   // Shorthand
-  updateCurrentAnnotation = diff => {
+  updateCurrentAnnotation = (diff, saveImmediately) => {
     this.setState({
       currentAnnotation: this.state.currentAnnotation.clone(diff)
+    }, () => {
+      if (saveImmediately)
+        this.onOk();
     })
   }
 
-  onAppendBody = body => this.updateCurrentAnnotation({ 
+  onAppendBody = (body, saveImmediately) => this.updateCurrentAnnotation({ 
     body: [ ...this.state.currentAnnotation.bodies, { ...body, ...this.creationMeta(body) } ] 
-  });
+  }, saveImmediately);
 
-  onUpdateBody = (previous, updated) => this.updateCurrentAnnotation({
+  onUpdateBody = (previous, updated, saveImmediately) => this.updateCurrentAnnotation({
     body: this.state.currentAnnotation.bodies.map(body => 
       body === previous ? { ...updated, ...this.creationMeta(updated) } : body)
-  });
+  }, saveImmediately);
 
-  onRemoveBody = body => this.updateCurrentAnnotation({
+  onRemoveBody = (body, saveImmediately) => this.updateCurrentAnnotation({
     body: this.state.currentAnnotation.bodies.filter(b => b !== body)
-  });
+  }, saveImmediately);
 
   /** A convenience shorthand **/
-  onUpsertBody = (arg1, arg2) => {
+  onUpsertBody = (arg1, arg2, saveImmediately) => {
     if (arg1 == null && arg2 != null) {
       // Append arg 2 as a new body
-      this.onAppendBody(arg2);
+      this.onAppendBody(arg2, saveImmediately);
     } else if (arg1 != null && arg2 != null) {
       // Replace body arg1 with body arg2
-      this.onUpdateBody(arg1, arg2);
+      this.onUpdateBody(arg1, arg2, saveImmediately);
     } else if (arg1 != null && arg2 == null) {
       // Find the first body with the same purpose as arg1,
       // and upsert
       const existing = this.state.currentAnnotation.bodies.find(b => b.purpose === arg1.purpose);
       if (existing)
-        this.onUpdateBody(existing, arg1);
+        this.onUpdateBody(existing, arg1, saveImmediately);
       else
-        this.onAppendBody(arg1);
+        this.onAppendBody(arg1, saveImmediately);
     }
   }
 
