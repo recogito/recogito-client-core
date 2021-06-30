@@ -95,18 +95,33 @@ export default class Editor extends Component {
     })
   }
 
-  onAppendBody = (body, saveImmediately) => this.updateCurrentAnnotation({ 
-    body: [ ...this.state.currentAnnotation.bodies, { ...body, ...this.creationMeta(body) } ] 
-  }, saveImmediately);
+  // Shorthand
+  toArray = body =>
+    Array.isArray(body) ? body : [ body ];
+  
+  onAppendBody = (bodyOrBodies, saveImmediately) => {
+    const toAppend = this.toArray(bodyOrBodies).map(b => 
+      ({ ...b, ...this.creationMeta(b) }));
 
-  onUpdateBody = (previous, updated, saveImmediately) => this.updateCurrentAnnotation({
-    body: this.state.currentAnnotation.bodies.map(body => 
-      body === previous ? { ...updated, ...this.creationMeta(updated) } : body)
-  }, saveImmediately);
+    this.updateCurrentAnnotation({ 
+      body: [ ...this.state.currentAnnotation.bodies, ...toAppend ] 
+    }, saveImmediately);
+  }
 
-  onRemoveBody = (body, saveImmediately) => this.updateCurrentAnnotation({
-    body: this.state.currentAnnotation.bodies.filter(b => b !== body)
-  }, saveImmediately);
+  onUpdateBody = (previous, updated, saveImmediately) => { 
+    this.updateCurrentAnnotation({
+      body: this.state.currentAnnotation.bodies.map(body => 
+        body === previous ? { ...updated, ...this.creationMeta(updated) } : body)
+    }, saveImmediately);
+  }
+
+  onRemoveBody = (bodyOrBodies, saveImmediately) => {
+    const toRemove = this.toArray(bodyOrBodies);
+
+    this.updateCurrentAnnotation({
+      body: this.state.currentAnnotation.bodies.filter(b => !toRemove.includes(b))
+    }, saveImmediately);
+  }
 
   /** A convenience shorthand **/
   onUpsertBody = (arg1, arg2, saveImmediately) => {
