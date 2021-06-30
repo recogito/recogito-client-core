@@ -5,6 +5,11 @@ import { TrashIcon } from '../Icons';
 import setPosition from './setPosition';
 import i18n from '../i18n';
 
+/** Shorthand **/
+const toArray = body =>
+  Array.isArray(body) ? body : [ body ];
+
+
 /**
  * The popup editor component.
  * 
@@ -27,26 +32,27 @@ export default class Editor extends Component {
   }
 
   componentWillReceiveProps(next) {
-    if (this.props.annotation != next.annotation) {
-      this.setState({ currentAnnotation: next.annotation });
-    }
+    this.setState({ currentAnnotation: next.annotation });
 
     if (this.props.modifiedTarget != next.modifiedTarget) {
-      const { currentAnnotation } = this.state;
-      if (currentAnnotation)
+      // Update in case target was changed (move, resize)
+      if (this.state.currentAnnotation) {
         this.updateCurrentAnnotation({ target: this.props.modifiedTarget });
-    }
 
-    // Change editor position if element has moved
-    this.removeObserver && this.removeObserver();
-    this.removeObserver = this.initResizeObserver();
+        // Change editor position if element has moved
+        this.removeObserver && this.removeObserver();
+        this.removeObserver = this.initResizeObserver();
+      }
+    }
   }
 
   componentDidMount() {
+    // Init observer (triggers setPosition once)
     this.removeObserver = this.initResizeObserver();
   }
 
   componentWillUnmount() {
+    // Remove the observer
     this.removeObserver && this.removeObserver();
   }
 
@@ -60,7 +66,7 @@ export default class Editor extends Component {
       resizeObserver.observe(this.props.wrapperEl);
       return () => resizeObserver.disconnect();
     } else {
-      // Fire setPosition *only* for devices that don't support ResizeObserver
+      // Fire setPosition manually *only* for devices that don't support ResizeObserver
       if (!this.state.dragged)
         setPosition(this.props.wrapperEl, this.element.current, this.props.selectedElement);
     }  
@@ -85,7 +91,7 @@ export default class Editor extends Component {
     return meta;
   }
 
-  // Shorthand
+  /** Shorthand **/
   updateCurrentAnnotation = (diff, saveImmediately) => {
     this.setState({
       currentAnnotation: this.state.currentAnnotation.clone(diff)
@@ -95,12 +101,14 @@ export default class Editor extends Component {
     })
   }
 
-  // Shorthand
-  toArray = body =>
-    Array.isArray(body) ? body : [ body ];
-  
+  /**
+   * Appends a body to the current annotation. For convenience: also 
+   * takes an array of bodies as argument.
+   * @param bodyOrBodies the body or list of bodies to append
+   * @param saveImmediately set to true to save & close immediately
+   */
   onAppendBody = (bodyOrBodies, saveImmediately) => {
-    const toAppend = this.toArray(bodyOrBodies).map(b => 
+    const toAppend = toArray(bodyOrBodies).map(b => 
       ({ ...b, ...this.creationMeta(b) }));
 
     this.updateCurrentAnnotation({ 
@@ -108,6 +116,12 @@ export default class Editor extends Component {
     }, saveImmediately);
   }
 
+  /**
+   * Updates a previous body with the given body.
+   * @param previous the body to replace
+   * @param updated the body to replace with
+   * @param saveImmediately set to true to save & close immediately
+   */
   onUpdateBody = (previous, updated, saveImmediately) => { 
     this.updateCurrentAnnotation({
       body: this.state.currentAnnotation.bodies.map(body => 
@@ -115,16 +129,10 @@ export default class Editor extends Component {
     }, saveImmediately);
   }
 
-  onRemoveBody = (bodyOrBodies, saveImmediately) => {
-    const toRemove = this.toArray(bodyOrBodies);
-
-    this.updateCurrentAnnotation({
-      body: this.state.currentAnnotation.bodies.filter(b => !toRemove.includes(b))
-    }, saveImmediately);
-  }
-
-  /** A convenience shorthand **/
-  onUpsertBody = (arg1, arg2, saveImmediately) => {
+  /** 
+   * For convenience: an 'append or update' shorthand.
+   */
+   onUpsertBody = (arg1, arg2, saveImmediately) => {
     if (arg1 == null && arg2 != null) {
       // Append arg 2 as a new body
       this.onAppendBody(arg2, saveImmediately);
@@ -142,6 +150,42 @@ export default class Editor extends Component {
     }
   }
 
+  /**
+   * Removes the given body from the current annotation. For 
+   * convenience: also takes an array of bodies as argument.
+   * @param bodyOrBodies the body or list of bodies to remove
+   * @param saveImmediately set to true to save & close immediately
+   */
+  onRemoveBody = (bodyOrBodies, saveImmediately) => {
+    const toRemove = toArray(bodyOrBodies);
+
+    this.updateCurrentAnnotation({
+      body: this.state.currentAnnotation.bodies.filter(b => !toRemove.includes(b))
+    }, saveImmediately);
+  }
+
+  /**
+   * For convenience: removes and appends one or more bodies
+   * in one go, optionally saving immediately.
+   */
+  onRemoveAndAppend = (bodyOrBodiesToRemove, bodyOrBodiesToAppend, saveImmediately) => {
+    const toRemove = toArray(bodyOrBodiesToRemove);
+    const toAppend = toArray(bodyOrBodiesToAppend).map(b => 
+      ({ ...b, ...this.creationMeta(b) }));
+
+    this.updateCurrentAnnotation({
+      body: [
+        ...this.state.currentAnnotation.bodies.filter(b => !toRemove.includes(b)),
+        ...toAppend 
+      ]
+    }, saveImmediately);
+  }
+
+  /**
+   * Sets the given property value at the top level of the annotation.
+   * @param property property key
+   * @param value property value - set to null to delete the property
+   */
   onSetProperty = (property, value) => {
     // A list of properties the user is NOT allowed to set
     const isForbidden = [ '@context', 'id', 'type', 'body', 'target' ].includes(property); 
@@ -150,18 +194,18 @@ export default class Editor extends Component {
       throw new Exception(`Cannot set ${property} - not allowed`);
 
     if (value) {
-      this.updateCurrentAnnotation({ [property]: value });
+      this.updateCurrentAnnotation({ [ property ]: value });
     } else {
       const updated = this.currentAnnotation.clone();
-      delete updated[property];
+      delete updated[ property ];
       this.setState({ currentAnnotation: updated });
     }
-  };
+  }
 
   onCancel = () => 
     this.props.onCancel(this.props.annotation);
 
-  onOk = _ => {
+  onOk = () => {
     // Removes the state payload from all bodies
     const undraft = annotation => 
       annotation.clone({
@@ -172,7 +216,7 @@ export default class Editor extends Component {
 
     // Current annotation is either a selection (if it was created from 
     // scratch just now) or an annotation (if it existed already and was
-    // opened for editing)
+    // selected for editing)
     if (currentAnnotation.bodies.length === 0 && !this.props.allowEmpty) {
       if (currentAnnotation.isSelection)
         onCancel();
@@ -184,7 +228,7 @@ export default class Editor extends Component {
       else
         this.props.onAnnotationUpdated(undraft(currentAnnotation), this.props.annotation);
     }
-  };
+  }
 
   onDelete = () => 
     this.props.onAnnotationDeleted(this.props.annotation);
@@ -229,6 +273,7 @@ export default class Editor extends Component {
                 onUpdateBody: this.onUpdateBody,
                 onRemoveBody: this.onRemoveBody,
                 onUpsertBody: this.onUpsertBody,
+                onRemoveAndAppend: this.onRemoveAndAppend,
                 onSetProperty: this.onSetProperty,
                 onSaveAndClose: this.onOk              
               })
