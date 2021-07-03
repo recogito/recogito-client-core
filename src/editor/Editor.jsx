@@ -91,43 +91,29 @@ export default class Editor extends Component {
     return meta;
   }
 
-  /** Shorthand **/
-  updateCurrentAnnotation = (diff, saveImmediately) => {
-    this.setState({
-      currentAnnotation: this.state.currentAnnotation.clone(diff)
-    }, () => {
-      if (saveImmediately)
-        this.onOk();
-    })
-  }
+  /** Shorthand **/ 
+  updateCurrentAnnotation = (diff, saveImmediately) => this.setState({
+    currentAnnotation: this.state.currentAnnotation.clone(diff)
+  }, () => {
+    if (saveImmediately)
+      this.onOk();
+  })
 
-  /**
-   * Appends a body to the current annotation. For convenience: also 
-   * takes an array of bodies as argument.
-   * @param bodyOrBodies the body or list of bodies to append
-   * @param saveImmediately set to true to save & close immediately
-   */
-  onAppendBody = (bodyOrBodies, saveImmediately) => {
-    const toAppend = toArray(bodyOrBodies).map(b => 
-      ({ ...b, ...this.creationMeta(b) }));
+  onAppendBody = (body, saveImmediately) => this.updateCurrentAnnotation({ 
+    body: [ 
+      ...this.state.currentAnnotation.bodies, 
+      { ...body, ...this.creationMeta(body) } 
+    ] 
+  }, saveImmediately);
 
-    this.updateCurrentAnnotation({ 
-      body: [ ...this.state.currentAnnotation.bodies, ...toAppend ] 
-    }, saveImmediately);
-  }
+  onUpdateBody = (previous, updated, saveImmediately) => this.updateCurrentAnnotation({
+    body: this.state.currentAnnotation.bodies.map(body => 
+      body === previous ? { ...updated, ...this.creationMeta(updated) } : body)
+  }, saveImmediately);
 
-  /**
-   * Updates a previous body with the given body.
-   * @param previous the body to replace
-   * @param updated the body to replace with
-   * @param saveImmediately set to true to save & close immediately
-   */
-  onUpdateBody = (previous, updated, saveImmediately) => { 
-    this.updateCurrentAnnotation({
-      body: this.state.currentAnnotation.bodies.map(body => 
-        body === previous ? { ...updated, ...this.creationMeta(updated) } : body)
-    }, saveImmediately);
-  }
+  onRemoveBody = (body, saveImmediately) => this.updateCurrentAnnotation({
+    body: this.state.currentAnnotation.bodies.filter(b => b !== body)
+  }, saveImmediately);
 
   /** 
    * For convenience: an 'append or update' shorthand.
@@ -150,18 +136,76 @@ export default class Editor extends Component {
     }
   }
 
-  /**
-   * Removes the given body from the current annotation. For 
-   * convenience: also takes an array of bodies as argument.
-   * @param bodyOrBodies the body or list of bodies to remove
-   * @param saveImmediately set to true to save & close immediately
+  /** 
+   * Advanced method for applying a batch of body changes
+   * in one go (append, remove update), optionally saving
+   * immediately afterwards. The argument is an array of 
+   * diff objects with the following structure:
+   * 
+   *   [
+   *     { action: 'append', body: bodyToAppend },
+   *     { action: 'update', previous: prevBody, updated: updatedBody }
+   *     { action: 'remove', body: bodyToRemove },
+   * 
+   *     // Normal upsert, previous is optional
+   *     { action: 'upsert', previous: prevBody, updated: updatedBody }
+   * 
+   *     // Auto-upsert based on purpose    
+   *     { action: 'upsert', body: bodyToUpser }
+   *   ]
    */
-  onRemoveBody = (bodyOrBodies, saveImmediately) => {
-    const toRemove = toArray(bodyOrBodies);
+  onBatchModify = (diffs, saveImmediately) => {
+    // First, find previous bodies for auto upserts
+    const autoUpserts = diffs
+      .filter(d => d.action === 'upsert' && d.body)
+      .map(d => ({
+        previous: this.state.currentAnnotation.bodies.find(b => b.purpose === d.body.purpose),
+        updated: { ...d.body, ...this.creationMeta(d.body)}
+      }));
 
-    this.updateCurrentAnnotation({
-      body: this.state.currentAnnotation.bodies.filter(b => !toRemove.includes(b))
-    }, saveImmediately);
+    const toRemove = diffs
+      .filter(d => d.action === 'remove')
+      .map(d => d.body);
+      
+    const toAppend = [
+      ...diffs
+        .filter(d => (d.action === 'append') || (d.action === 'upsert' && d.updated && !d.previous))
+        .map(d => ({ ...d.body, ...this.creationMeta(d.body) })),
+
+      ...autoUpserts
+        .filter(d => !d.previous)
+        .map(d => d.updated)
+    ];
+
+    const toUpdate = [ 
+      ...diffs 
+        .filter(d => (d.action === 'update') || (d.action === 'upsert' && d.updated && d.previous))
+        .map(d => ({ 
+          previous: d.previous, 
+          updated: { ...d.updated, ...this.creationMeta(d.updated) } 
+        })),
+
+      ...autoUpserts
+        .filter(d => d.previous)
+    ];
+
+    const updatedBodies = [
+      // Current bodies
+      ...this.state.currentAnnotation.bodies    
+        // Remvoe
+        .filter(b => !toRemove.includes(b))
+
+        // Update
+        .map(b => {
+          const { updated  } = toUpdate.find(t => t.previous === b);
+          return updated ? updated : body;
+        }),
+
+        // Append
+        ...toAppend
+    ]
+      
+    this.updateCurrentAnnotation({ body: updatedBodies }, saveImmediately);
   }
 
   /**
