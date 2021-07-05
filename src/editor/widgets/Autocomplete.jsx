@@ -19,7 +19,7 @@ export default class Autocomplete extends Component {
         this.element.current.querySelector('input').value = this.props.initialValue;
         
       if (this.props.focus)
-        this.element.current.querySelector('input').focus();
+        this.element.current.querySelector('input').focus({ preventScroll: true });
     }
   }
   

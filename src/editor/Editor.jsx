@@ -9,7 +9,6 @@ import i18n from '../i18n';
 const toArray = body =>
   Array.isArray(body) ? body : [ body ];
 
-
 /**
  * The popup editor component.
  * 

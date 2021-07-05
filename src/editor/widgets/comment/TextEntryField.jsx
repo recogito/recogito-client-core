@@ -20,8 +20,9 @@ export default class TextEntryField extends Component {
   }
 
   componentDidMount() {
-    if (this.props.focus && this.element.current)
-      this.element.current.focus();
+    if (this.props.focus && this.element.current) {
+      this.element.current.focus({ preventScroll: true });
+    }
   }
 
   render() {
