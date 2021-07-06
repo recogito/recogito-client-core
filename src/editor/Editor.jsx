@@ -5,10 +5,6 @@ import { TrashIcon } from '../Icons';
 import setPosition from './setPosition';
 import i18n from '../i18n';
 
-/** Shorthand **/
-const toArray = body =>
-  Array.isArray(body) ? body : [ body ];
-
 /**
  * The popup editor component.
  * 
@@ -212,6 +208,9 @@ export default class Editor extends Component {
    * in one go, optionally saving immediately.
    */
   onRemoveAndAppend = (bodyOrBodiesToRemove, bodyOrBodiesToAppend, saveImmediately) => {
+    // Shorthand
+    const toArray = body => Array.isArray(body) ? body : [ body ];
+
     const toRemove = toArray(bodyOrBodiesToRemove);
     const toAppend = toArray(bodyOrBodiesToAppend).map(b => 
       ({ ...b, ...this.creationMeta(b) }));
