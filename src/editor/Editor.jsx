@@ -261,7 +261,7 @@ export default class Editor extends Component {
     // selected for editing)
     if (currentAnnotation.bodies.length === 0 && !this.props.allowEmpty) {
       if (currentAnnotation.isSelection)
-        onCancel();
+        this.onCancel();
       else 
         this.props.onAnnotationDeleted(this.props.annotation);
     } else {
