@@ -102,7 +102,7 @@
 }
 
 .r6o-editor.align-bottom {
-  margin-bottom:14px;
+  margin-top:-14px;
 
   .r6o-arrow {
     top:auto;
@@ -114,6 +114,10 @@
     box-shadow:none;
   }
 
+}
+
+.r6o-editor.align-bottom.pushed-down {
+  margin-top:4px;
 }
 
 .r6o-editor.dragged .r6o-arrow {

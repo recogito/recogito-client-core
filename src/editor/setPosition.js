@@ -2,7 +2,6 @@
 const setPosition = (wrapperEl, editorEl, selectedEl) => {
   // Container element offset
   const containerBounds = wrapperEl.getBoundingClientRect();
-  const { pageYOffset } = window;
 
   // Re-set orientation class
   editorEl.className = 'r6o-editor';
@@ -28,12 +27,10 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
   // If so, flip vertically
   if (defaultOrientation.bottom > window.innerHeight) {
     // Flip vertically
-    const annotationTop = top + pageYOffset; // Annotation bottom relative to parents
-    const containerHeight = containerBounds.bottom + pageYOffset;
+    const editorHeight = editorEl.children[1].getBoundingClientRect().height;
 
     editorEl.classList.add('align-bottom');
-    editorEl.style.top = 'auto';
-    editorEl.style.bottom = `${containerHeight - annotationTop}px`;
+    editorEl.style.top = `${top - containerBounds.top - editorHeight}px`;
   }
 
   // Get bounding box in current orientation 
@@ -42,8 +39,9 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
   // Test 3: does the top (still?) extend beyond top of the page?
   // If so, push down
   if (currentOrientation.top < 0) {
+    editorEl.classList.add('pushed-down');
+
     editorEl.style.top = `${-containerBounds.top}px`;
-    editorEl.style.bottom = 'auto';
 
     const shapeBottom = bottom - containerBounds.top;
     const editorBottom = currentOrientation.height - containerBounds.top;
@@ -54,9 +52,8 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
 
   // Test 4: does the left edge extend beyond the start of the page?
   // If so, push inward
-  if (currentOrientation.left < 0) {
+  if (currentOrientation.left < 0)
     editorEl.style.left = `${-containerBounds.left}px`;
-  }
 
 }
 
