@@ -1,12 +1,12 @@
 /** Sets the editor position and determines a proper orientation **/
 const setPosition = (wrapperEl, editorEl, selectedEl) => {
-  // Container element offset
+  // Container element bounds
   const containerBounds = wrapperEl.getBoundingClientRect();
 
   // Re-set orientation class
   editorEl.className = 'r6o-editor';
 
-  // Set visible
+  // Make visible
   editorEl.style.opacity = 1;
 
   // Default orientation (upwards arrow, at bottom-left of shape)
@@ -26,18 +26,17 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
   // Test 2: does the bottom edge extend beyond the height of the page?
   // If so, flip vertically
   if (defaultOrientation.bottom > window.innerHeight) {
-    // Flip vertically
-    const editorHeight = editorEl.children[1].getBoundingClientRect().height;
-
     editorEl.classList.add('align-bottom');
+    
+    const editorHeight = editorEl.children[1].getBoundingClientRect().height;
     editorEl.style.top = `${top - containerBounds.top - editorHeight}px`;
   }
 
-  // Get bounding box in current orientation 
+  // Get bounding box in current orientation for next tests
   const currentOrientation = editorEl.children[1].getBoundingClientRect();
 
   // Test 3: does the top (still?) extend beyond top of the page?
-  // If so, push down
+  // If so, push it down
   if (currentOrientation.top < 0) {
     editorEl.classList.add('pushed-down');
 
@@ -54,7 +53,6 @@ const setPosition = (wrapperEl, editorEl, selectedEl) => {
   // If so, push inward
   if (currentOrientation.left < 0)
     editorEl.style.left = `${-containerBounds.left}px`;
-
 }
 
 export default setPosition;
