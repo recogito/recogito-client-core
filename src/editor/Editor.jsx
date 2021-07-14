@@ -5,6 +5,12 @@ import { TrashIcon } from '../Icons';
 import setPosition from './setPosition';
 import i18n from '../i18n';
 
+/** We need to compare bounds by value, not by object ref **/
+const bounds = elem => {
+  const { top, left, width, height } = elem.getBoundingClientRect();
+  return `${top}, ${left}, ${width}, ${height}`;
+}
+
 /**
  * The popup editor component.
  * 
@@ -22,19 +28,29 @@ export default class Editor extends Component {
 
     this.state = {
       currentAnnotation: props.annotation,
-      dragged: false
+      dragged: false,
+      selectionBounds: bounds(props.selectedElement)
     }
   }
 
   componentWillReceiveProps(next) {
-    this.setState({ currentAnnotation: next.annotation });
+    const { selectionBounds } = this.state;
+    const nextBounds = bounds(next.selectedElement);
+
+    this.setState({ 
+      currentAnnotation: next.annotation,
+      selectionBounds: nextBounds 
+    });
 
     if (this.props.modifiedTarget != next.modifiedTarget) {
       // Update in case target was changed (move, resize)
-      if (this.state.currentAnnotation) {
+      if (this.state.currentAnnotation)
         this.updateCurrentAnnotation({ target: this.props.modifiedTarget });
+    }
 
-        // Change editor position if element has moved
+    // Change editor position if element has moved
+    if (selectionBounds != nextBounds) {
+      if (this.element.current) {
         this.removeObserver && this.removeObserver();
         this.removeObserver = this.initResizeObserver();
       }
