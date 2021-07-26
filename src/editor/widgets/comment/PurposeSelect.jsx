@@ -13,7 +13,8 @@ export const PURPOSES = [
   {'value': 'linking', 'label': 'Linking'},
   {'value': 'moderating', 'label': 'Moderating'},
   {'value': 'questioning', 'label': 'Questioning'},
-  {'value': 'replying', 'label': 'Replying'}
+  {'value': 'replying', 'label': 'Replying'},
+  {'value': 'supplementing', 'label': 'Transcription'}
 ]
 
 const PurposeSelect = props => {
