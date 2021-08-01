@@ -1,12 +1,42 @@
 import Polyglot from 'node-polyglot';
 import * as timeago from 'timeago.js';
 
+import messages_ar from './messages_ar.json';
+import messages_cs from './messages_cs.json';
+import messages_de from './messages_de.json';
+import messages_el from './messages_el.json';
+import messages_es from './messages_es.json';
+import messages_gl from './messages_gl.json';
+import messages_hi from './messages_hi.json';
+import messages_it from './messages_it.json';
+import messages_nl from './messages_nl.json';
+import messages_pt from './messages_pt.json';
+import messages_sv from './messages_sv.json';
+import messages_tr from './messages_tr.json';
+import messages_ur from './messages_ur.json';
+
+const MESSAGES = {
+  ar: messages_ar,
+  cs: messages_cs,
+  de: messages_de,
+  el: messages_el,
+  es: messages_es,
+  gl: messages_gl,
+  hi: messages_hi,
+  it: messages_it,
+  nl: messages_nl,
+  pt: messages_pt,
+  sv: messages_sv,
+  tr: messages_tr,
+  ur: messages_ur
+}
+
 const i18n = new Polyglot({ allowMissing: true });
 
 i18n.init = (lang, opt_messages) => {
   if (lang) {
     i18n.locale(lang);
-    i18n.extend(require(`./messages_${lang}.json`));  
+    i18n.extend(MESSAGES[lang]);  
   }
 
   if (opt_messages)
