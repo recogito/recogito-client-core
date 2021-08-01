@@ -59,14 +59,14 @@ const isReactComponent = component => {
  */
 export const getWidget = arg => {
 
-  const instantiate = (widget, config, type) => {
+  const instantiate = (widget, config, force) => {
     // Check if user forced explicit type 
     if (typeof widget === 'string' || widget instanceof String) {
       // Built-in
       return React.createElement(BUILTIN_WIDGETS[widget], config);
     } else {      
       // Plugin
-      if (type?.toLowerCase() === 'react') {
+      if (force?.toLowerCase() === 'react') {
         return React.createElement(widget, config);
       } else {
         // Auto-detect
@@ -83,8 +83,8 @@ export const getWidget = arg => {
 
   // First, check 'top-level' vs. 'nested object' case
   if (arg.widget) {
-    const { widget, type, ...config } = arg;
-    return instantiate(widget, config, type);
+    const { widget, force, ...config } = arg;
+    return instantiate(widget, config, force);
   } else {
     // No object with args -> instantiate arg directly
     return instantiate(arg);
