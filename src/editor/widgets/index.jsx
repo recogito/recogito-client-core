@@ -68,6 +68,8 @@ export const getWidget = arg => {
       // Plugin
       if (force?.toLowerCase() === 'react') {
         return React.createElement(widget, config);
+      } else if (force?.toLowerCase() === 'plainjs') {
+        return <WrappedWidget widget={widget} config={config} />
       } else {
         // Auto-detect
         if (isReactComponent(widget)) {
