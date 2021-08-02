@@ -6,6 +6,7 @@ import messages_cs from './messages_cs.json';
 import messages_de from './messages_de.json';
 import messages_el from './messages_el.json';
 import messages_es from './messages_es.json';
+import messages_fr from './messages_fr.json';
 import messages_gl from './messages_gl.json';
 import messages_hi from './messages_hi.json';
 import messages_it from './messages_it.json';
@@ -21,6 +22,7 @@ const MESSAGES = {
   de: messages_de,
   el: messages_el,
   es: messages_es,
+  fr: messages_fr,
   gl: messages_gl,
   hi: messages_hi,
   it: messages_it,
@@ -49,6 +51,7 @@ import cs from 'timeago.js/lib/lang/cs';
 import de from 'timeago.js/lib/lang/de';
 import el from 'timeago.js/lib/lang/el';
 import es from 'timeago.js/lib/lang/es';
+import fr from 'timeago.js/lib/lang/fr';
 import gl from 'timeago.js/lib/lang/gl';
 import hi from 'timeago.js/lib/lang/hi_IN';
 import it from 'timeago.js/lib/lang/it';
@@ -63,6 +66,7 @@ timeago.register('cs', cs);
 timeago.register('de', de);
 timeago.register('el', el);
 timeago.register('es', es);
+timeago.register('fr', fr);
 timeago.register('gl', gl);
 timeago.register('hi', hi);
 timeago.register('it', it);
