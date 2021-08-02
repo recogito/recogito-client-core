@@ -59,22 +59,34 @@ const isReactComponent = component => {
  */
 export const getWidget = arg => {
 
-  const instantiate = (widget, config) => {
+  const instantiate = (widget, config, force) => {
+    // Check if user forced explicit type 
     if (typeof widget === 'string' || widget instanceof String) {
+      // Built-in
       return React.createElement(BUILTIN_WIDGETS[widget], config);
-    } else if (isReactComponent(widget)) {
-      return React.createElement(widget, config);
-    } else if (typeof widget === 'function' || widget instanceof Function) {
-      return <WrappedWidget widget={widget} config={config} />
-    } else {
-      throw `${widget} is not a valid plugin`
+    } else {      
+      // Plugin
+      if (force?.toLowerCase() === 'react') {
+        return React.createElement(widget, config);
+      } else if (force?.toLowerCase() === 'plainjs') {
+        return <WrappedWidget widget={widget} config={config} />
+      } else {
+        // Auto-detect
+        if (isReactComponent(widget)) {
+          return React.createElement(widget, config);
+        } else if (typeof widget === 'function' || widget instanceof Function) {
+          return <WrappedWidget widget={widget} config={config} />
+        } else {
+          throw `${widget} is not a valid plugin`
+        }
+      }
     }
   }
 
   // First, check 'top-level' vs. 'nested object' case
   if (arg.widget) {
-    const { widget, ...config } = arg;
-    return instantiate(widget, config);
+    const { widget, force, ...config } = arg;
+    return instantiate(widget, config, force);
   } else {
     // No object with args -> instantiate arg directly
     return instantiate(arg);
