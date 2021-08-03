@@ -323,6 +323,7 @@ export default class Editor extends Component {
           <div className="r6o-editor-inner">
             {widgets.map((widget, idx) => 
               React.cloneElement(widget, { 
+                key: `${idx}`,
                 focus: idx === 0,
                 annotation : currentAnnotation,
                 readOnly : this.props.readOnly,
