@@ -37,10 +37,14 @@ export default class Editor extends Component {
     const { selectionBounds } = this.state;
     const nextBounds = bounds(next.selectedElement);
 
-    this.setState({ 
-      currentAnnotation: next.annotation,
-      selectionBounds: nextBounds 
-    });
+    if (this.props.annotation?.id !== next.annotation.id) {
+      this.setState({ 
+        currentAnnotation: next.annotation,
+        selectionBounds: nextBounds 
+      });  
+    } else {
+      this.setState({ selectionBounds: nextBounds });
+    }
 
     if (this.props.modifiedTarget != next.modifiedTarget) {
       // Update in case target was changed (move, resize)
