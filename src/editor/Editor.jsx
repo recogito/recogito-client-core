@@ -37,7 +37,7 @@ export default class Editor extends Component {
     const { selectionBounds } = this.state;
     const nextBounds = bounds(next.selectedElement);
 
-    if (this.props.annotation?.id !== next.annotation.id) {
+    if (!this.props.annotation?.isEqual(next.annotation)) {
       this.setState({ 
         currentAnnotation: next.annotation,
         selectionBounds: nextBounds 
