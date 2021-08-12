@@ -106,6 +106,9 @@ export default class Editor extends Component {
     return meta;
   }
 
+  getCurrentAnnotation = () =>
+    this.state.currentAnnotation.clone();
+
   /** Shorthand **/ 
   updateCurrentAnnotation = (diff, saveImmediately) => this.setState({
     currentAnnotation: this.state.currentAnnotation.clone(diff)
