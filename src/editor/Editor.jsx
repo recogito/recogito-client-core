@@ -322,7 +322,7 @@ export default class Editor extends Component {
     return (
       <Draggable 
         disabled={!this.props.detachable}
-        cancel=".r6o-btn, .r6o-nodrag" 
+        cancel=".r6o-btn, .r6o-nodrag, input, textarea" 
         onDrag={() => this.setState({ dragged: true })}>
 
         <div ref={this.element} className={this.state.dragged ? 'r6o-editor dragged' : 'r6o-editor'}>
