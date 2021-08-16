@@ -3,7 +3,7 @@
   "version": "1.4.6",
   "description": "Core functions, classes and components for RecogitoJS",
   "main": "src/index.js",
-  "sideEffects": ["themes/default/*"],
+  "sideEffects": ["themes/default/*", "src/polyfills/*"],
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --require @babel/register"
   },
