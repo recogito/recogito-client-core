@@ -13,9 +13,10 @@ export default class WrappedWidget extends Component {
       annotation: props.annotation,
       readOnly: props.readOnly,
       ...props.config,
-      onAppendBody: body => props.onAppendBody(body),
-      onUpdateBody: (previous, updated) => props.onUpdateBody(previous, updated),
-      onRemoveBody: body => props.onRemoveBody(body),
+      onAppendBody: (body, saveImmediately) => props.onAppendBody(body, saveImmediately),
+      onUpdateBody: (previous, updated, saveImmediately) => props.onUpdateBody(previous, updated, saveImmediately),
+      onUpsertBody: (previous, updated, saveImmediately) => props.onUpsertBody(previous, updated, saveImmediately),
+      onRemoveBody: (body, saveImmediately) => props.onRemoveBody(body, saveImmediately),
       onSaveAndClose: () => props.onSaveAndClose()
     });
 
