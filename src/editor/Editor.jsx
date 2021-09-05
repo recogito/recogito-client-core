@@ -73,7 +73,7 @@ export default class Editor extends Component {
   initResizeObserver = () => {
     // Defaults to true
     const autoPosition =
-      this.props.editorAutoPosition === undefined ? true : this.props.editorAutoPosition;
+      this.props.autoPosition === undefined ? true : this.props.autoPosition;
   
     if (window?.ResizeObserver) {
       const resizeObserver = new ResizeObserver(() => {
