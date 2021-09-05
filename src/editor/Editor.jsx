@@ -62,13 +62,7 @@ export default class Editor extends Component {
   }
 
   componentDidMount() {
-    // Defaults to true
-    const autoPosition = 
-      this.props.autoPosition === undefined ? true : this.props.autoPosition;
-
-    // Init observer (triggers setPosition once)
-    if (autoPosition)
-      this.removeObserver = this.initResizeObserver();
+    this.removeObserver = this.initResizeObserver();
   }
 
   componentWillUnmount() {
@@ -77,10 +71,14 @@ export default class Editor extends Component {
   }
 
   initResizeObserver = () => {
+    // Defaults to true
+    const autoPosition =
+      this.props.editorAutoPosition === undefined ? true : this.props.editorAutoPosition;
+  
     if (window?.ResizeObserver) {
       const resizeObserver = new ResizeObserver(() => {
         if (!this.state.dragged)
-          setPosition(this.props.wrapperEl, this.element.current, this.props.selectedElement);
+          setPosition(this.props.wrapperEl, this.element.current, this.props.selectedElement, autoPosition);
       });
 
       resizeObserver.observe(this.props.wrapperEl);
@@ -88,7 +86,7 @@ export default class Editor extends Component {
     } else {
       // Fire setPosition manually *only* for devices that don't support ResizeObserver
       if (!this.state.dragged)
-        setPosition(this.props.wrapperEl, this.element.current, this.props.selectedElement);
+        setPosition(this.props.wrapperEl, this.element.current, this.props.selectedElement, autoPosition);
     }  
   }
 
