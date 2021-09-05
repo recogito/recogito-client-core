@@ -62,8 +62,13 @@ export default class Editor extends Component {
   }
 
   componentDidMount() {
+    // Defaults to true
+    const autoPosition = 
+      this.props.autoPosition === undefined ? true : this.props.autoPosition;
+
     // Init observer (triggers setPosition once)
-    this.removeObserver = this.initResizeObserver();
+    if (autoPosition)
+      this.removeObserver = this.initResizeObserver();
   }
 
   componentWillUnmount() {
