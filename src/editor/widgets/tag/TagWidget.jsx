@@ -50,7 +50,10 @@ const TagWidget = props => {
   }
 
   const onSubmit = tag => {
-    const { draft, ...toSubmit } =  { ...draftTag, value: tag }; 
+    const { draft, ...toSubmit } = tag.label ? 
+      { ...draftTag, value: tag.label, source: tag.uri } :
+      { ...draftTag, value: tag }; 
+
     if (draftTag.value.trim().length === 0) {
       props.onAppendBody(toSubmit);
     } else {

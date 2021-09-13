@@ -18,7 +18,9 @@ const Autocomplete = props => {
   const onInputValueChange = ({ inputValue }) => {
     if (inputValue.length > 0) {
       const prefixMatches = props.vocabulary.filter(item => {
-        return item.toLowerCase().startsWith(inputValue.toLowerCase());
+        // Item could be string or { label, uri } tuple
+        const label = item.label ? item.label : item;
+        return label.toLowerCase().startsWith(inputValue.toLowerCase());
       });
 
       setInputItems(prefixMatches);
@@ -39,15 +41,16 @@ const Autocomplete = props => {
   } = useCombobox({ 
     items: inputItems, 
     onInputValueChange: onInputValueChange, 
-    onSelectedItemChange: ({ inputValue }) => {
-      onSubmit(inputValue);
-      setInputValue('');
+    onSelectedItemChange: ({ selectedItem }) => {
+      onSubmit(selectedItem);
     } 
   });
 
   const onSubmit = inputValue => {
     setInputValue('');
-    if (inputValue.trim().length > 0)
+
+    const label = inputValue.label ? inputValue.label : inputValue;
+    if (label.trim().length > 0)
       props.onSubmit(inputValue);
   }
 
@@ -65,11 +68,16 @@ const Autocomplete = props => {
     }
   }
 
+  // This is a horrible hack - need to get rid of downshift altogether!
+  const inputProps = getInputProps({ onKeyUp });
+  if (inputProps.value === '[object Object]')
+    inputProps.value = '';
+
   return (
     <div className="r6o-autocomplete" ref={element}>
       <div {...getComboboxProps()}>
         <input 
-          {...getInputProps({ onKeyUp })}
+          {...inputProps}
           placeholder={props.placeholder} />
       </div>
       <ul {...getMenuProps()}>
@@ -81,7 +89,7 @@ const Autocomplete = props => {
               }
               key={`${item}${index}`}
               {...getItemProps({ item, index })}>
-            {item}
+            {item.label ? item.label : item}
           </li>
         ))}
       </ul>
