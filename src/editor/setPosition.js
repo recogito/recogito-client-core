@@ -10,8 +10,8 @@ const setPosition = (wrapperEl, editorEl, selectedEl, autoPosition) => {
   editorEl.style.opacity = 1;
 
   // Default orientation (upwards arrow, at bottom-left of shape)
-  const { left, top, right, height, bottom } = selectedEl.getBoundingClientRect();
-  editorEl.style.top = `${top + height - containerBounds.top}px`;
+  const { left, top, right, bottom } = selectedEl.getBoundingClientRect();
+  editorEl.style.top = `${bottom - containerBounds.top}px`;
   editorEl.style.left = `${left - containerBounds.left}px`;
 
   if (autoPosition) {
