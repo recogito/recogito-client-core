@@ -86,16 +86,13 @@ timeago.register('tr', tr);
 
 /**
  * Helper function that allows plugins to register their
- * own I18N labels
+ * own additional I18N labels
  */
-i18n.registerMessages = dict => {
-  const currentLocale = i18n.locale();
-  const messages = dict[currentLocale];
-
-  if (messages)
-    i18n.extend(messages);  
+i18n.registerMessages = (lang, messages) => {
+  if (MESSAGES[lang])
+    MESSAGES[lang] = {...MESSAGES[lang], ...messages };
   else
-    console.warn(`Locale ${currentLocale} not supported by plugin widget - falling back to defaults`);
+    MESSAGES[lang] = messages;
 }
 
 export default i18n;
