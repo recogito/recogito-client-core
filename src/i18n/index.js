@@ -1,4 +1,5 @@
 import Polyglot from 'node-polyglot';
+import TimeAgo from 'timeago-react';
 import * as timeago from 'timeago.js';
 
 import messages_ar from './messages_ar.json';
@@ -83,4 +84,32 @@ timeago.register('pt', pt);
 timeago.register('sv', sv);
 timeago.register('tr', tr);
 
+/**
+ * Helper function that allows plugins to register their
+ * own I18N labels
+ */
+i18n.registerMessages = dict => {
+  const currentLocale = i18n.locale();
+  const messages = dict[currentLocale];
+
+  if (messages)
+    i18n.extend(messages);  
+  else
+    console.warn(`Locale ${currentLocale} not supported by plugin widget - falling back to defaults`);
+}
+
 export default i18n;
+
+/** 
+ * For convenience: exposes a pre-localized TimeAgo widget, 
+ * for use in plugins
+ */
+export const LocalTimeAgo = props => {
+
+  return (
+    <TimeAgo 
+      datetime={props.timestamp}
+      locale={i18n.locale()} />
+  )
+
+}
