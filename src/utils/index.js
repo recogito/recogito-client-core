@@ -17,3 +17,16 @@ export const setLocale = (locale, opt_messages) => {
     I18n.init(null, opt_messages);
   }
 }
+
+/** See https://www.freecodecamp.org/news/javascript-debounce-example/ **/
+export const debounce = (fn, timeout = 10) => {
+  let timer;
+
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { fn.apply(this, args); }, timeout);
+  };
+
+}
+
+export default debounce;
