@@ -67,8 +67,10 @@ export default class Editor extends Component {
 
     // This makes sure the editor is repositioned if the widgets change
     const observer = new MutationObserver(debounce(() => {
-      this.removeObserver && this.removeObserver();
-      this.removeObserver = this.initResizeObserver();
+      if (this.element.current) {
+        this.removeObserver && this.removeObserver();
+        this.removeObserver = this.initResizeObserver();
+      }
     }));
 
     observer.observe(this.element.current, { childList: true, subtree: true });
