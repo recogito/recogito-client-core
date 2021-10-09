@@ -15,9 +15,9 @@
   font-size:17px;
   line-height:27px;
 
-  -webkit-transition:opacity 0.1s ease-in-out;
-     -moz-transition:opacity 0.1s ease-in-out;
-          transition:opacity 0.1s ease-in-out;
+  -webkit-transition:opacity 0.2s ease-in;
+     -moz-transition:opacity 0.2s ease-in;
+          transition:opacity 0.2s ease-in;
 
   .r6o-arrow {
     position:absolute;
@@ -129,6 +129,14 @@
 
 .r6o-editor.r6o-arrow-bottom.pushed.down {
   margin-top:4px;
+}
+
+.r6o-editor .r6o-nodrag * {
+  cursor:default !important;
+}
+
+.r6o-editor *:not(.r6o-nodrag, .r6o-btn, input, textarea) {
+  cursor:move;
 }
 
 .r6o-purposedropdown {

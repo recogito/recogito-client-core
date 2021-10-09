@@ -6,9 +6,6 @@ const setPosition = (wrapperEl, editorEl, selectedEl, autoPosition) => {
   // Re-set orientation class
   editorEl.className = 'r6o-editor r6o-arrow-top r6o-arrow-left';
 
-  // Make visible
-  editorEl.style.opacity = 1;
-
   // Default orientation (upwards arrow, at bottom-left of shape)
   const { left, top, right, bottom } = selectedEl.getBoundingClientRect();
   editorEl.style.top = `${bottom - containerBounds.top}px`;
@@ -58,6 +55,10 @@ const setPosition = (wrapperEl, editorEl, selectedEl, autoPosition) => {
       editorEl.classList.add('pushed', 'right');
       editorEl.style.left = `${-containerBounds.left}px`;
     }
+
+    // Make visible
+    requestAnimationFrame(() =>
+      editorEl.style.opacity = 1);
   }
 }
 
