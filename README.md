@@ -29,7 +29,7 @@ here's what the German translation file `messages_de.json` looks like.
 
 ### To add a new translation
 
-- Fork the this repository
+- Fork this repository
 - Add a message file to the [src/i18n folder](https://github.com/recogito/recogito-client-core/tree/main/src/i18n) 
   named `messages_{iso}.json`, where {iso} is the 2-character ISO code of the language.
 - Copy the dictionary above, and replace the translations accordingly.
