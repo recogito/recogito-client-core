@@ -26,6 +26,7 @@
     left:12px;
     width:28px;
     height:12px;
+    display:none;
   }
 
   .r6o-arrow:after {
@@ -91,7 +92,11 @@
 
 }
 
-.r6o-editor.align-right {
+.r6o-editor.r6o-arrow-top .r6o-arrow {
+  display:block;
+}
+
+.r6o-editor.r6o-arrow-right {
   margin-left:8px;
 
   .r6o-arrow {
@@ -101,10 +106,11 @@
 
 }
 
-.r6o-editor.align-bottom {
+.r6o-editor.r6o-arrow-bottom {
   margin-top:-14px;
 
   .r6o-arrow {
+    display:block;
     top:auto;
     bottom:-12px;
   }
@@ -116,12 +122,13 @@
 
 }
 
-.r6o-editor.align-bottom.pushed-down {
-  margin-top:4px;
-}
-
+.r6o-editor.pushed .r6o-arrow,
 .r6o-editor.dragged .r6o-arrow {
   display:none;
+}
+
+.r6o-editor.r6o-arrow-bottom.pushed.down {
+  margin-top:4px;
 }
 
 .r6o-purposedropdown {
