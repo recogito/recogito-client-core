@@ -66,7 +66,7 @@ const Comment = props => {
           /> } 
           
       <div 
-        className={isMenuVisible ? "r6o-icon r6o-arrow-down r6o-nodrag r6o-menu-open" : "r6o-icon r6o-arrow-down r6o-nodrag"} 
+        className={isMenuVisible ? "r6o-icon r6o-arrow-down r6o-menu-open" : "r6o-icon r6o-arrow-down"} 
         onClick={() => setIsMenuVisible(!isMenuVisible)}>
         <ChevronDownIcon width={12} />
       </div>

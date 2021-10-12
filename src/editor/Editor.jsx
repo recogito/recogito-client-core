@@ -335,7 +335,7 @@ export default class Editor extends Component {
     return (
       <Draggable 
         disabled={!this.props.detachable}
-        cancel=".r6o-btn, .r6o-nodrag, input, textarea" 
+        handle=".r6o-draggable" 
         onDrag={() => this.setState({ dragged: true })}>
 
         <div ref={this.element} className={this.state.dragged ? 'r6o-editor dragged' : 'r6o-editor'}>
@@ -365,7 +365,8 @@ export default class Editor extends Component {
                   onClick={this.onCancel}>{i18n.t('Close')}</button>
               </div>
             ) : (
-              <div className="r6o-footer">
+              <div 
+                className={this.props.detachable ? "r6o-footer r6o-draggable" : "r6o-footer"}>
                 { hasDelete && (
                   <button 
                     className="r6o-btn left delete-annotation" 

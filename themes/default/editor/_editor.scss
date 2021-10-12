@@ -131,11 +131,7 @@
   margin-top:4px;
 }
 
-.r6o-editor .r6o-nodrag * {
-  cursor:default !important;
-}
-
-.r6o-editor *:not(.r6o-nodrag, .r6o-btn, input, textarea) {
+.r6o-editor .r6o-draggable {
   cursor:move;
 }
 
