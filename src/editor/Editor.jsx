@@ -229,7 +229,7 @@ export default class Editor extends Component {
         // Update
         .map(b => {
           const diff = toUpdate.find(t => t.previous === b);
-          return diff ? diff.updated : body;
+          return diff ? diff.updated : b;
         }),
 
         // Append

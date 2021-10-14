@@ -1,4 +1,5 @@
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 /**
  * Adds DOM polyfills that babel polyfill doesn't include
