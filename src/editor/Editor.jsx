@@ -240,26 +240,6 @@ export default class Editor extends Component {
   }
 
   /**
-   * For convenience: removes and appends one or more bodies
-   * in one go, optionally saving immediately.
-   */
-  onRemoveAndAppend = (bodyOrBodiesToRemove, bodyOrBodiesToAppend, saveImmediately) => {
-    // Shorthand
-    const toArray = body => Array.isArray(body) ? body : [ body ];
-
-    const toRemove = toArray(bodyOrBodiesToRemove);
-    const toAppend = toArray(bodyOrBodiesToAppend).map(b => 
-      ({ ...b, ...this.creationMeta(b) }));
-
-    this.updateCurrentAnnotation({
-      body: [
-        ...this.state.currentAnnotation.bodies.filter(b => !toRemove.includes(b)),
-        ...toAppend 
-      ]
-    }, saveImmediately);
-  }
-
-  /**
    * Sets the given property value at the top level of the annotation.
    * @param property property key
    * @param value property value - set to null to delete the property
@@ -352,7 +332,7 @@ export default class Editor extends Component {
                 onUpdateBody: this.onUpdateBody,
                 onRemoveBody: this.onRemoveBody,
                 onUpsertBody: this.onUpsertBody,
-                onRemoveAndAppend: this.onRemoveAndAppend,
+                onBatchModify: this.onBatchModify,
                 onSetProperty: this.onSetProperty,
                 onSaveAndClose: this.onOk              
               })
