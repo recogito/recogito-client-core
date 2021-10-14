@@ -223,13 +223,13 @@ export default class Editor extends Component {
     const updatedBodies = [
       // Current bodies
       ...this.state.currentAnnotation.bodies    
-        // Remvoe
+        // Remove
         .filter(b => !toRemove.includes(b))
 
         // Update
         .map(b => {
-          const { updated  } = toUpdate.find(t => t.previous === b);
-          return updated ? updated : body;
+          const diff = toUpdate.find(t => t.previous === b);
+          return diff ? diff.updated : body;
         }),
 
         // Append
