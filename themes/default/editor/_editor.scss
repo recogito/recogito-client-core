@@ -6,7 +6,6 @@
 .r6o-editor {
   position:absolute;
   z-index:99999;
-  margin-top:18px;
   margin-left:-14px;
   width:400px;
   color:$standard-type;
@@ -107,7 +106,6 @@
 }
 
 .r6o-editor.r6o-arrow-bottom {
-  margin-top:-14px;
 
   .r6o-arrow {
     display:block;
@@ -125,10 +123,6 @@
 .r6o-editor.pushed .r6o-arrow,
 .r6o-editor.dragged .r6o-arrow {
   display:none;
-}
-
-.r6o-editor.r6o-arrow-bottom.pushed.down {
-  margin-top:4px;
 }
 
 .r6o-editor .r6o-draggable {

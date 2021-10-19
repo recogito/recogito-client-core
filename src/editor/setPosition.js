@@ -1,3 +1,5 @@
+const MARGIN_VERTICAL = 14;
+
 /** Sets the editor position and determines a proper orientation **/
 const setPosition = (wrapperEl, editorEl, selectedEl, autoPosition) => {
   // Container element bounds
@@ -8,7 +10,7 @@ const setPosition = (wrapperEl, editorEl, selectedEl, autoPosition) => {
 
   // Default orientation (upwards arrow, at bottom-left of shape)
   const { left, top, right, bottom } = selectedEl.getBoundingClientRect();
-  editorEl.style.top = `${bottom - containerBounds.top}px`;
+  editorEl.style.top = `${bottom - containerBounds.top + MARGIN_VERTICAL}px`;
   editorEl.style.left = `${left - containerBounds.left}px`;
 
   if (autoPosition) {
@@ -29,7 +31,7 @@ const setPosition = (wrapperEl, editorEl, selectedEl, autoPosition) => {
       editorEl.classList.add('r6o-arrow-bottom');
       
       const editorHeight = editorEl.children[1].getBoundingClientRect().height;
-      editorEl.style.top = `${top - containerBounds.top - editorHeight}px`;
+      editorEl.style.top = `${top - containerBounds.top - editorHeight - MARGIN_VERTICAL}px`;
     }
 
     // Get bounding box in current orientation for next tests
