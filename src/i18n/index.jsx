@@ -16,6 +16,7 @@ import messages_ko from './messages_ko.json';
 import messages_nl from './messages_nl.json';
 import messages_pt from './messages_pt.json';
 import messages_sv from './messages_sv.json';
+import messages_th from './messages_th.json';
 import messages_tr from './messages_tr.json';
 import messages_ur from './messages_ur.json';
 
@@ -34,6 +35,7 @@ const MESSAGES = {
   nl: messages_nl,
   pt: messages_pt,
   sv: messages_sv,
+  th: messages_th,
   tr: messages_tr,
   ur: messages_ur
 }
@@ -65,6 +67,7 @@ import ko from 'timeago.js/lib/lang/ko';
 import nl from 'timeago.js/lib/lang/nl';
 import pt from 'timeago.js/lib/lang/pt_BR';
 import sv from 'timeago.js/lib/lang/sv';
+import th from 'timeago.js/lib/lang/th';
 import tr from 'timeago.js/lib/lang/tr';
 // import ur from 'timeago.js/lib/lang/ur'; // Not currently supported by TimeAgo 
 
@@ -82,6 +85,7 @@ timeago.register('ko', ko);
 timeago.register('nl', nl);
 timeago.register('pt', pt);
 timeago.register('sv', sv);
+timeago.register('th', th);
 timeago.register('tr', tr);
 
 /**
