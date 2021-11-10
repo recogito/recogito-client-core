@@ -3,6 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 import { CloseIcon } from '../../../Icons';
 import i18n from '../../../i18n';
 import Autocomplete from '../Autocomplete';
+import Select from 'react-select';
 
 const getDraftTag = existingDraft =>
   existingDraft ? existingDraft : {
@@ -21,6 +22,22 @@ const TagWidget = props => {
 
   // All except draft tag
   const tags = all.filter(b => b != draftTag);
+  const isDropdown = props.dropdown && props.vocabulary ? true : false;
+  if (isDropdown){
+    var mappedTags = [];
+    var selectedTag = {};
+    for (var vo=0; vo<props.vocabulary.length; vo++){
+      const vocab = props.vocabulary[vo];
+      const label = vocab.label ? vocab.label : vocab;
+      const uri = vocab.uri ? vocab.uri : '';
+      const optionDict = {'label': label, 'value': label, 'uri': uri}
+      mappedTags.push(optionDict);
+      if (tags.length > 0 && tags[0]['value'] == label){
+        selectedTag = optionDict;
+      }
+    }
+  }
+
 
   const [ showDelete, setShowDelete ] = useState(false);
 
@@ -53,9 +70,11 @@ const TagWidget = props => {
     const { draft, ...toSubmit } = tag.label ? 
       { ...draftTag, value: tag.label, source: tag.uri } :
       { ...draftTag, value: tag }; 
-
-    if (draftTag.value.trim().length === 0) {
+    const dropdowncheck = isDropdown ? tags.length == 0 : true;
+    if (draftTag.value.trim().length === 0 && dropdowncheck) {
       props.onAppendBody(toSubmit);
+    } else if (isDropdown) {
+      props.onUpdateBody(tags[0], toSubmit);
     } else {
       props.onUpdateBody(draftTag, toSubmit); 
     }
@@ -63,7 +82,7 @@ const TagWidget = props => {
 
   return (
     <div className="r6o-widget r6o-tag">
-      { tags.length > 0 &&
+      { tags.length > 0 && !isDropdown &&
         <ul className="r6o-taglist">
           { tags.map(tag =>
             <li key={tag.value} onClick={toggle(tag.value)}>
@@ -82,8 +101,14 @@ const TagWidget = props => {
           )}
         </ul>
       }
-
-      {!props.readOnly &&
+      {!props.readOnly && isDropdown &&
+        <Select
+          onChange={onSubmit}
+          options={mappedTags}
+          value={selectedTag}
+        />
+      }
+      {!props.readOnly && !isDropdown &&
         <Autocomplete
           focus={props.focus}
           placeholder={i18n.t('Add tag...')}
