@@ -43,6 +43,8 @@ const MESSAGES = {
 const i18n = new Polyglot({ allowMissing: true });
 
 i18n.init = (lang, opt_messages) => {
+  i18n.clear();
+
   if (lang) {
     i18n.locale(lang);
     i18n.extend(MESSAGES[lang]);  
