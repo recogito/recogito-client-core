@@ -29,7 +29,7 @@ const Autocomplete = props => {
   }, []);
 
   useEffect(() => {
-    props.onChange(value);
+    props.onChange && props.onChange(value);
   }, [ value ]);
 
   const getSuggestions = value => {
