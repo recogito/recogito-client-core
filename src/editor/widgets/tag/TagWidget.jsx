@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { CloseIcon } from '../../../Icons';
 import i18n from '../../../i18n';
+
 import Autocomplete from '../Autocomplete';
 
 const getDraftTag = existingDraft =>
@@ -9,7 +10,6 @@ const getDraftTag = existingDraft =>
     type: 'TextualBody', value: '', purpose: 'tagging', draft: true
   };
 
-/** The basic freetext tag control from original Recogito **/
 const TagWidget = props => {
 
   // All tags (draft + non-draft)
@@ -31,11 +31,6 @@ const TagWidget = props => {
       setShowDelete(tag); // Sets delete button on a different tag
   }
 
-  const onDelete = tag => evt => {
-    evt.stopPropagation();
-    props.onRemoveBody(tag);
-  }
-
   const onDraftChange = value => {
     const prev = draftTag.value.trim();
     const updated = value.trim();
@@ -47,6 +42,11 @@ const TagWidget = props => {
     } else {
       props.onUpdateBody(draftTag, { ...draftTag, value: updated });
     }
+  }
+
+  const onDelete = tag => evt => {
+    evt.stopPropagation();
+    props.onRemoveBody(tag);
   }
 
   const onSubmit = tag => {
@@ -84,17 +84,16 @@ const TagWidget = props => {
       }
 
       {!props.readOnly &&
-        <Autocomplete
+        <Autocomplete 
           focus={props.focus}
           placeholder={i18n.t('Add tag...')}
-          initialValue={draftTag.value}
+          vocabulary={props.vocabulary || []}
           onChange={onDraftChange}
-          onSubmit={onSubmit}
-          vocabulary={props.vocabulary || []} />
+          onSubmit={onSubmit}/>
       }
     </div>
   )
 
-};
+}
 
 export default TagWidget;
