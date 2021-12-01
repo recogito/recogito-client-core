@@ -182,7 +182,7 @@ export default class Editor extends Component {
    *     { action: 'upsert', previous: prevBody, updated: updatedBody }
    * 
    *     // Auto-upsert based on purpose    
-   *     { action: 'upsert', body: bodyToUpser }
+   *     { action: 'upsert', body: bodyToUpsert }
    *   ]
    */
   onBatchModify = (diffs, saveImmediately) => {
