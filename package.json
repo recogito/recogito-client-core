@@ -30,7 +30,7 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.9.0",
-    "mocha": "^9.1.2"
+    "mocha": "^9.1.4"
   },
   "dependencies": {
     "core-js": "^3.18.3",
