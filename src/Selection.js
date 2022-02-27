@@ -74,7 +74,7 @@ export default class Selection {
 
   /** Shorthand for the 'exact' field of the TextQuoteSelector **/
   get quote() {
-    return this.selector('TextQuoteSelector').exact;
+    return this.selector('TextQuoteSelector')?.exact;
   }
 
   /*******************************************/ 
