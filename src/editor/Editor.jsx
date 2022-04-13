@@ -62,6 +62,9 @@ export default class Editor extends Component {
   }
 
   componentDidMount() {
+    const onOpen = new Event('onEditorOpened');
+    this.element.current.dispatchEvent(onOpen);
+
     this.removeObserver = this.initResizeObserver();
 
     // This makes sure the editor is repositioned if the widgets change
@@ -76,6 +79,9 @@ export default class Editor extends Component {
   }
 
   componentWillUnmount() {
+    const onClose = new Event('onEditorClosed');
+    this.element.current.dispatchEvent(onClose);
+
     // Remove the observer
     this.removeObserver && this.removeObserver();
   }
