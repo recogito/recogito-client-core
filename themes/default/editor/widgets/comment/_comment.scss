@@ -15,6 +15,10 @@
     resize:none;
   }
 
+  .r6o-readonly-comment {
+    white-space: pre-line; 
+  }
+
   .r6o-editable-text::-webkit-input-placeholder { color:#c2c2c2; }
   .r6o-editable-text::-moz-placeholder { color:#c2c2c2; }
   .r6o-editable-text:-moz-placeholder { color:#c2c2c2; }

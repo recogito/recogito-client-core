@@ -6,7 +6,6 @@
 .r6o-editor {
   position:absolute;
   z-index:99999;
-  margin-left:-14px;
   width:400px;
   color:$standard-type;
   opacity:0;
@@ -87,6 +86,14 @@
       color:#fff;
       background-color:#ef352c;
     }
+  }
+
+}
+
+@media (max-width: 640px) {
+
+  .r6o-editor {
+    width:260px;
   }
 
 }

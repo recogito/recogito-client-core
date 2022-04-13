@@ -103,17 +103,17 @@ export default class WebAnnotation {
 
   /** Shorthand for the 'exact' field of the TextQuoteSelector **/
   get quote() {
-    return this.selector('TextQuoteSelector').exact;
+    return this.selector('TextQuoteSelector')?.exact;
   }
 
   /** Shorthand for the 'start' field of the TextPositionSelector **/
   get start() {
-    return this.selector('TextPositionSelector').start;
+    return this.selector('TextPositionSelector')?.start;
   }
 
   /** Shorthand for the 'end' field of the TextPositionSelector **/
   get end() {
-    return this.selector('TextPositionSelector').end;
+    return this.selector('TextPositionSelector')?.end;
   }
   
 }

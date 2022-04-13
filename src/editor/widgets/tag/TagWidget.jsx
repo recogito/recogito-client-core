@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { CloseIcon } from '../../../Icons';
 import i18n from '../../../i18n';
+
 import Autocomplete from '../Autocomplete';
 
 const getDraftTag = existingDraft =>
@@ -9,12 +10,11 @@ const getDraftTag = existingDraft =>
     type: 'TextualBody', value: '', purpose: 'tagging', draft: true
   };
 
-/** The basic freetext tag control from original Recogito **/
 const TagWidget = props => {
 
   // All tags (draft + non-draft)
   const all = props.annotation ? 
-    props.annotation.bodies.filter(b => b.type === 'TextualBody' && b.purpose === 'tagging') : [];
+    props.annotation.bodies.filter(b => b.purpose === 'tagging') : [];
 
   // Last draft tag goes into the input field
   const draftTag = getDraftTag(all.slice().reverse().find(b => b.draft)); 
@@ -31,11 +31,6 @@ const TagWidget = props => {
       setShowDelete(tag); // Sets delete button on a different tag
   }
 
-  const onDelete = tag => evt => {
-    evt.stopPropagation();
-    props.onRemoveBody(tag);
-  }
-
   const onDraftChange = value => {
     const prev = draftTag.value.trim();
     const updated = value.trim();
@@ -49,10 +44,24 @@ const TagWidget = props => {
     }
   }
 
+  const onDelete = tag => evt => {
+    evt.stopPropagation();
+    props.onRemoveBody(tag);
+  }
+
   const onSubmit = tag => {
-    const { draft, ...toSubmit } = tag.label ? 
-      { ...draftTag, value: tag.label, source: tag.uri } :
-      { ...draftTag, value: tag }; 
+    const toSubmit = tag.uri ? {
+        type: 'SpecificResource',
+        purpose: 'tagging',
+        source: {
+          id: tag.uri,
+          label: tag.label
+        }
+      } : {
+        type: 'TextualBody',
+        purpose: 'tagging',
+        value: tag.label || tag
+      };
 
     if (draftTag.value.trim().length === 0) {
       props.onAppendBody(toSubmit);
@@ -61,16 +70,19 @@ const TagWidget = props => {
     }
   }
 
+  // Shorthand
+  const tagValue = tag => tag.value || tag.source.label;
+
   return (
     <div className="r6o-widget r6o-tag">
       { tags.length > 0 &&
         <ul className="r6o-taglist">
           { tags.map(tag =>
-            <li key={tag.value} onClick={toggle(tag.value)}>
-              <span className="r6o-label">{tag.value}</span>
+            <li key={tagValue(tag)} onClick={toggle(tag)}>
+              <span className="r6o-label">{tagValue(tag)}</span>
 
               {!props.readOnly &&
-                <CSSTransition in={showDelete === tag.value} timeout={200} classNames="r6o-delete">
+                <CSSTransition in={showDelete === tag} timeout={200} classNames="r6o-delete">
                   <span className="r6o-delete-wrapper" onClick={onDelete(tag)}>
                     <span className="r6o-delete">
                       <CloseIcon width={12} />
@@ -84,17 +96,16 @@ const TagWidget = props => {
       }
 
       {!props.readOnly &&
-        <Autocomplete
+        <Autocomplete 
           focus={props.focus}
           placeholder={i18n.t('Add tag...')}
-          initialValue={draftTag.value}
+          vocabulary={props.vocabulary || []}
           onChange={onDraftChange}
-          onSubmit={onSubmit}
-          vocabulary={props.vocabulary || []} />
+          onSubmit={onSubmit}/>
       }
     </div>
   )
 
-};
+}
 
 export default TagWidget;

@@ -15,6 +15,7 @@ import messages_it from './messages_it.json';
 import messages_ko from './messages_ko.json';
 import messages_nl from './messages_nl.json';
 import messages_pt from './messages_pt.json';
+import messages_ru from './messages_ru.json';
 import messages_sv from './messages_sv.json';
 import messages_th from './messages_th.json';
 import messages_tr from './messages_tr.json';
@@ -34,6 +35,7 @@ const MESSAGES = {
   ko: messages_ko,
   nl: messages_nl,
   pt: messages_pt,
+  ru: messages_ru,
   sv: messages_sv,
   th: messages_th,
   tr: messages_tr,
@@ -43,6 +45,8 @@ const MESSAGES = {
 const i18n = new Polyglot({ allowMissing: true });
 
 i18n.init = (lang, opt_messages) => {
+  i18n.clear();
+
   if (lang) {
     i18n.locale(lang);
     i18n.extend(MESSAGES[lang]);  
@@ -66,6 +70,7 @@ import it from 'timeago.js/lib/lang/it';
 import ko from 'timeago.js/lib/lang/ko';
 import nl from 'timeago.js/lib/lang/nl';
 import pt from 'timeago.js/lib/lang/pt_BR';
+import ru from 'timeago.js/lib/lang/ru';
 import sv from 'timeago.js/lib/lang/sv';
 import th from 'timeago.js/lib/lang/th';
 import tr from 'timeago.js/lib/lang/tr';
@@ -84,6 +89,7 @@ timeago.register('it', it);
 timeago.register('ko', ko);
 timeago.register('nl', nl);
 timeago.register('pt', pt);
+timeago.register('ru', ru);
 timeago.register('sv', sv);
 timeago.register('th', th);
 timeago.register('tr', tr);
