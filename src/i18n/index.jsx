@@ -20,6 +20,8 @@ import messages_sv from './messages_sv.json';
 import messages_th from './messages_th.json';
 import messages_tr from './messages_tr.json';
 import messages_ur from './messages_ur.json';
+import messages_zh_CN from './messages_zh_CN.json';
+import messages_zh_TW from './messages_zh_TW.json';
 
 const MESSAGES = {
   ar: messages_ar,
@@ -39,8 +41,12 @@ const MESSAGES = {
   sv: messages_sv,
   th: messages_th,
   tr: messages_tr,
-  ur: messages_ur
+  ur: messages_ur,
+  'zh-CN': messages_zh_CN,
+  'zh-TW': messages_zh_TW
 }
+
+export const availableLocales = Object.keys(MESSAGES);
 
 const i18n = new Polyglot({ allowMissing: true });
 
@@ -74,7 +80,9 @@ import ru from 'timeago.js/lib/lang/ru';
 import sv from 'timeago.js/lib/lang/sv';
 import th from 'timeago.js/lib/lang/th';
 import tr from 'timeago.js/lib/lang/tr';
-// import ur from 'timeago.js/lib/lang/ur'; // Not currently supported by TimeAgo 
+import zh_CN from 'timeago.js/lib/lang/zh_CN';
+import zh_TW from 'timeago.js/lib/lang/zh_TW';
+// import ur from 'timeago.js/lib/lang/ur'; // Not currently supported by TimeAgo
 
 timeago.register('ar', ar);
 timeago.register('cs', cs);
@@ -93,6 +101,8 @@ timeago.register('ru', ru);
 timeago.register('sv', sv);
 timeago.register('th', th);
 timeago.register('tr', tr);
+timeago.register('zh-CN', zh_CN);
+timeago.register('zh-TW', zh_TW);
 
 /**
  * Helper function that allows plugins to register their
