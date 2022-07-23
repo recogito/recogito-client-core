@@ -12,6 +12,7 @@ import messages_fr from './messages_fr.json';
 import messages_gl from './messages_gl.json';
 import messages_hi from './messages_hi.json';
 import messages_it from './messages_it.json';
+import messages_ja from './messages_ja.json';
 import messages_ko from './messages_ko.json';
 import messages_nl from './messages_nl.json';
 import messages_pt from './messages_pt.json';
@@ -32,6 +33,7 @@ const MESSAGES = {
   gl: messages_gl,
   hi: messages_hi,
   it: messages_it,
+  ja: messages_ja,
   ko: messages_ko,
   nl: messages_nl,
   pt: messages_pt,
@@ -49,7 +51,7 @@ i18n.init = (lang, opt_messages) => {
 
   if (lang) {
     i18n.locale(lang);
-    i18n.extend(MESSAGES[lang]);  
+    i18n.extend(MESSAGES[lang]);
   }
 
   if (opt_messages)
@@ -67,6 +69,7 @@ import fr from 'timeago.js/lib/lang/fr';
 import gl from 'timeago.js/lib/lang/gl';
 import hi from 'timeago.js/lib/lang/hi_IN';
 import it from 'timeago.js/lib/lang/it';
+import ja from 'timeago.js/lib/lang/ja';
 import ko from 'timeago.js/lib/lang/ko';
 import nl from 'timeago.js/lib/lang/nl';
 import pt from 'timeago.js/lib/lang/pt_BR';
@@ -74,7 +77,7 @@ import ru from 'timeago.js/lib/lang/ru';
 import sv from 'timeago.js/lib/lang/sv';
 import th from 'timeago.js/lib/lang/th';
 import tr from 'timeago.js/lib/lang/tr';
-// import ur from 'timeago.js/lib/lang/ur'; // Not currently supported by TimeAgo 
+// import ur from 'timeago.js/lib/lang/ur'; // Not currently supported by TimeAgo
 
 timeago.register('ar', ar);
 timeago.register('cs', cs);
@@ -86,6 +89,7 @@ timeago.register('fr', fr);
 timeago.register('gl', gl);
 timeago.register('hi', hi);
 timeago.register('it', it);
+timeago.register('ja', ja);
 timeago.register('ko', ko);
 timeago.register('nl', nl);
 timeago.register('pt', pt);
@@ -107,14 +111,14 @@ i18n.registerMessages = (lang, messages) => {
 
 export default i18n;
 
-/** 
- * For convenience: exposes a pre-localized TimeAgo widget, 
+/**
+ * For convenience: exposes a pre-localized TimeAgo widget,
  * for use in plugins
  */
 export const LocalTimeAgo = props => {
 
   return (
-    <TimeAgo 
+    <TimeAgo
       datetime={props.timestamp}
       locale={i18n.locale()} />
   )
