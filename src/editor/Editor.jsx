@@ -13,7 +13,7 @@ const bounds = elem => {
 
 /**
  * The popup editor component.
- * 
+ *
  * TODO instead of just updating the current annotation state,
  * we could create a stack of revisions, and allow going back
  * with CTRL+Z.
@@ -38,10 +38,10 @@ export default class Editor extends Component {
     const nextBounds = bounds(next.selectedElement);
 
     if (!this.props.annotation?.isEqual(next.annotation)) {
-      this.setState({ 
+      this.setState({
         currentAnnotation: next.annotation,
-        selectionBounds: nextBounds 
-      });  
+        selectionBounds: nextBounds
+      });
     } else {
       this.setState({ selectionBounds: nextBounds });
     }
@@ -84,7 +84,7 @@ export default class Editor extends Component {
     // Defaults to true
     const autoPosition =
       this.props.autoPosition === undefined ? true : this.props.autoPosition;
-  
+
     if (window?.ResizeObserver) {
       const resizeObserver = new ResizeObserver(() => {
         if (!this.state.dragged)
@@ -97,7 +97,7 @@ export default class Editor extends Component {
       // Fire setPosition manually *only* for devices that don't support ResizeObserver
       if (!this.state.dragged)
         setPosition(this.props.wrapperEl, this.element.current, this.props.selectedElement, autoPosition);
-    }  
+    }
   }
 
   /** Creator and created/modified timestamp metadata **/
@@ -122,7 +122,7 @@ export default class Editor extends Component {
   getCurrentAnnotation = () =>
     this.state.currentAnnotation.clone();
 
-  /** Shorthand **/ 
+  /** Shorthand **/
   updateCurrentAnnotation = (diff, saveImmediately) => this.setState({
     currentAnnotation: this.state.currentAnnotation.clone(diff)
   }, () => {
@@ -130,15 +130,15 @@ export default class Editor extends Component {
       this.onOk();
   })
 
-  onAppendBody = (body, saveImmediately) => this.updateCurrentAnnotation({ 
-    body: [ 
-      ...this.state.currentAnnotation.bodies, 
-      { ...body, ...this.creationMeta(body) } 
-    ] 
+  onAppendBody = (body, saveImmediately) => this.updateCurrentAnnotation({
+    body: [
+      ...this.state.currentAnnotation.bodies,
+      { ...body, ...this.creationMeta(body) }
+    ]
   }, saveImmediately);
 
   onUpdateBody = (previous, updated, saveImmediately) => this.updateCurrentAnnotation({
-    body: this.state.currentAnnotation.bodies.map(body => 
+    body: this.state.currentAnnotation.bodies.map(body =>
       body === previous ? { ...updated, ...this.creationMeta(updated) } : body)
   }, saveImmediately);
 
@@ -146,7 +146,7 @@ export default class Editor extends Component {
     body: this.state.currentAnnotation.bodies.filter(b => b !== body)
   }, saveImmediately);
 
-  /** 
+  /**
    * For convenience: an 'append or update' shorthand.
    */
    onUpsertBody = (arg1, arg2, saveImmediately) => {
@@ -167,21 +167,21 @@ export default class Editor extends Component {
     }
   }
 
-  /** 
+  /**
    * Advanced method for applying a batch of body changes
    * in one go (append, remove update), optionally saving
-   * immediately afterwards. The argument is an array of 
+   * immediately afterwards. The argument is an array of
    * diff objects with the following structure:
-   * 
+   *
    *   [
    *     { action: 'append', body: bodyToAppend },
    *     { action: 'update', previous: prevBody, updated: updatedBody }
    *     { action: 'remove', body: bodyToRemove },
-   * 
+   *
    *     // Normal upsert, previous is optional
    *     { action: 'upsert', previous: prevBody, updated: updatedBody }
-   * 
-   *     // Auto-upsert based on purpose    
+   *
+   *     // Auto-upsert based on purpose
    *     { action: 'upsert', body: bodyToUpsert }
    *   ]
    */
@@ -197,7 +197,7 @@ export default class Editor extends Component {
     const toRemove = diffs
       .filter(d => d.action === 'remove')
       .map(d => d.body);
-      
+
     const toAppend = [
       ...diffs
         .filter(d => (d.action === 'append') || (d.action === 'upsert' && d.updated && !d.previous))
@@ -208,12 +208,12 @@ export default class Editor extends Component {
         .map(d => d.updated)
     ];
 
-    const toUpdate = [ 
-      ...diffs 
+    const toUpdate = [
+      ...diffs
         .filter(d => (d.action === 'update') || (d.action === 'upsert' && d.updated && d.previous))
-        .map(d => ({ 
-          previous: d.previous, 
-          updated: { ...d.updated, ...this.creationMeta(d.updated) } 
+        .map(d => ({
+          previous: d.previous,
+          updated: { ...d.updated, ...this.creationMeta(d.updated) }
         })),
 
       ...autoUpserts
@@ -222,7 +222,7 @@ export default class Editor extends Component {
 
     const updatedBodies = [
       // Current bodies
-      ...this.state.currentAnnotation.bodies    
+      ...this.state.currentAnnotation.bodies
         // Remove
         .filter(b => !toRemove.includes(b))
 
@@ -235,7 +235,7 @@ export default class Editor extends Component {
         // Append
         ...toAppend
     ]
-      
+
     this.updateCurrentAnnotation({ body: updatedBodies }, saveImmediately);
   }
 
@@ -246,7 +246,7 @@ export default class Editor extends Component {
    */
   onSetProperty = (property, value) => {
     // A list of properties the user is NOT allowed to set
-    const isForbidden = [ '@context', 'id', 'type', 'body', 'target' ].includes(property); 
+    const isForbidden = [ '@context', 'id', 'type', 'body', 'target' ].includes(property);
 
     if (isForbidden)
       throw new Exception(`Cannot set ${property} - not allowed`);
@@ -260,25 +260,39 @@ export default class Editor extends Component {
     }
   }
 
-  onCancel = () => 
+  /**
+   * Adds a URI to the context field
+   */
+  onAddContext = uri => {
+    const { currentAnnotation } = this.state;
+    const context = Array.isArray(currentAnnotation.context) ?
+      currentAnnotation.context :  [ currentAnnotation.context ];
+
+    if (context.indexOf(uri) < 0) {
+      context.push(uri);
+      this.updateCurrentAnnotation({ '@context': context });
+    }
+  }
+
+  onCancel = () =>
     this.props.onCancel(this.props.annotation);
 
   onOk = () => {
     // Removes the state payload from all bodies
-    const undraft = annotation => 
+    const undraft = annotation =>
       annotation.clone({
         body : annotation.bodies.map(({ draft, ...rest }) => rest)
       });
 
     const { currentAnnotation } = this.state;
 
-    // Current annotation is either a selection (if it was created from 
+    // Current annotation is either a selection (if it was created from
     // scratch just now) or an annotation (if it existed already and was
     // selected for editing)
     if (currentAnnotation.bodies.length === 0 && !this.props.allowEmpty) {
       if (currentAnnotation.isSelection)
         this.onCancel();
-      else 
+      else
         this.props.onAnnotationDeleted(this.props.annotation);
     } else {
       if (currentAnnotation.isSelection)
@@ -288,14 +302,14 @@ export default class Editor extends Component {
     }
   }
 
-  onDelete = () => 
+  onDelete = () =>
     this.props.onAnnotationDeleted(this.props.annotation);
 
   render() {
     const { currentAnnotation } = this.state;
 
     // Use default comment + tag widget unless host app overrides
-    const widgets = this.props.widgets ? 
+    const widgets = this.props.widgets ?
       this.props.widgets.map(getWidget) : DEFAULT_WIDGETS;
 
     const isReadOnlyWidget = w => w.type.disableDelete ?
@@ -305,7 +319,7 @@ export default class Editor extends Component {
         env: this.props.env
       }) : false;
 
-    const hasDelete = currentAnnotation && 
+    const hasDelete = currentAnnotation &&
       // annotation has bodies or allowEmpty,
       (currentAnnotation.bodies.length > 0 || this.props.allowEmpty) && // AND
       !this.props.readOnly && // we are not in read-only mode AND
@@ -313,17 +327,17 @@ export default class Editor extends Component {
       !widgets.some(isReadOnlyWidget);  // every widget is deletable
 
     return (
-      <Draggable 
+      <Draggable
         disabled={!this.props.detachable}
-        handle=".r6o-draggable" 
+        handle=".r6o-draggable"
         cancel=".r6o-btn, .r6o-btn *"
         onDrag={() => this.setState({ dragged: true })}>
 
         <div ref={this.element} className={this.state.dragged ? 'r6o-editor dragged' : 'r6o-editor'}>
           <div className="r6o-arrow" />
           <div className="r6o-editor-inner">
-            {widgets.map((widget, idx) => 
-              React.cloneElement(widget, { 
+            {widgets.map((widget, idx) =>
+              React.cloneElement(widget, {
                 key: `${idx}`,
                 focus: idx === 0,
                 annotation : currentAnnotation,
@@ -335,33 +349,34 @@ export default class Editor extends Component {
                 onUpsertBody: this.onUpsertBody,
                 onBatchModify: this.onBatchModify,
                 onSetProperty: this.onSetProperty,
-                onSaveAndClose: this.onOk              
+                onAddContext: this.onAddContext,
+                onSaveAndClose: this.onOk
               })
             )}
-            
+
             { this.props.readOnly ? (
               <div className="r6o-footer">
                 <button
-                  className="r6o-btn" 
+                  className="r6o-btn"
                   onClick={this.onCancel}>{i18n.t('Close')}</button>
               </div>
             ) : (
-              <div 
+              <div
                 className={this.props.detachable ? "r6o-footer r6o-draggable" : "r6o-footer"}>
                 { hasDelete && (
-                  <button 
-                    className="r6o-btn left delete-annotation" 
+                  <button
+                    className="r6o-btn left delete-annotation"
                     title={i18n.t('Delete')}
                     onClick={this.onDelete}>
                     <TrashIcon width={12} />
                   </button>
                 )}
 
-                <button 
+                <button
                   className="r6o-btn outline"
                   onClick={this.onCancel}>{i18n.t('Cancel')}</button>
 
-                <button 
+                <button
                   className="r6o-btn "
                   onClick={this.onOk}>{i18n.t('Ok')}</button>
               </div>

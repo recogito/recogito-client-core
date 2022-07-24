@@ -42,13 +42,17 @@ export default class WebAnnotation {
     return this.opts?.readOnly;
   }
 
-  /*************************************/ 
+  /*************************************/
   /* Getters to forward properties of  */
   /* the underlying annotation         */
   /*************************************/
 
   get id() {
-    return this.underlying.id; 
+    return this.underlying.id;
+  }
+
+  get context() {
+    return this.underlying['@context'];
   }
 
   get type() {
@@ -83,8 +87,8 @@ export default class WebAnnotation {
     return (Array.isArray(this.underlying.target)) ?
       this.underlying.target : [ this.underlying.target ];
   }
-  
-  /*****************************************/ 
+
+  /*****************************************/
   /* Various access helpers and shorthands */
   /*****************************************/
 
@@ -115,5 +119,5 @@ export default class WebAnnotation {
   get end() {
     return this.selector('TextPositionSelector')?.end;
   }
-  
+
 }

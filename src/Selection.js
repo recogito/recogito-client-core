@@ -11,6 +11,7 @@ export default class Selection {
 
   constructor(target, body) {
     this.underlying = {
+      '@context': 'http://www.w3.org/ns/anno.jsonld',
       type: 'Selection',
       body: body || [],
       target
@@ -21,12 +22,16 @@ export default class Selection {
   clone = opt_props => {
     // Deep-clone
     const cloned = new Selection();
-    cloned.underlying = JSON.parse(JSON.stringify(this.underlying));  
+    cloned.underlying = JSON.parse(JSON.stringify(this.underlying));
 
     if (opt_props)
       cloned.underlying = { ...cloned.underlying, ...opt_props };
 
     return cloned;
+  }
+
+  get context() {
+    return this.underlying['@context'];
   }
 
   get type() {
@@ -54,7 +59,7 @@ export default class Selection {
       return equals(this.underlying, other.underlying);
     }
   }
-  
+
   get bodies() {
     return (Array.isArray(this.underlying.body)) ?
       this.underlying.body : [ this.underlying.body ];
@@ -77,7 +82,7 @@ export default class Selection {
     return this.selector('TextQuoteSelector')?.exact;
   }
 
-  /*******************************************/ 
+  /*******************************************/
   /* Selection-specific properties & methods */
   /*******************************************/
 
@@ -87,7 +92,6 @@ export default class Selection {
 
   toAnnotation = () => {
     const a = Object.assign({}, this.underlying, {
-      '@context': 'http://www.w3.org/ns/anno.jsonld',
       'type': 'Annotation',
       'id': `#${uuid()}`
     });
