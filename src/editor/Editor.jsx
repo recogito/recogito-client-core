@@ -122,6 +122,9 @@ export default class Editor extends Component {
   getCurrentAnnotation = () =>
     this.state.currentAnnotation.clone();
 
+  hasChanges = () => 
+    this.props.annotation?.isEqual(this.state.currentAnnotation);
+
   /** Shorthand **/
   updateCurrentAnnotation = (diff, saveImmediately) => this.setState({
     currentAnnotation: this.state.currentAnnotation.clone(diff)
