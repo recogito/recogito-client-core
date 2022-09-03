@@ -126,12 +126,16 @@ export default class Editor extends Component {
     !this.props.annotation?.isEqual(this.state.currentAnnotation);
 
   /** Shorthand **/
-  updateCurrentAnnotation = (diff, saveImmediately) => this.setState({
-    currentAnnotation: this.state.currentAnnotation.clone(diff)
-  }, () => {
-    if (saveImmediately)
-      this.onOk();
-  })
+  updateCurrentAnnotation = (diff, saveImmediately) => {
+    this.setState({
+      currentAnnotation: this.state.currentAnnotation.clone(diff)
+    }, () => {
+      if (saveImmediately)
+        this.onOk();
+      else 
+        this.props.onChanged && this.props.onChanged();
+    })
+  }
 
   onAppendBody = (body, saveImmediately) => this.updateCurrentAnnotation({
     body: [
