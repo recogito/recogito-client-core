@@ -16,9 +16,11 @@ const setPosition = (wrapperEl, editorEl, selectedEl, autoPosition) => {
   if (autoPosition) {
     const defaultOrientation = editorEl.children[1].getBoundingClientRect();
 
+    const { innerWidth, innerHeight } = wrapperEl.ownerDocument.defaultView;
+
     // Test 1: does right edge extend beyond the width of the page?
     // If so, flip horizontally
-    if (defaultOrientation.right > window.innerWidth) {
+    if (defaultOrientation.right > innerWidth) {
       editorEl.classList.remove('r6o-arrow-left');
       editorEl.classList.add('r6o-arrow-right');
       editorEl.style.left = `${right - defaultOrientation.width - containerBounds.left}px`;
@@ -26,7 +28,7 @@ const setPosition = (wrapperEl, editorEl, selectedEl, autoPosition) => {
 
     // Test 2: does the bottom edge extend beyond the height of the page?
     // If so, flip vertically
-    if (defaultOrientation.bottom > window.innerHeight) {
+    if (defaultOrientation.bottom > innerHeight) {
       editorEl.classList.remove('r6o-arrow-top');
       editorEl.classList.add('r6o-arrow-bottom');
       
