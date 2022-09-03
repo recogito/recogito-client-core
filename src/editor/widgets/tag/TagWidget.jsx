@@ -39,7 +39,7 @@ const TagWidget = props => {
       props.onAppendBody({ ...draftTag, value: updated });
     } else if (prev.length > 0 && updated.length === 0) {
       props.onRemoveBody(draftTag);
-    } else {
+    } else if (prev !== updated) {
       props.onUpdateBody(draftTag, { ...draftTag, value: updated });
     }
   }
