@@ -15,8 +15,14 @@ export default class TextEntryField extends Component {
 
   // CTRL+Enter functions as Ok
   onKeyDown = evt => {
-    if (evt.which === 13 && evt.ctrlKey)
+    if (evt.which === 13 && evt.ctrlKey) {
       this.props.onSaveAndClose();
+    }
+  }
+
+  onKeyUp = evt => {
+    if (evt.which === 46)
+      evt.stopPropagation();
   }
 
   componentDidMount() {
@@ -33,6 +39,7 @@ export default class TextEntryField extends Component {
         placeholder={this.props.placeholder || i18n.t('Add a comment...')}
         disabled={!this.props.editable}
         onChange={this.props.onChange}
+        onKeyUp={this.onKeyUp}
         onKeyDown={this.onKeyDown} />
     )
   }
