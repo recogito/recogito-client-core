@@ -13,11 +13,11 @@ const getDraftTag = existingDraft =>
 const TagWidget = props => {
 
   // All tags (draft + non-draft)
-  const all = props.annotation ? 
+  const all = props.annotation ?
     props.annotation.bodies.filter(b => b.purpose === 'tagging') : [];
 
   // Last draft tag goes into the input field
-  const draftTag = getDraftTag(all.slice().reverse().find(b => b.draft)); 
+  const draftTag = getDraftTag(all.slice().reverse().find(b => b.draft));
 
   // All except draft tag
   const tags = all.filter(b => b != draftTag);
@@ -66,7 +66,7 @@ const TagWidget = props => {
     if (draftTag.value.trim().length === 0) {
       props.onAppendBody(toSubmit);
     } else {
-      props.onUpdateBody(draftTag, toSubmit); 
+      props.onUpdateBody(draftTag, toSubmit);
     }
   }
 
@@ -96,9 +96,9 @@ const TagWidget = props => {
       }
 
       {!props.readOnly &&
-        <Autocomplete 
+        <Autocomplete
           focus={props.focus}
-          placeholder={i18n.t('Add tag...')}
+          placeholder={props.textPlaceHolder || i18n.t('Add tag...')}
           vocabulary={props.vocabulary || []}
           onChange={onDraftChange}
           onSubmit={onSubmit}/>
