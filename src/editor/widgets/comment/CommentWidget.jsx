@@ -7,11 +7,11 @@ import PurposeSelect, { PURPOSES } from './PurposeSelect';
 const validPurposes = PURPOSES.map(p => p.value);
 
 /**
- * Comments are TextualBodies where the purpose field is either 
+ * Comments are TextualBodies where the purpose field is either
  * blank or 'commenting' or 'replying'
  */
 const isComment = (body, matchAllPurposes) => {
-  const hasMatchingPurpose = matchAllPurposes ? 
+  const hasMatchingPurpose = matchAllPurposes ?
     validPurposes.indexOf(body.purpose) > -1 : body.purpose == 'commenting' || body.purpose == 'replying';
 
   return body.type === 'TextualBody' && (
@@ -19,10 +19,10 @@ const isComment = (body, matchAllPurposes) => {
   );
 }
 
-/** 
+/**
 /* A comment should be read-only if:
 /* - the global read-only flag is set
-/* - the current rule is 'MINE_ONLY' and the creator ID differs 
+/* - the current rule is 'MINE_ONLY' and the creator ID differs
 /* The 'editable' config flag overrides the global setting, if any
 */
 const isReadOnlyComment = (body, props) =>  {
@@ -56,18 +56,18 @@ const getDraftReply = (existingDraft, isReply) => {
   };
 };
 
-/** 
+/**
  * Renders a list of comment bodies, followed by a 'reply' field.
  */
 const CommentWidget = props => {
 
   // All comments
-  const all = props.annotation ? 
+  const all = props.annotation ?
     props.annotation.bodies.filter(body => isComment(body, props.purposeSelector)) : [];
 
   // Add a draft reply if there isn't one already
   const draftReply = getDraftReply(all.find(b => b.draft == true), all.length > 1);
-  
+
   // All except draft reply
   const comments = all.filter(b => b != draftReply);
 
@@ -87,38 +87,44 @@ const CommentWidget = props => {
   const onChangeReplyPurpose = purpose =>
     props.onUpdateBody(draftReply, { ...draftReply, purpose: purpose.value });
 
+  // Pre-condition: will be true if the annotation exists, and Annotorious is not in read-only mode
+  const isReadable = (!props.readOnly && props.annotation);
+
+  // Extra condtion to: reply field exists if there is no comment yet, or disableReply is false.
+  const hasReply = comments.length === 0 || !props.disableReply;
+
   return (
     <>
-      { comments.map((body, idx) => 
-        <Comment 
-          key={idx} 
+      { comments.map((body, idx) =>
+        <Comment
+          key={idx}
           env={props.env}
           purposeSelector={props.purposeSelector}
-          readOnly={isReadOnlyComment(body, props)} 
-          body={body} 
+          readOnly={isReadOnlyComment(body, props)}
+          body={body}
           onUpdate={props.onUpdateBody}
           onDelete={props.onRemoveBody}
           onSaveAndClose={props.onSaveAndClose} />
       )}
 
-      { !props.readOnly && props.annotation &&
+      { isReadable && hasReply &&
         <div className="r6o-widget comment editable">
           <TextEntryField
             focus={props.focus}
             content={draftReply.value}
             editable={true}
-            placeholder={comments.length > 0 ? i18n.t('Add a reply...') : i18n.t('Add a comment...')}
+            placeholder={comments.length > 0 ? i18n.t('Add a reply...') : (props.textPlaceHolder || i18n.t('Add a comment...'))}
             onChange={onEditReply}
             onSaveAndClose={() => props.onSaveAndClose()}
-          /> 
-        { props.purposeSelector  && draftReply.value.length > 0 &&
-          <PurposeSelect
+          />
+          { props.purposeSelector  && draftReply.value.length > 0 &&
+            <PurposeSelect
               editable={true}
               content={draftReply.purpose}
-              onChange={onChangeReplyPurpose} 
+              onChange={onChangeReplyPurpose}
               onSaveAndClose={() => props.onSaveAndClose()}
             />
-          } 
+          }
         </div>
       }
     </>
@@ -127,9 +133,9 @@ const CommentWidget = props => {
 }
 
 CommentWidget.disableDelete = (annotation, props) => {
-  const commentBodies = 
+  const commentBodies =
     annotation.bodies.filter(body => isComment(body, props.purposeSelector));
-    
+
   return commentBodies.some(comment => isReadOnlyComment(comment, props));
 }
 
