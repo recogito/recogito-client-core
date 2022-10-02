@@ -87,6 +87,12 @@ const CommentWidget = props => {
   const onChangeReplyPurpose = purpose =>
     props.onUpdateBody(draftReply, { ...draftReply, purpose: purpose.value });
 
+  // Pre-condition: will be true if the annotation exists, and Annotorious is not in read-only mode
+  const isReadable = (!props.readOnly && props.annotation);
+
+  // Extra condtion to: reply field exists if there is no comment yet, or disableReply is false.
+  const hasReply = comments.length === 0 || !props.disableReply;
+
   return (
     <>
       { comments.map((body, idx) =>
@@ -100,28 +106,8 @@ const CommentWidget = props => {
           onDelete={props.onRemoveBody}
           onSaveAndClose={props.onSaveAndClose} />
       )}
-      { comments.length === 0 && !props.readOnly && props.disableReply && props.annotation &&
-        <div className="r6o-widget comment editable">
-          <TextEntryField
-            focus={props.focus}
-            content={draftReply.value}
-            editable={true}
-            placeholder={props.textPlaceHolder || i18n.t('Add a comment...') }
-            onChange={onEditReply}
-            onSaveAndClose={() => props.onSaveAndClose()}
-          />
-        { props.purposeSelector  && draftReply.value.length > 0 &&
-          <PurposeSelect
-              editable={true}
-              content={draftReply.purpose}
-              onChange={onChangeReplyPurpose}
-              onSaveAndClose={() => props.onSaveAndClose()}
-            />
-          }
-        </div>
-      }
 
-      { !props.readOnly && !props.disableReply && props.annotation &&
+      { isReadable && hasReply &&
         <div className="r6o-widget comment editable">
           <TextEntryField
             focus={props.focus}
