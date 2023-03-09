@@ -15,7 +15,7 @@ const isComment = (body, matchAllPurposes) => {
     validPurposes.indexOf(body.purpose) > -1 : body.purpose == 'commenting' || body.purpose == 'replying';
 
   return body.type === 'TextualBody' && (
-    !body.hasOwnProperty('purpose') || hasMatchingPurpose
+    !Object.prototype.hasOwnProperty.call(body, 'purpose') || hasMatchingPurpose
   );
 }
 
