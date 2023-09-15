@@ -32,6 +32,10 @@ const isReadOnlyComment = (body, props) =>  {
   if (props.editable === false)
     return true;
 
+  if (props.env.user?.isAdmin){
+    return false
+  }
+
   if (props.editable === 'MINE_ONLY') {
     // The original creator of the body
     const creator = body.creator?.id;
