@@ -21,6 +21,7 @@ import messages_sv from './messages_sv.json';
 import messages_th from './messages_th.json';
 import messages_tr from './messages_tr.json';
 import messages_ur from './messages_ur.json';
+import messages_zh from './messages_zh.json';
 import messages_zh_CN from './messages_zh_CN.json';
 import messages_zh_TW from './messages_zh_TW.json';
 
@@ -44,6 +45,7 @@ const MESSAGES = {
   th: messages_th,
   tr: messages_tr,
   ur: messages_ur,
+  zh: messages_zh,
   'zh-CN': messages_zh_CN,
   'zh-TW': messages_zh_TW
 }
@@ -105,6 +107,7 @@ timeago.register('ru', ru);
 timeago.register('sv', sv);
 timeago.register('th', th);
 timeago.register('tr', tr);
+timeago.register('zh', zh_CN);
 timeago.register('zh-CN', zh_CN);
 timeago.register('zh-TW', zh_TW);
 
